@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse, HttpResponseNotFound, Http404
 from django.views import View
-from poll_app.models import Poll, Comment, User, VotesIn
+from poll_app.models import Poll, Comment, UserProfile, VotesIn
 import json
 import random
 
@@ -62,8 +62,16 @@ class JSONComments(View):
             comments = Comment.objects.filter(poll=poll, parent=None)
 
             for comment in comments:
-                the_user = comment.user
-                new_object = { "id": comment.id, "comment": comment.comment, "submitter": the_user.username, "votes": comment.votes, "parent": comment.parent}
+                the_user = comment.submitter
+                user_profile = UserProfile.objects.get(user=the_user)
+                new_object = { 
+                    "id": comment.id, 
+                    "comment": comment.comment, 
+                    "submitter": the_user.username,
+                    "profile_image": user_profile.profile_image.url, 
+                    "votes": comment.votes, 
+                    "parent": comment.parent
+                    }
                 dictionary["comments"].append(new_object)
         
         except Comment.DoesNotExist:
@@ -81,20 +89,20 @@ class JSONChildComments(View):
         try:
             parent_comment = Comment.objects.get(id=comment_id)
             
-            dictionary = {"parent": parent_comment.id, "comments":[]}
+
+            dictionary = {"parent": parent_comment.id, "poll_question": parent_comment.poll.question, "comments":[]}
             
             child_comments = Comment.objects.filter(parent=parent_comment)
 
             for comment in child_comments:
-                the_user = comment.user
+                the_user = comment.submitter
                 user_profile = UserProfile.objects.get(user=the_user)
                 new_object = { 
                     "id": comment.id, 
                     "comment": comment.comment, 
                     "submitter": the_user.username, 
-                    "profile_image": user_profile.profile_image, 
-                    "votes": comment.votes, 
-                    "parent": comment.parent
+                    "profile_image": user_profile.profile_image.url, 
+                    "votes": comment.votes,
                     }
                 dictionary["comments"].append(new_object)
 
