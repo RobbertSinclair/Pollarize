@@ -131,3 +131,5 @@ dmypy.json
 
 # API Key files
 *.key
+
+profile_images/
