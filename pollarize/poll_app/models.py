@@ -5,8 +5,11 @@ from django.template.defaultfilters import slugify
 # Create your models here.
 
 class UserProfile(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE) 
-    profileImage = models.ImageField(null=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE) 
+    profileImage = models.ImageField(null=True, upload_to='profile_images')
+
+    def __str__(self):
+        return self.user.username
 
 class Poll(models.Model):
     submitter = models.ForeignKey(User, on_delete=models.CASCADE)

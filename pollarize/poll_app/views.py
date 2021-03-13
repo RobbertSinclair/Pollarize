@@ -87,7 +87,15 @@ class JSONChildComments(View):
 
             for comment in child_comments:
                 the_user = comment.user
-                new_object = { "id": comment.id, "comment": comment.comment, "submitter": the_user.username, "votes": comment.votes, "parent": comment.parent}
+                user_profile = UserProfile.objects.get(user=the_user)
+                new_object = { 
+                    "id": comment.id, 
+                    "comment": comment.comment, 
+                    "submitter": the_user.username, 
+                    "profile_image": user_profile.profile_image, 
+                    "votes": comment.votes, 
+                    "parent": comment.parent
+                    }
                 dictionary["comments"].append(new_object)
 
         except Comment.DoesNotExist:
