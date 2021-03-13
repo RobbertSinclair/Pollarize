@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, JsonResponse, HttpResponseNotFound, Http404
 from django.views import View
 from poll_app.models import Poll, Comment, User, VotesIn
 import json
@@ -48,6 +48,57 @@ class JSONPollByPopularity(View):
             }
             dictionary["polls"].append(poll_dict)
         return JsonResponse(dictionary)
+
+class JSONComments(View):
+
+    def get(self, request, poll_slug):
+        
+
+        try:
+            poll = Poll.objects.get(poll_slug=poll_slug)
+            
+            dictionary = {"poll": poll.question, "comments": []}
+            
+            comments = Comment.objects.filter(poll=poll, parent=None)
+
+            for comment in comments:
+                the_user = comment.user
+                new_object = { "id": comment.id, "comment": comment.comment, "submitter": the_user.username, "votes": comment.votes, "parent": comment.parent}
+                dictionary["comments"].append(new_object)
+        
+        except Comment.DoesNotExist:
+            raise Http404("Comments were not found")
+
+        except Poll.DoesNotExist:
+            raise Http404("Poll does not exist")
+
+        return JsonResponse(dictionary)
+
+class JSONChildComments(View):
+
+    def get(self, request, comment_id):
+        
+        try:
+            parent_comment = Comment.objects.get(id=comment_id)
+            
+            dictionary = {"parent": parent_comment.id, "comments":[]}
+            
+            child_comments = Comment.objects.filter(parent=parent_comment)
+
+            for comment in child_comments:
+                the_user = comment.user
+                new_object = { "id": comment.id, "comment": comment.comment, "submitter": the_user.username, "votes": comment.votes, "parent": comment.parent}
+                dictionary["comments"].append(new_object)
+
+        except Comment.DoesNotExist:
+            raise Http404("no_comment")
+
+        return JsonResponse(dictionary)
+
+
+
+
+
 
 
 

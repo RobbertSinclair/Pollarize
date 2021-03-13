@@ -11,7 +11,7 @@ class UserProfile(models.Model):
 class Poll(models.Model):
     submitter = models.ForeignKey(User, on_delete=models.CASCADE)
     question = models.CharField(max_length=300, null=False)
-    slug = models.SlugField(max_length=300, default="")
+    poll_slug = models.SlugField(max_length=300, default="")
     answer1 = models.CharField(max_length=200, null=False)
     answer2 = models.CharField(max_length=200, null=False)
     votes1 = models.IntegerField(default=0)
