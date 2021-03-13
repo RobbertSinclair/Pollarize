@@ -31,7 +31,7 @@ class UserProfileForm(forms.ModelForm):
         fields = ('picture',)
 
 class UserForm(forms.ModelForm):
-    password = forms.CharField(widget.forms.PasswordInput())
+    password = forms.CharField(widget=forms.PasswordInput())
 
     class Meta:
         model = User
