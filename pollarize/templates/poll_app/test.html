@@ -12,8 +12,8 @@
             <div class="comment" id="comment-{{ comment.id }}">
                 <h3>{{comment.submitter}}</h3>
                 <p>{{ comment.comment }}</p>
-                <button id="load-replies">Load Replies</button>
-                <div id="replies"></div>
+                <button id="load-replies-{{ comment.id }}" onClick="loadReplies({{ comment.id }})">Load Replies</button>
+                <div id="replies-{{ comment.id }}" style="margin-left: 20px;"></div>
                 
             </div>
         {% endfor %}
