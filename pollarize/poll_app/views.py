@@ -10,6 +10,23 @@ import random
 def index(request):
     return HttpResponse("<h1>Pollarize</h1>")
 
+class TestView(View):
+
+    def get(self, request, poll_slug):
+        try:
+            comment_list = []
+            poll = Poll.objects.get(poll_slug=poll_slug)
+            comments = Comment.objects.filter(poll=poll, parent=None)
+            for comment in comments:
+                comment_dict = {"comment": comment}
+                comment_dict["children"] = len(Comment.objects.filter(parent=comment))
+                comment_list.append(comment_dict)
+                
+            context_dict = {"poll": poll, "comments": comments}
+            return render(request, "poll_app/test.html", context=context_dict)
+        except Poll.DoesNotExist:
+            raise Http404("Poll question doesn't exist")
+
 
 # JSON views here
 class JSONRandomPoll(View):

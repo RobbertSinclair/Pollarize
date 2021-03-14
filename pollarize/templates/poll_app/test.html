@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en">
+    <head>
+        <title>Test View</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+        <script src="{% static 'js/comments.js' %}"></script>
+    </head>
+    <body>
+        <h1>{{ poll.question }}</h1>
+        {% for comment in comments %}
+            <div class="comment" id="comment-{{ comment.id }}">
+                <h3>{{comment.submitter}}</h3>
+                <p>{{ comment.comment }}</p>
+                <button id="load-replies">Load Replies</button>
+                <div id="replies"></div>
+                
+            </div>
+        {% endfor %}
+    </body>
+
+</html>
