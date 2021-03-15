@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse, HttpResponseNotFound, Http404
 from django.views import View
 from poll_app.models import Poll, Comment, UserProfile, VotesIn
+from django.contrib.auth.models import User
+from django.views.decorators.csrf import csrf_exempt
 import json
 import random
 
@@ -18,11 +20,13 @@ class TestView(View):
             poll = Poll.objects.get(poll_slug=poll_slug)
             comments = Comment.objects.filter(poll=poll, parent=None)
             for comment in comments:
+                user = comment.submitter
+                user_profile = UserProfile.objects.get(user=user)
                 comment_dict = {"comment": comment}
                 comment_dict["children"] = len(Comment.objects.filter(parent=comment))
+                comment_dict["image"] = user_profile.profile_image.url
                 comment_list.append(comment_dict)
-                
-            context_dict = {"poll": poll, "comments": comments}
+            context_dict = {"poll": poll, "comments": comment_list}
             return render(request, "poll_app/test.html", context=context_dict)
         except Poll.DoesNotExist:
             raise Http404("Poll question doesn't exist")
@@ -98,6 +102,13 @@ class JSONComments(View):
             raise Http404("Poll does not exist")
 
         return JsonResponse(dictionary)
+
+    def post(self, request, *args, **kwargs):
+        comment = request.POST["comment"]
+        if user.is_authenticated():
+            user_profile = UserProfile.objects.get(user=user)
+            
+
 
 class JSONChildComments(View):
 

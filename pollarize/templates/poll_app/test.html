@@ -3,20 +3,47 @@
 <html lang="en">
     <head>
         <title>Test View</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
         <script src="{% static 'js/comments.js' %}"></script>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+        <style>
+            .profile-img {
+                width: 50px;
+                height: 50px;
+                object-fit: cover;
+            }
+
+        </style>
+
     </head>
     <body>
         <h1>{{ poll.question }}</h1>
-        {% for comment in comments %}
-            <div class="comment" id="comment-{{ comment.id }}">
-                <h3>{{comment.submitter}}</h3>
-                <p>{{ comment.comment }}</p>
-                <button id="load-replies-{{ comment.id }}" onClick="loadReplies({{ comment.id }})">Load Replies</button>
-                <div id="replies-{{ comment.id }}" style="margin-left: 20px;"></div>
-                
-            </div>
-        {% endfor %}
+        {% if user.is_authenticated %}
+        <form onsubmit="postComment('{{ poll.poll_slug }}', '{{ user.username }}')">
+            {% csrf_token %}
+            <label for="comment-text">Enter Comment:</label><br>
+            <textarea name="comment" cols="40" rows="5" id="add-comment"></textarea><br>
+            <input type="submit" class="btn btn-link">
+        </form>
+        {% endif %}
+        <div id="comments" class="comments-div">
+            {% for comment in comments %}
+                <div class="comment" id="comment-{{ comment.comment.id }}">
+                    <img class="mr-3 rounded-circle profile-img" alt="Profile image" src="{{ comment.image }}" />
+                    <h3>{{comment.comment.submitter}}</h3>
+                    <p>{{ comment.comment.comment }}</p>
+                    {% if comment.children != 0 %}
+                    <button id="load-replies-{{ comment.comment.id }}" class="btn btn-link" onClick="loadReplies({{ comment.comment.id }})">Load Replies ({{ comment.children }})</button>
+                    {% endif %}
+                    <div id="replies-{{ comment.comment.id }}" style="margin-left: 50px;"></div>
+                    
+                </div>
+            {% endfor %}
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
     </body>
 
 </html>
