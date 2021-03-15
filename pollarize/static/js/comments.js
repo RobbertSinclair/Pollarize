@@ -21,7 +21,6 @@ function postComment(poll_slug, submitter) {
         submitter: submitter,
         csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
     }
-    console.log(post_data.csrfmiddlewaretoken);
     var the_url = '/json/add-comment/'; 
     $.ajax({
         type: 'POST',
