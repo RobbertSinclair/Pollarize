@@ -21,11 +21,11 @@
     <body>
         <h1>{{ poll.question }}</h1>
         {% if user.is_authenticated %}
-        <form onsubmit="postComment('{{ poll.poll_slug }}', '{{ user.username }}')">
+        <form onsubmit="return false">
             {% csrf_token %}
             <label for="comment-text">Enter Comment:</label><br>
             <textarea name="comment" cols="40" rows="5" id="add-comment"></textarea><br>
-            <input type="submit" class="btn btn-link">
+            <button class="btn btn-link" onclick="postComment('{{ poll.poll_slug }}', '{{ user.username }}')">Submit</button>
         </form>
         {% endif %}
         <div id="comments" class="comments-div">

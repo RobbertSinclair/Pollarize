@@ -103,11 +103,34 @@ class JSONComments(View):
 
         return JsonResponse(dictionary)
 
-    def post(self, request, *args, **kwargs):
+    def post(self, request, poll_slug):
         comment = request.POST["comment"]
-        if user.is_authenticated():
-            user_profile = UserProfile.objects.get(user=user)
-            
+        return HttpResponse(comment)
+
+def add_comment(request):
+    context_dict = {}
+    if request.method == "POST":
+        username = request.POST["submitter"]
+        comment = request.POST["comment"]
+        poll_slug = request.POST["poll"]
+
+        
+
+        user = User.objects.get(username=username)
+        user_profile = UserProfile.objects.get(user=user)
+
+        the_poll = Poll.objects.get(poll_slug=poll_slug)
+
+        new_comment = Comment.objects.create(submitter=user, comment=comment, poll=the_poll, parent=None)
+        new_comment.save()
+
+        context_dict["profile_image"] = user_profile.profile_image.url
+        context_dict["comment_id"] = new_comment.id
+        context_dict["message"] = "SUCCESS"
+
+        return JsonResponse(context_dict)
+
+
 
 
 class JSONChildComments(View):

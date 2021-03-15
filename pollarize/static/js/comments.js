@@ -17,20 +17,31 @@ function postComment(poll_slug, submitter) {
     var the_comment = $("#add-comment").val();
     var post_data = {
         comment: the_comment,
+        poll: poll_slug,
+        submitter: submitter,
         csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
     }
     console.log(post_data.csrfmiddlewaretoken);
-    $ajax({
+    var the_url = '/json/add-comment/'; 
+    $.ajax({
         type: 'POST',
-        url: '/json/' + poll_slug + '/comment/',
+        url: the_url,
         data: post_data,
-        success:function(response)
+        success:function(data)
         {
-            alert(response);
+            //console.log("Success")
+            var profile_pic = data.profile_image;
+            $("#comments").prepend("<div class='comment' id='comment-" + data.comment_id + "' />" 
+            + "<img class='mr-3 rounded-circle profile-img' alt='Profile image' src='" + profile_pic + "' />" 
+            + "<h3>" + submitter + "</h3>" 
+            + "<p>" + the_comment + "</p>");
+
+            $("#add-comment").val("");
+
         },
-        failure:function(response)
+        failure:function(data)
         {
-            alert(response);
+            console.log("Failure")
         }
     })
 }
