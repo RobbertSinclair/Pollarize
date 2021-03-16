@@ -20,11 +20,9 @@ class Poll(models.Model):
     answer2 = models.CharField(max_length=200, null=False)
     votes1 = models.IntegerField(default=0)
     votes2 = models.IntegerField(default=0)
-    total_votes = models.IntegerField(default=0)
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.question)
-        self.total_votes = self.votes1 + self.votes2
         super(Poll, self).save(*args, **kwargs)
 
     def __str__(self):

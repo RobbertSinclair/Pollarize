@@ -15,6 +15,12 @@
                 object-fit: cover;
             }
 
+            .loading-image {
+                width: 20px;
+                height: 20px;
+                object-fit: cover;
+            }
+
         </style>
 
     </head>
@@ -37,7 +43,11 @@
                     {% if comment.children != 0 %}
                     <button id="load-replies-{{ comment.comment.id }}" class="btn btn-link" onClick="loadReplies({{ comment.comment.id }})">Load Replies ({{ comment.children }})</button>
                     {% endif %}
-                    <div id="replies-{{ comment.comment.id }}" style="margin-left: 50px;"></div>
+                    <div id="replies-{{ comment.comment.id }}" style="margin-left: 50px;">
+                        <div class="loading" id="loading-{{ comment.comment.id }}">
+                            <img class="loading-image" src="{% static 'img/ajax_loader.gif' %}"/>
+                        </div>
+                    </div>
                     
                 </div>
             {% endfor %}

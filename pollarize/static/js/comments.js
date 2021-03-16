@@ -1,5 +1,10 @@
+$(document).ready(function(){
+    $(".loading").hide();
+})
+
 
 function loadReplies(comment_id) {
+    $("#loading-" + comment_id).show();
     console.log("loadReplies has been run");
     $.get("/json/" + comment_id + "/child-comments", function( data ) {
         for (var i = 0; i < data.comments.length; i++) {
@@ -9,6 +14,7 @@ function loadReplies(comment_id) {
             $("#load-replies-"+ comment_id).remove();
         }
     });
+    $('#loading-' + comment_id).hide();
 }
 
 
