@@ -20,9 +20,11 @@ class Poll(models.Model):
     answer2 = models.CharField(max_length=200, null=False)
     votes1 = models.IntegerField(default=0)
     votes2 = models.IntegerField(default=0)
+    total_votes = models.IntegerField(default=0)
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.question)
+        self.total_votes = self.votes1 + self.votes2
         super(Poll, self).save(*args, **kwargs)
 
     def __str__(self):
@@ -34,6 +36,9 @@ class Comment(models.Model):
     comment = models.CharField(max_length=1000)
     votes = models.IntegerField(default=0)
     parent = models.ForeignKey("self", null=True, related_name="comments", on_delete=models.CASCADE, blank=True)
+
+    def __str__(self):
+        return self.comment
 
 class VotesIn(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
