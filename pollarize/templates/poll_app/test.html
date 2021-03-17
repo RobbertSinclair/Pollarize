@@ -21,6 +21,7 @@
                 object-fit: cover;
             }
 
+
         </style>
 
     </head>
@@ -41,9 +42,13 @@
                     <h3>{{comment.comment.submitter}}</h3>
                     <p>{{ comment.comment.comment }}</p>
                     {% if comment.children != 0 %}
-                    <button id="load-replies-{{ comment.comment.id }}" class="btn btn-link" onClick="loadReplies({{ comment.comment.id }})">Load Replies ({{ comment.children }})</button>
+                    <button id="load-replies-{{ comment.comment.id }}" class="btn btn-link" onClick="loadReplies({{ comment.comment.id }})">Load Replies ({{ comment.children }}) &#8595;</button>
+                    <button id="hide-replies-{{ comment.comment.id }}" class="hide-replies btn btn-link" onClick="hideReplies({{ comment.comment.id }})">Hide Replies &#8593;</button>
                     {% endif %}
-                    <div id="replies-{{ comment.comment.id }}" style="margin-left: 50px;">
+                    {% if user.is_authenticated %}
+                    <button id="add-reply-{{ comment.comment.id }}" class="add-reply btn btn-link" onClick="postReply('{{ comment.comment.id }}', '{{ user.username }}')">Reply</button>
+                    {% endif %}
+                    <div id="replies-{{ comment.comment.id }}" class="replies" style="margin-left: 50px;">
                         <div class="loading" id="loading-{{ comment.comment.id }}">
                             <img class="loading-image" src="{% static 'img/ajax_loader.gif' %}"/>
                         </div>
