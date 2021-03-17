@@ -2,6 +2,8 @@ $(document).ready(function(){
     $(".loading").hide();
     $(".replies").hide();
     $(".hide-replies").hide();
+    $(".reply-form").hide();
+    $(".hide-reply-form").hide();
 })
 
 
@@ -18,10 +20,13 @@ function loadReplies(comment_id) {
                 
             } 
         });
+        $("#replies-" + comment_id).slideDown("slow");
+    } else {
+        $("#replies-" + comment_id).slideDown("slow");
     }
     $("#load-replies-"+ comment_id).hide();
     $("#hide-replies-" + comment_id).show();
-    $("#replies-" + comment_id).slideDown("slow");
+    
     $('#loading-' + comment_id).hide();
 }
 
@@ -32,13 +37,28 @@ function hideReplies(comment_id) {
 }
 
 
+function showReplyForm(comment_id) {
+    $("#reply-form-" + comment_id).slideDown("slow");
+    $("#hide-reply-form-" + comment_id).show();
+    $("#add-reply-" + comment_id).hide();
+    
+}
 
-function postComment(poll_slug, submitter) {
+function hideReplyForm(comment_id) {
+    $("#reply-form-" + comment_id).slideUp("slow");
+    $("#hide-reply-form-" + comment_id).hide();
+    $("#add-reply-" + comment_id).show();
+}
+
+
+
+function postComment(poll_slug, submitter, parent) {
     var the_comment = $("#add-comment").val();
     var post_data = {
         comment: the_comment,
         poll: poll_slug,
         submitter: submitter,
+        parent: parent,
         csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
     }
     var the_url = '/json/add-comment/'; 
@@ -48,7 +68,6 @@ function postComment(poll_slug, submitter) {
         data: post_data,
         success:function(data)
         {
-            //console.log("Success")
             var profile_pic = data.profile_image;
             $("#comments").prepend("<div class='comment' id='comment-" + data.comment_id + "' />" 
             + "<img class='mr-3 rounded-circle profile-img' alt='Profile image' src='" + profile_pic + "' />" 

@@ -31,8 +31,8 @@
         <form onsubmit="return false">
             {% csrf_token %}
             <label for="comment-text">Enter Comment:</label><br>
-            <textarea name="comment" cols="40" rows="5" id="add-comment"></textarea><br>
-            <button class="btn btn-link" onclick="postComment('{{ poll.poll_slug }}', '{{ user.username }}')">Submit</button>
+            <textarea name="comment-text" cols="40" rows="5" id="add-comment"></textarea><br>
+            <button class="btn btn-link" onclick="postComment('{{ poll.poll_slug }}', '{{ user.username }}', null)">Submit</button>
         </form>
         {% endif %}
         <div id="comments" class="comments-div">
@@ -46,7 +46,14 @@
                     <button id="hide-replies-{{ comment.comment.id }}" class="hide-replies btn btn-link" onClick="hideReplies({{ comment.comment.id }})">Hide Replies &#8593;</button>
                     {% endif %}
                     {% if user.is_authenticated %}
-                    <button id="add-reply-{{ comment.comment.id }}" class="add-reply btn btn-link" onClick="postReply('{{ comment.comment.id }}', '{{ user.username }}')">Reply</button>
+                    <button id="add-reply-{{ comment.comment.id }}" class="add-reply btn btn-link" onClick="showReplyForm({{comment.comment.id}})">Reply</button>
+                    <button id="hide-reply-form-{{comment.comment.id}}" class="hide-reply-form btn btn-link" onClick="hideReplyForm({{comment.comment.id}})">Cancel</button>
+                    <form id="reply-form-{{comment.comment.id}}" class="reply-form" style="margin-left: 50px" onSubmit="return false;">
+                        <label for="reply-text">Enter Reply:</label><br>
+                        <textarea name="reply-text" cols="30" rows="2" id="add-reply-{{comment.comment.id}}"></textarea><br>
+                        <button class="btn btn-link" onclick="postComment('{{ poll.poll_slug }}', '{{ user.username }}', '{{ comment.comment.id }}')">Submit</button>
+                    </form>
+                    
                     {% endif %}
                     <div id="replies-{{ comment.comment.id }}" class="replies" style="margin-left: 50px;">
                         <div class="loading" id="loading-{{ comment.comment.id }}">
