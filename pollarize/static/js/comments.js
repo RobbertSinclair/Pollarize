@@ -52,15 +52,22 @@ function hideReplyForm(comment_id) {
 
 
 
-function postComment(poll_slug, submitter, parent) {
-    var the_comment = $("#add-comment").val();
+function postComment(poll_slug, submitter, children, parent) {
+    console.log(parent);
+    if (parent == null) {
+        var the_comment = $("#add-comment").val();
+    } else {
+        var the_comment = $("#add-reply-text-" + parent).val();
+    }
     var post_data = {
         comment: the_comment,
         poll: poll_slug,
         submitter: submitter,
         parent: parent,
+        children: children,
         csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
     }
+    console.log(post_data);
     var the_url = '/json/add-comment/'; 
     $.ajax({
         type: 'POST',
@@ -69,12 +76,26 @@ function postComment(poll_slug, submitter, parent) {
         success:function(data)
         {
             var profile_pic = data.profile_image;
-            $("#comments").prepend("<div class='comment' id='comment-" + data.comment_id + "' />" 
+            var html_string = "<div class='comment' id='comment-" + data.comment_id + "' />" 
             + "<img class='mr-3 rounded-circle profile-img' alt='Profile image' src='" + profile_pic + "' />" 
             + "<h3>" + submitter + "</h3>" 
-            + "<p>" + the_comment + "</p>");
+            + "<p>" + the_comment + "</p>"; 
+            
+            
+            if(parent == null) {
+                
+                $("#comments").prepend(html_string);
 
-            $("#add-comment").val("");
+                $("#add-comment").val("");
+            } else {
+                $("#replies-" + parent).prepend(html_string);
+                $("#load-replies-" + parent).html("Load Replies (" + data.children + ") &#8595;");
+                $("#add-reply-text-" + parent).val("");
+                $("#reply-form-" + parent).slideUp();
+                $("#add-reply-" + parent).show();
+                $("#hide-reply-form-" + parent).hide();
+
+            }
 
         },
         failure:function(data)

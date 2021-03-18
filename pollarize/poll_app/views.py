@@ -110,9 +110,17 @@ class JSONComments(View):
 def add_comment(request):
     context_dict = {}
     if request.method == "POST":
+        print(request.POST)
         username = request.POST["submitter"]
         comment = request.POST["comment"]
         poll_slug = request.POST["poll"]
+        children = int(request.POST["children"])
+        parent = request.POST["parent"]
+        if parent != "":
+            parent = int(parent)
+            the_parent = Comment.objects.get(id=parent)
+        else:
+            the_parent = None
 
         
 
@@ -121,11 +129,12 @@ def add_comment(request):
 
         the_poll = Poll.objects.get(poll_slug=poll_slug)
 
-        new_comment = Comment.objects.create(submitter=user, comment=comment, poll=the_poll, parent=None)
+        new_comment = Comment.objects.create(submitter=user, comment=comment, poll=the_poll, parent=the_parent)
         new_comment.save()
 
         context_dict["profile_image"] = user_profile.profile_image.url
         context_dict["comment_id"] = new_comment.id
+        context_dict["children"] = children + 1
         context_dict["message"] = "SUCCESS"
 
         return JsonResponse(context_dict)

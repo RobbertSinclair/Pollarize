@@ -32,7 +32,7 @@
             {% csrf_token %}
             <label for="comment-text">Enter Comment:</label><br>
             <textarea name="comment-text" cols="40" rows="5" id="add-comment"></textarea><br>
-            <button class="btn btn-link" onclick="postComment('{{ poll.poll_slug }}', '{{ user.username }}', null)">Submit</button>
+            <button class="btn btn-link" onclick="postComment('{{ poll.poll_slug }}', '{{ user.username }}', 0, null)">Submit</button>
         </form>
         {% endif %}
         <div id="comments" class="comments-div">
@@ -42,7 +42,7 @@
                     <h3>{{comment.comment.submitter}}</h3>
                     <p>{{ comment.comment.comment }}</p>
                     {% if comment.children != 0 %}
-                    <button id="load-replies-{{ comment.comment.id }}" class="btn btn-link" onClick="loadReplies({{ comment.comment.id }})">Load Replies ({{ comment.children }}) &#8595;</button>
+                    <button id="load-replies-{{ comment.comment.id }}" class="btn btn-link" value="{{ comment.children }}" onClick="loadReplies({{ comment.comment.id }})">Load Replies ({{ comment.children }}) &#8595;</button>
                     <button id="hide-replies-{{ comment.comment.id }}" class="hide-replies btn btn-link" onClick="hideReplies({{ comment.comment.id }})">Hide Replies &#8593;</button>
                     {% endif %}
                     {% if user.is_authenticated %}
@@ -50,8 +50,8 @@
                     <button id="hide-reply-form-{{comment.comment.id}}" class="hide-reply-form btn btn-link" onClick="hideReplyForm({{comment.comment.id}})">Cancel</button>
                     <form id="reply-form-{{comment.comment.id}}" class="reply-form" style="margin-left: 50px" onSubmit="return false;">
                         <label for="reply-text">Enter Reply:</label><br>
-                        <textarea name="reply-text" cols="30" rows="2" id="add-reply-{{comment.comment.id}}"></textarea><br>
-                        <button class="btn btn-link" onclick="postComment('{{ poll.poll_slug }}', '{{ user.username }}', '{{ comment.comment.id }}')">Submit</button>
+                        <textarea name="reply-text" cols="30" rows="2" id="add-reply-text-{{comment.comment.id}}"></textarea><br>
+                        <button class="btn btn-link" onclick="postComment('{{ poll.poll_slug }}', '{{ user.username }}', {{ comment.children }}, '{{ comment.comment.id }}')">Submit</button>
                     </form>
                     
                     {% endif %}
