@@ -7,68 +7,63 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
         <script src="{% static 'js/comments.js' %}"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+        <script src="{% static 'js/result.js' %}"></script>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+        <link rel="stylesheet" href="{% static 'css/comment.css' %}"/>
         <style>
-            .profile-img {
-                width: 50px;
-                height: 50px;
-                object-fit: cover;
-            }
-
-            .loading-image {
-                width: 20px;
-                height: 20px;
-                object-fit: cover;
-            }
-
-
         </style>
 
     </head>
-    <body>
+    <body onload="displayChart('{{ poll.question }}', '{{ poll.answer1 }}', {{ poll.votes1 }}, '{{ poll.answer2 }}', {{ poll.votes2}})">
         <h1>{{ poll.question }}</h1>
-        {% if user.is_authenticated %}
-        <form onsubmit="return false">
-            {% csrf_token %}
-            <label for="comment-text">Enter Comment:</label><br>
-            <textarea name="comment-text" cols="40" rows="5" id="add-comment"></textarea><br>
-            <button class="btn btn-link" onclick="postComment('{{ poll.poll_slug }}', '{{ user.username }}', 0, null)">Submit</button>
-        </form>
-        {% endif %}
-        <div id="comments" class="comments-div">
-            {% for comment in comments %}
-                <div class="comment" id="comment-{{ comment.comment.id }}">
-                    <img class="mr-3 rounded-circle profile-img" alt="Profile image" src="{{ comment.image }}" />
-                    <h3>{{comment.comment.submitter}}</h3>
-                    <p>{{ comment.comment.comment }}</p>
-                    {% if comment.children != 0 %}
-                    <button id="load-replies-{{ comment.comment.id }}" class="btn btn-link" value="{{ comment.children }}" onClick="loadReplies({{ comment.comment.id }})">Load Replies ({{ comment.children }}) &#8595;</button>
-                    <button id="hide-replies-{{ comment.comment.id }}" class="hide-replies btn btn-link" onClick="hideReplies({{ comment.comment.id }})">Hide Replies &#8593;</button>
-                    {% endif %}
-                    {% if user.is_authenticated %}
-                    <button id="add-reply-{{ comment.comment.id }}" class="add-reply btn btn-link" onClick="showReplyForm({{comment.comment.id}})">Reply</button>
-                    <button id="hide-reply-form-{{comment.comment.id}}" class="hide-reply-form btn btn-link" onClick="hideReplyForm({{comment.comment.id}})">Cancel</button>
-                    <button id="upvote-{{ comment.comment.id }}" class="upvote" onClick="addVote(1, {{ comment.comment.id }}, {{ comment.comment.votes }})">&#8593;</button>
-                    <label id="votes-{{comment.comment.id}}">{{ comment.comment.votes }}</label>
-                    <button id="downvote-{{ comment.comment.id }}" class="downvote" onClick="addVote(-1, {{ comment.comment.id }}, {{ comment.comment.votes }})">&#8595;</button>
-                    <form id="reply-form-{{comment.comment.id}}" class="reply-form" style="margin-left: 50px" onSubmit="return false;">
-                        <label for="reply-text">Enter Reply:</label><br>
-                        <textarea name="reply-text" cols="30" rows="2" id="add-reply-text-{{comment.comment.id}}"></textarea><br>
-                        <button class="btn btn-link" onclick="postComment('{{ poll.poll_slug }}', '{{ user.username }}', {{ comment.children }}, '{{ comment.comment.id }}')">Submit</button>
-                    </form>
-                    
-                    {% endif %}
-                    <div id="replies-{{ comment.comment.id }}" class="replies" style="margin-left: 50px;">
-                        <div class="loading" id="loading-{{ comment.comment.id }}">
-                            <img class="loading-image" src="{% static 'img/ajax_loader.gif' %}"/>
-                        </div>
-                    </div>
-                    
-                </div>
-            {% endfor %}
+        <div id="canvas-space" class="canvas">
+            <canvas id="poll-chart" width="500" height="100"></canvas>
         </div>
+        <div id="comment-space" class="comments-div">
+            {% if user.is_authenticated %}
+            <form onsubmit="return false">
+                {% csrf_token %}
+                <label for="comment-text">Enter Comment:</label><br>
+                <textarea name="comment-text" cols="40" rows="5" id="add-comment"></textarea><br>
+                <button class="btn btn-link" onclick="postComment('{{ poll.poll_slug }}', '{{ user.username }}', 0, null)">Submit</button>
+            </form>
+            {% endif %}
+            <div id="comments" class="comments-div">
+                {% for comment in comments %}
+                    <div class="comment" id="comment-{{ comment.comment.id }}">
+                        <img class="mr-3 rounded-circle profile-img" alt="Profile image" src="{{ comment.image }}" />
+                        <h3>{{comment.comment.submitter}}</h3>
+                        <p>{{ comment.comment.comment }}</p>
+                        {% if comment.children != 0 %}
+                        <button id="load-replies-{{ comment.comment.id }}" class="btn btn-link" value="{{ comment.children }}" onClick="loadReplies({{ comment.comment.id }})">Load Replies ({{ comment.children }}) &#8595;</button>
+                        <button id="hide-replies-{{ comment.comment.id }}" class="hide-replies btn btn-link" onClick="hideReplies({{ comment.comment.id }})">Hide Replies &#8593;</button>
+                        {% endif %}
+                        {% if user.is_authenticated %}
+                        <button id="add-reply-{{ comment.comment.id }}" class="add-reply btn btn-link" onClick="showReplyForm({{comment.comment.id}})">Reply</button>
+                        <button id="hide-reply-form-{{comment.comment.id}}" class="hide-reply-form btn btn-link" onClick="hideReplyForm({{comment.comment.id}})">Cancel</button>
+                        <button id="upvote-{{ comment.comment.id }}" class="upvote vote-button" onClick="addVote(1, {{ comment.comment.id }}, {{ comment.comment.votes }})">&#8593;</button>
+                        <label id="votes-{{comment.comment.id}}">{{ comment.comment.votes }}</label>
+                        <button id="downvote-{{ comment.comment.id }}" class="downvote vote-button" onClick="addVote(-1, {{ comment.comment.id }}, {{ comment.comment.votes }})">&#8595;</button>
+                        <form id="reply-form-{{comment.comment.id}}" class="reply-form" style="margin-left: 50px" onSubmit="return false;">
+                            <label for="reply-text">Enter Reply:</label><br>
+                            <textarea name="reply-text" cols="30" rows="2" id="add-reply-text-{{comment.comment.id}}"></textarea><br>
+                            <button class="btn btn-link" onclick="postComment('{{ poll.poll_slug }}', '{{ user.username }}', {{ comment.children }}, '{{ comment.comment.id }}')">Submit</button>
+                        </form>
+                        
+                        {% endif %}
+                        <div id="replies-{{ comment.comment.id }}" class="replies" style="margin-left: 50px;">
+                            <div class="loading" id="loading-{{ comment.comment.id }}">
+                                <img class="loading-image" src="{% static 'img/ajax_loader.gif' %}"/>
+                            </div>
+                        </div>
+                        
+                    </div>
+                {% endfor %}
+            </div>
 
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+        </div>
     </body>
 
 </html>

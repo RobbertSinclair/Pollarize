@@ -121,12 +121,14 @@ function addVote(vote_amount, comment_id, votes) {
             $("#votes-" + comment_id).html(data.votes);
             console.log(data);
             if(vote_amount == 1 && !data.voted_before) {
-                $("upvote-" + comment_id).css("background-color", "#FF4500");
+                console.log("Upvote");
+                $("#upvote-" + comment_id).addClass("upvote-selected");
             } else if (vote_amount == -1 && !data.voted_before) {
-                $("downvote-" + comment_id).css("background-color", "#0000FF");
+                console.log("Downvote");
+                $("#downvote-" + comment_id).addClass("downvote-selected");
             } else {
-                $("upvote-" + comment_id).css("background-color", "");
-                $("downvote-" + comment_id).css("background-color", "");
+                $("#upvote-" + comment_id).removeClass("upvote-selected");
+                $("#downvote-" + comment_id).removeClass("downvote-selected");
             }
 
         },

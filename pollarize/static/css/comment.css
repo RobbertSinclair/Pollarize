@@ -1,0 +1,34 @@
+
+.profile-img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+}
+
+.loading-image {
+    width: 20px;
+    height: 20px;
+    object-fit: cover;
+}
+
+.vote-button {
+    font-family: "Comic Sans MS";
+    font-size: 14px;
+}
+
+.upvote-selected {
+    background-color: #FF9C00;
+    color: #505050;
+    
+}
+
+.downvote-selected {
+    background-color: #505050;
+    color: #FF9C00;
+}
+
+#poll-chart {
+    width: 300px;
+    height: 100px;
+    align: center;
+}
