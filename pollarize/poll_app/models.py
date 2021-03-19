@@ -20,6 +20,7 @@ class Poll(models.Model):
     answer2 = models.CharField(max_length=200, null=False)
     votes1 = models.IntegerField(default=0)
     votes2 = models.IntegerField(default=0)
+    total_votes = models.IntegerField(null=True)
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.question)
