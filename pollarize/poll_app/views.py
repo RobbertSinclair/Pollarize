@@ -149,15 +149,21 @@ def add_votes(request):
         the_comment = Comment.objects.get(id=comment_id)
         try:
             votes_in = VotesInComment.objects.get(user=user, comment=the_comment)
-            the_comment.votes = votes_in.old_votes
+            old_vote = votes_in.old_votes
+            if old_vote == 1:
+                the_comment.votes -= 1
+            else:
+                the_comment.votes += 1
+            voted_before = True
             votes_in.delete()
         except VotesInComment.DoesNotExist:
             votes_in = VotesInComment.objects.create(user=user, comment=the_comment)
-            votes_in.old_votes = the_comment.votes
+            votes_in.old_votes = vote_amount
             votes_in.save()
             the_comment.votes += vote_amount
+            voted_before = False
         the_comment.save()
-        context_dict = {"votes": the_comment.votes}
+        context_dict = {"votes": the_comment.votes, "voted_before": voted_before }
         return JsonResponse(context_dict)
 
 

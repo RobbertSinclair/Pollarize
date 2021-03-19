@@ -119,6 +119,15 @@ function addVote(vote_amount, comment_id, votes) {
         data: post_data,
         success: function(data) {
             $("#votes-" + comment_id).html(data.votes);
+            console.log(data);
+            if(vote_amount == 1 && !data.voted_before) {
+                $("upvote-" + comment_id).css("background-color", "#FF4500");
+            } else if (vote_amount == -1 && !data.voted_before) {
+                $("downvote-" + comment_id).css("background-color", "#0000FF");
+            } else {
+                $("upvote-" + comment_id).css("background-color", "");
+                $("downvote-" + comment_id).css("background-color", "");
+            }
 
         },
         failure: function(data) {
