@@ -44,3 +44,10 @@ class VotesIn(models.Model):
     option = models.BooleanField()
 
 
+# This is a linker model to only give a user one upvote or downvote
+class VotesInComment(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    comment = models.ForeignKey(Comment, on_delete=models.CASCADE)
+    old_votes = models.IntegerField(default=0)
+
+

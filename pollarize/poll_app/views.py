@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse, HttpResponseNotFound, Http404
 from django.views import View
-from poll_app.models import Poll, Comment, UserProfile, VotesIn
+from poll_app.models import Poll, Comment, UserProfile, VotesIn, VotesInComment
 from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
 import json
@@ -18,7 +18,7 @@ class TestView(View):
         try:
             comment_list = []
             poll = Poll.objects.get(poll_slug=poll_slug)
-            comments = Comment.objects.filter(poll=poll, parent=None)
+            comments = Comment.objects.filter(poll=poll, parent=None).order_by("-votes")
             for comment in comments:
                 user = comment.submitter
                 user_profile = UserProfile.objects.get(user=user)
@@ -27,7 +27,7 @@ class TestView(View):
                 comment_dict["image"] = user_profile.profile_image.url
                 comment_list.append(comment_dict)
             context_dict = {"poll": poll, "comments": comment_list}
-            return render(request, "poll_app/test.html", context=context_dict)
+            return render(request, "poll_app/comment.html", context=context_dict)
         except Poll.DoesNotExist:
             raise Http404("Poll question doesn't exist")
 
@@ -139,6 +139,26 @@ def add_comment(request):
 
         return JsonResponse(context_dict)
 
+def add_votes(request):
+    context_dict = {}
+    user = request.user
+    if request.method == "POST" and user.is_authenticated:
+        comment_id = request.POST["id"]
+        votes = request.POST["votes"]
+        vote_amount = int(request.POST["vote_amount"])
+        the_comment = Comment.objects.get(id=comment_id)
+        try:
+            votes_in = VotesInComment.objects.get(user=user, comment=the_comment)
+            the_comment.votes = votes_in.old_votes
+            votes_in.delete()
+        except VotesInComment.DoesNotExist:
+            votes_in = VotesInComment.objects.create(user=user, comment=the_comment)
+            votes_in.old_votes = the_comment.votes
+            votes_in.save()
+            the_comment.votes += vote_amount
+        the_comment.save()
+        context_dict = {"votes": the_comment.votes}
+        return JsonResponse(context_dict)
 
 
 
@@ -152,7 +172,7 @@ class JSONChildComments(View):
 
             dictionary = {"parent": parent_comment.id, "poll_question": parent_comment.poll.question, "comments":[]}
             
-            child_comments = Comment.objects.filter(parent=parent_comment)
+            child_comments = Comment.objects.filter(parent=parent_comment).order_by("-votes")
 
             for comment in child_comments:
                 the_user = comment.submitter

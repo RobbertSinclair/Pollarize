@@ -104,3 +104,25 @@ function postComment(poll_slug, submitter, children, parent) {
         }
     })
 }
+
+function addVote(vote_amount, comment_id, votes) {
+    var post_data = {
+        id: comment_id,
+        votes: votes,
+        vote_amount: vote_amount,
+        csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
+    }
+    var the_url = "/json/add-vote/";
+    $.ajax({
+        type: "POST",
+        url: the_url,
+        data: post_data,
+        success: function(data) {
+            $("#votes-" + comment_id).html(data.votes);
+
+        },
+        failure: function(data) {
+            console.log("Failure");
+        }
+    })
+}
