@@ -2,15 +2,6 @@ from django import forms
 from poll_app.models import UserProfile, Poll, Comment
 from django.contrib.auth.models import User
 
-class CommentForm(forms.ModelForm):
-    comment = forms.CharField(help_text="Enter your comment here.")
-    votes = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
-    slug = forms.CharField(widget=forms.HiddenInput(), required=False)
-    parent = forms.IntegerField(widget=forms.HiddenInput(), required=False)
-
-    class Meta:
-        model = Comment
-        fields = ('comment',)
 
 class PollForm(forms.ModelForm):
     question = forms.CharField(help_text="Enter a question")
