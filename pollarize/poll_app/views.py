@@ -80,7 +80,7 @@ class JSONComments(View):
             
             dictionary = {"poll": poll.question, "comments": []}
             
-            comments = Comment.objects.filter(poll=poll, parent=None)
+            comments = Comment.objects.filter(poll=poll, parent=None).order_by("-votes")
 
             for comment in comments:
                 the_user = comment.submitter
