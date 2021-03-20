@@ -34,7 +34,24 @@
 }
 
 #back-to-top-div {
+    
+    
     position: fixed;
     bottom: 10px;
     right: 10px;
+    
+}
+
+#back-to-top-button {
+    background-color: #FF9C00;
+    color: #505050;
+    border: none;
+    padding: 10px 10px;
+    text-align: center;
+}
+
+
+#back-to-top-button:hover {
+    background-color: #505050;
+    color: #FF9C00;
 }
