@@ -32,3 +32,9 @@
     height: 100px;
     align: center;
 }
+
+#back-to-top-div {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+}

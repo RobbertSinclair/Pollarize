@@ -4,6 +4,8 @@ $(document).ready(function(){
     $(".hide-replies").hide();
     $(".reply-form").hide();
     $(".hide-reply-form").hide();
+
+    
 })
 
 
