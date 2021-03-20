@@ -26,7 +26,7 @@ function displayChart(poll_question, answer1, votes1, answer2, votes2) {
         data: theData,
         options: theOptions,
         responsive: true,
-        maintainAspectRation: false,
+        maintainAspectRatio: true,
 
     })
 }
