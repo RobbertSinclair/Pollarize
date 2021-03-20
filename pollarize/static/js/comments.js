@@ -9,7 +9,7 @@ $(document).ready(function(){
 
 function loadReplies(comment_id) {
     var reply_children_count = $("#replies-" + comment_id).children().length;
-    
+    $("#replies-" + comment_id).slideDown("slow");
     $("#loading-" + comment_id).show();
     if (reply_children_count == 1) {
         $.get("/json/" + comment_id + "/child-comments", function( data ) {
@@ -20,14 +20,12 @@ function loadReplies(comment_id) {
                 
             } 
         });
-        $("#replies-" + comment_id).slideDown("slow");
-    } else {
-        $("#replies-" + comment_id).slideDown("slow");
+        
     }
     $("#load-replies-"+ comment_id).hide();
     $("#hide-replies-" + comment_id).show();
     
-    $('#loading-' + comment_id).hide();
+    $('#loading-' + comment_id).slideUp("slow");
 }
 
 function hideReplies(comment_id) {
