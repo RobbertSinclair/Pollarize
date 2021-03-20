@@ -10,7 +10,7 @@ $(document).ready(function(){
 function loadReplies(comment_id) {
     var reply_children_count = $("#replies-" + comment_id).children().length;
     $("#replies-" + comment_id).slideDown("slow");
-    $("#loading-" + comment_id).show();
+    $("#loading-" + comment_id).slideDown("slow");
     if (reply_children_count == 1) {
         $.get("/json/" + comment_id + "/child-comments", function( data ) {
             for (var i = 0; i < data.comments.length; i++) {
