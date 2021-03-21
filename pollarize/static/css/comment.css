@@ -12,7 +12,8 @@
 }
 
 .vote-button {
-    font-family: "Comic Sans MS";
+    font-family: "Arial";
+    border: none;
     font-size: 14px;
 }
 
@@ -34,7 +35,11 @@
 }
 
 .replies {
-    margin-left: 50px;
+    margin-left: 3vw;
+}
+
+.form-control {
+    width: 50vw;
 }
 
 

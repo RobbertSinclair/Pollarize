@@ -1,5 +1,6 @@
 
 $(document).ready(function(){
+    console.log("result.js loaded successfully");
     var the_url = window.location.pathname;
     var theCanvas = document.getElementById("poll-chart");
     var theChart;

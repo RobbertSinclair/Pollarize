@@ -1,9 +1,11 @@
 $(document).ready(function(){
+    console.log("comments.js loaded successfully");
     $(".loading").hide();
     $(".replies").hide();
     $(".hide-replies").hide();
     $(".reply-form").hide();
     $(".hide-reply-form").hide();
+    repliesResize();
 
     if(window.innerWidth <= 500) {
         $("#add-comment").attr('rows', 2);
@@ -15,10 +17,19 @@ $(document).ready(function(){
         } else {
             $("#add-comment").attr('rows', 5);
         }
+        repliesResize();
     })
 
     
 })
+
+function repliesResize() {
+    if(window.innerWidth <= 1000) {
+        $(".replies").css("marginLeft", "10vw");
+    } else {
+        $(".replies").css("marginLeft", "4vw");
+    }
+}
 
 
 function loadReplies(comment_id) {
@@ -29,8 +40,12 @@ function loadReplies(comment_id) {
         $.get("/json/" + comment_id + "/child-comments", function( data ) {
             for (var i = 0; i < data.comments.length; i++) {
                 var the_comment = data.comments[i];
-                $("#replies-" + comment_id).append("<div class='comment' id='comment-" + the_comment.id + 
-                "'><img class='mr-3 rounded-circle profile-img' alt='Profile image' src='" + the_comment.profile_image + "'/><h3>" + the_comment.submitter + "</h3><p>" + the_comment.comment + "</p></div>");
+                $("#replies-" + comment_id).append("<div class='comment row' id='comment-" + the_comment.id + 
+                "'><div class='col'><img class='mr-3 rounded-circle profile-img' alt='Profile image' src='" + the_comment.profile_image + "'/><h3>" + the_comment.submitter + "</h3><p>" + the_comment.comment + "</p></div>" + 
+                "<div class='col'><button id='upvote-" + the_comment.id + "'class='upvote vote-button'" +
+                "onClick='addVote(1, " + the_comment.id + ", " + the_comment.votes + ")'>&#8593;</button>" +
+                "<label id='votes-" + the_comment.id + "'>" + the_comment.votes + "</label>" + 
+                "<button id='downvote-" + the_comment.id + " class='downvote vote-button' onClick='addVote(-1, " + the_comment.id + ", " + the_comment.votes + ")'>&#8595;</button></div></div>");
                 
             }
         });
