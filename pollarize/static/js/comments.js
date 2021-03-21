@@ -5,6 +5,18 @@ $(document).ready(function(){
     $(".reply-form").hide();
     $(".hide-reply-form").hide();
 
+    if(window.innerWidth <= 500) {
+        $("#add-comment").attr('rows', 2);
+    }
+
+    $(window).resize(function() {
+        if(window.innerWidth <= 500) {
+            $("#add-comment").attr('rows', 2);
+        } else {
+            $("#add-comment").attr('rows', 5);
+        }
+    })
+
     
 })
 

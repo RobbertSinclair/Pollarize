@@ -1,6 +1,18 @@
 
-function displayChart(poll_question, answer1, votes1, answer2, votes2) {
+$(document).ready(function(){
+    var the_url = window.location.pathname;
     var theCanvas = document.getElementById("poll-chart");
+    var theChart;
+    var poll_slug = the_url.split("/")[1];
+    var request_url = "/json/" + poll_slug + "/results/"
+    $.get(request_url, function(data) {
+        chartData = displayChart(data.answer1, data.votes1, data.answer2, data.votes2);
+        theChart = new Chart(theCanvas, chartData)
+    });
+});
+
+
+function displayChart(answer1, votes1, answer2, votes2) {
     var theData = {
             labels: [answer1, answer2],
             datasets: [{
@@ -11,22 +23,14 @@ function displayChart(poll_question, answer1, votes1, answer2, votes2) {
     };
 
     Chart.defaults.scale.ticks.beginAtZero = true;
-    var theOptions = {
-        scales: {
-            xAxes: [{
-                gridLines: {
-                    offsetGridLines: true
-                }
-            }]
-        }
-    };
 
-    var theChart = new Chart(theCanvas, {
+    chartData = {
         type: 'horizontalBar',
         data: theData,
-        options: theOptions,
         responsive: true,
         maintainAspectRatio: true,
 
-    })
+    };
+
+    return chartData;
 }

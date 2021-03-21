@@ -33,6 +33,21 @@ class TestView(View):
 
 
 # JSON views here
+
+class JSONPollResults(View):
+    def get(self, request, poll_slug):
+        try:
+            the_poll = Poll.objects.get(poll_slug=poll_slug)
+            dictionary = {
+                "answer1": the_poll.answer1,
+                "votes1": the_poll.votes1,
+                "answer2": the_poll.answer2,
+                "votes2": the_poll.votes2
+            }
+            return JsonResponse(dictionary)
+        except Poll.DoesNotExist:
+            raise Http404("Poll doesn't exist")
+
 class JSONRandomPoll(View):
 
     def get(self, request):
