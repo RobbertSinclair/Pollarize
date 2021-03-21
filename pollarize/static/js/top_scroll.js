@@ -1,4 +1,6 @@
 $(document).ready(function() {
+    windowResize();
+    
     $(window).scroll(function() {
         var max_scroll = 100;
 
@@ -7,8 +9,11 @@ $(document).ready(function() {
         } else {
             $("#back-to-top-button").hide();
         }
+    });
 
-        
+
+    $(window).resize(function() {
+        windowResize();
     });
 
     $("#back-to-top-button").click(function() {
@@ -16,3 +21,12 @@ $(document).ready(function() {
     });
 
 })
+
+function windowResize() {
+    var width = window.innerWidth;
+    if (width < 600) {
+        $("#back-to-top-button").html("Top &#8593;");
+    } else {
+        $("#back-to-top-button").html("Back To Top &#8593;")
+    }
+}
