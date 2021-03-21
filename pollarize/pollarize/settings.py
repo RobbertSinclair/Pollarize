@@ -29,7 +29,7 @@ SECRET_KEY = '8a%65*$8j6+0iz+)2#ypd9_uw@lgcwgil0d$8p(6(%lvn!7x-!'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = hosts
+ALLOWED_HOSTS = ["robbertsinclair.pythonanywhere.com"]
 
 
 # Application definition
