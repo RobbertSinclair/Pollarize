@@ -7,10 +7,12 @@ from django.template.defaultfilters import slugify
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE) 
-    profile_image = models.ImageField(null=True, upload_to='profile_images', blank=True)
+    profile_image = models.ImageField(null=True, upload_to='profile_images', blank=True, default="/static/default.png")
 
     def __str__(self):
         return self.user.username
+
+
 
 class Poll(models.Model):
     submitter = models.ForeignKey(User, on_delete=models.CASCADE)
