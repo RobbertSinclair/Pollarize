@@ -4,23 +4,25 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "pollarize.settings")
 import django
 django.setup()
 from poll_app.models import UserProfile, Comment, Poll
-from django.auth.models import User
+from django.contrib.auth.models import User
+from django.template.defaultfilters import slugify
 import random
 
 def populate():
     
     users = [
-        {"username": "testUser1"},
-        {"username": "testUser2"},
-        {"username": "testUser3"},
-        {"username": "testUser4"},
-        {"username": "testUser5"}
+        {"username": "AdminUser", "password": "adminPass", "superuser": True},
+        {"username": "testUser1", "password": "testPass1", "superuser": False},
+        {"username": "testUser2", "password": "testPass2", "superuser": False},
+        {"username": "testUser3", "password": "testPass3", "superuser": False},
+        {"username": "testUser4", "password": "testPass4", "superuser": False},
+        {"username": "testUser5", "password": "testPass5", "superuser": False}
     ]
     
     polls = [
-        {"question": "Does Pineapple belong on a pizza?", "answer1": "Yes", "answer2": "No", "votes1": random.randint(0, 100), "votes2": random.randint(0, 100)},
-        {"question": "Star Wars or Star Trek?", "answer1": "Star Trek", "answer2": "Star Wars", "votes1": random.randint(0, 100), "votes2": random.randint(0, 100)},
-        {"question": "What are your thoughts on Marmite?", "answer1": "Love it", "answer2": "Hate it", "votes1": random.randint(0, 100), "votes2": random.randint(0, 100)}
+        {"question": "Does Pineapple belong on a pizza?", "answer1": "Yes", "answer2": "No", "votes1": random.randint(0, 100), "votes2": random.randint(0, 100), "submitter": "testUser1"},
+        {"question": "Star Wars or Star Trek?", "answer1": "Star Trek", "answer2": "Star Wars", "votes1": random.randint(0, 100), "votes2": random.randint(0, 100), "submitter": "testUser2"},
+        {"question": "What are your thoughts on Marmite?", "answer1": "Love it", "answer2": "Hate it", "votes1": random.randint(0, 100), "votes2": random.randint(0, 100), "submitter": "testUser3"}
     ]
 
     comments = [
@@ -37,44 +39,57 @@ def populate():
 
     for user in users:
         u = add_user(user)
-        print(f"{user.username} created")
+        print(f"{user['username']} created")
 
     for poll in polls:
         p = add_poll(poll)
-        print(f"Poll with question {p.question} created")
+        print(f"Poll with question {poll['question']} created")
 
     for comment in comments:
         c = add_comment(comment)
-        print(f"Comment id {comment.id} created")
+        print(f"Comment id {comment['id']} created")
 
     
 def add_user(user):
-    u = User.objects.get_or_create(username=user["username"])
-    u.password = User.objects.make_random_password()
+    u = User.objects.create_user(user["username"], password=user["password"])
+    u.is_superuser = user["superuser"]
+    u.is_staff = user["superuser"]
     u.save()
-    profile = UserProfile.objects.get_or_create(user=u)
+    profile = UserProfile.objects.create(user=u)
+    profile.save()
     return u
 
 def add_poll(poll):
-    p = Poll.objects.get_or_create(question=poll["question"])
-    p.answer1 = poll["answer1"]
-    p.answer2 = poll["answer2"]
-    p.votes1 = poll["votes1"]
-    p.votes2 = poll["votes2"]
+    submitter = User.objects.get(username=poll["submitter"])
+    slug = slugify(poll["question"])
+    p = Poll.objects.get_or_create(
+        question=poll["question"], 
+        answer1=poll["answer1"],
+        answer2=poll["answer2"],
+        votes1=poll["votes1"],
+        votes2=poll["votes2"],
+        submitter=submitter,
+        poll_slug=slug
+        )[0]
     p.save()
     return p
 
 def add_comment(comment):
-    c = Comment.objects.get_or_create(id=comment["id"])
-    user = User.objects.get(username=comment["submitter"])
-    c.submitter = user
-    poll = Poll.objects.get(question=comment["poll_question"])
-    c.poll = poll
-    c.comment = comment["comment"]
-    c.votes = comment["votes"]
     if comment["parent"] != None:
         parent_comment = Comment.objects.get(id=comment["parent"])
-        c.parent = parent_comment
+    else:
+        parent_comment = None
+    poll = Poll.objects.get(question=comment["poll_question"])
+    user = User.objects.get(username=comment["submitter"])
+    c = Comment.objects.get_or_create(
+        id=comment["id"],
+        submitter=user,
+        comment=comment["comment"],
+        votes=comment["votes"],
+        poll=poll,
+        parent=parent_comment
+        )[0]
+    
     return c
 
 if __name__ == "__main__":

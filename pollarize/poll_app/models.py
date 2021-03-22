@@ -7,7 +7,7 @@ from django.template.defaultfilters import slugify
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE) 
-    profile_image = models.ImageField(null=True, upload_to='profile_images', blank=True, default="/media/default.png")
+    profile_image = models.ImageField(null=True, upload_to='profile_images', blank=True, default="default.png")
 
     def __str__(self):
         return self.user.username
