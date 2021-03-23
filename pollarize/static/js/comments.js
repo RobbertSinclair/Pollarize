@@ -153,6 +153,7 @@ function addVote(vote_amount, comment_id, votes) {
         poll_slug: poll_slug,
         csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
     }
+    console.log(post_data);
     var the_url = "/json/add-vote/";
     $.ajax({
         type: "POST",

@@ -33,6 +33,8 @@
                     <button class="btn btn-link" onclick="postComment('{{ poll.poll_slug }}', '{{ user.username }}', 0, null)">Submit</button>
                 </form>
             </div>
+            {% else %}
+            {% csrf_token %}
             {% endif %}
             <div id="comments" class="comments-div">
                 {% for comment in comments %}
