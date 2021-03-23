@@ -1,6 +1,7 @@
 $(document).ready(function() {
     console.log("top_scroll.js loaded successfully");
     windowResize();
+    $(".back-to-top").hide();
     
     $(window).scroll(function() {
         console.log($(this).scrollTop());

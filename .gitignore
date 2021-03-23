@@ -134,3 +134,6 @@ dmypy.json
 
 profile_images/
 migrations/
+
+#HOST
+hosts.py

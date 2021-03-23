@@ -45,7 +45,7 @@ function loadReplies(comment_id) {
                 "<div class='col'><button id='upvote-" + the_comment.id + "'class='upvote vote-button'" +
                 "onClick='addVote(1, " + the_comment.id + ", " + the_comment.votes + ")'>&#8593;</button>" +
                 "<label id='votes-" + the_comment.id + "'>" + the_comment.votes + "</label>" + 
-                "<button id='downvote-" + the_comment.id + " class='downvote vote-button' onClick='addVote(-1, " + the_comment.id + ", " + the_comment.votes + ")'>&#8595;</button></div></div>");
+                "<button id='downvote-" + the_comment.id + "' class='downvote vote-button' onClick='addVote(-1, " + the_comment.id + ", " + the_comment.votes + ")'>&#8595;</button></div></div>");
                 
             }
         });
@@ -94,49 +94,63 @@ function postComment(poll_slug, submitter, children, parent) {
         children: children,
         csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
     }
-    console.log(post_data);
-    var the_url = '/json/add-comment/'; 
-    $.ajax({
-        type: 'POST',
-        url: the_url,
-        data: post_data,
-        success:function(data)
-        {
-            var profile_pic = data.profile_image;
-            var html_string = "<div class='comment' id='comment-" + data.comment_id + "' />" 
-            + "<img class='mr-3 rounded-circle profile-img' alt='Profile image' src='" + profile_pic + "' />" 
-            + "<h3>" + submitter + "</h3>" 
-            + "<p>" + the_comment + "</p>"; 
-            
-            
-            if(parent == null) {
+    if (the_comment != "") {
+        var the_url = '/json/add-comment/'; 
+        $.ajax({
+            type: 'POST',
+            url: the_url,
+            data: post_data,
+            success:function(data)
+            {
+                var profile_pic = data.profile_image;
+                var html_string = "<div class='comment' id='comment-" + data.comment_id + "' />"
+                + "<div class='row'>"
+                + "<div class='col'>"
+                + "<img class='mr-3 rounded-circle profile-img' alt='Profile image' src='" + profile_pic + "' />" 
+                + "<h3>" + submitter + "</h3>" 
+                + "<p>" + the_comment + "</p>"
+                + "</div>" 
+                + "<div class='col'>"
+                + "<button id='upvote-" + data.comment_id + "' class='upvote vote-button' onclick='addVote(1, " + data.comment_id + ", 0)'>&#8593;</button>"
+                + "<label id='votes-" + data.comment_id + "'>0</label>"
+                + "<button id='downvote-" + data.comment_id + "' class='downvote vote-button' onclick='addVote(-1, " + data.comment_id + ", 0)'>&#8595;</button>"
+                + "</div>"
+                + "</div>"
+                + "</div>"; 
                 
-                $("#comments").prepend(html_string);
+                
+                if(parent == null) {
+                    
+                    $("#comments").prepend(html_string);
 
-                $("#add-comment").val("");
-            } else {
-                $("#replies-" + parent).prepend(html_string);
-                $("#load-replies-" + parent).html("Load Replies (" + data.children + ") &#8595;");
-                $("#add-reply-text-" + parent).val("");
-                $("#reply-form-" + parent).slideUp();
-                $("#add-reply-" + parent).show();
-                $("#hide-reply-form-" + parent).hide();
+                    $("#add-comment").val("");
+                } else {
+                    $("#replies-" + parent).prepend(html_string);
+                    $("#load-replies-" + parent).html("Load Replies (" + data.children + ") &#8595;");
+                    $("#add-reply-text-" + parent).val("");
+                    $("#reply-form-" + parent).slideUp();
+                    $("#add-reply-" + parent).show();
+                    $("#hide-reply-form-" + parent).hide();
 
+                }
+
+            },
+            failure:function(data)
+            {
+                console.log("Failure")
             }
-
-        },
-        failure:function(data)
-        {
-            console.log("Failure")
-        }
-    })
+        })
+    }
 }
 
 function addVote(vote_amount, comment_id, votes) {
+    var page_url = window.location.pathname;
+    var poll_slug = page_url.split("/")[1];
     var post_data = {
         id: comment_id,
         votes: votes,
         vote_amount: vote_amount,
+        poll_slug: poll_slug,
         csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
     }
     var the_url = "/json/add-vote/";

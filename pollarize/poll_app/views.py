@@ -10,9 +10,13 @@ import random
 # Create your views here.
 
 def index(request):
-    return HttpResponse("<h1>Pollarize</h1>")
+    context_dict = {}
+    polls = Poll.objects.all()
+    context_dict["polls"] = polls
+    return render(request, "poll_app/debug.html", context=context_dict)
 
-class TestView(View):
+
+class ResultsView(View):
 
     def get(self, request, poll_slug):
         try:
@@ -160,10 +164,12 @@ def add_votes(request):
     if request.method == "POST" and user.is_authenticated:
         comment_id = request.POST["id"]
         votes = request.POST["votes"]
+        poll_slug = request.POST["poll_slug"]
         vote_amount = int(request.POST["vote_amount"])
+        the_poll = Poll.objects.get(poll_slug=poll_slug)
         the_comment = Comment.objects.get(id=comment_id)
         try:
-            votes_in = VotesInComment.objects.get(user=user, comment=the_comment)
+            votes_in = VotesInComment.objects.get(user=user, poll=the_poll, comment=the_comment)
             old_vote = votes_in.old_votes
             if old_vote == 1:
                 the_comment.votes -= 1
@@ -172,7 +178,7 @@ def add_votes(request):
             voted_before = True
             votes_in.delete()
         except VotesInComment.DoesNotExist:
-            votes_in = VotesInComment.objects.create(user=user, comment=the_comment)
+            votes_in = VotesInComment.objects.create(user=user, poll=the_poll, comment=the_comment)
             votes_in.old_votes = vote_amount
             votes_in.save()
             the_comment.votes += vote_amount

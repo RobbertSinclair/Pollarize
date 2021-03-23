@@ -23,14 +23,16 @@
         </div>
         <div id="comment-space" class="comments-div">
             {% if user.is_authenticated %}
-            <form onsubmit="return false">
-                {% csrf_token %}
-                <div class="form-group">
-                    <label for="comment-text">Enter Comment:</label><br>
-                    <textarea name="comment-text" class="form-control" cols="40" rows="5" id="add-comment" placeholder="What do you think?"></textarea><br>
-                </div>
-                <button class="btn btn-link" onclick="postComment('{{ poll.poll_slug }}', '{{ user.username }}', 0, null)">Submit</button>
-            </form>
+            <div class="row" id="comment-form">
+                <form onsubmit="return false">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="comment-text">Enter Comment:</label><br>
+                        <textarea name="comment-text" class="form-control" cols="40" rows="5" id="add-comment" placeholder="What do you think?"></textarea><br>
+                    </div>
+                    <button class="btn btn-link" onclick="postComment('{{ poll.poll_slug }}', '{{ user.username }}', 0, null)">Submit</button>
+                </form>
+            </div>
             {% endif %}
             <div id="comments" class="comments-div">
                 {% for comment in comments %}
@@ -49,13 +51,13 @@
                                     <button id="hide-reply-form-{{comment.comment.id}}" class="hide-reply-form btn btn-link" onClick="hideReplyForm({{comment.comment.id}})">Cancel</button>
                                 {% endif %}
                             </div>
-                            {% if user.is_authenticated %}
                             <div class="col">
                                 <button id="upvote-{{ comment.comment.id }}" class="upvote vote-button" onClick="addVote(1, {{ comment.comment.id }}, {{ comment.comment.votes }})">&#8593;</button>
                                 <label id="votes-{{comment.comment.id}}">{{ comment.comment.votes }}</label>
                                 <button id="downvote-{{ comment.comment.id }}" class="downvote vote-button" onClick="addVote(-1, {{ comment.comment.id }}, {{ comment.comment.votes }})">&#8595;</button>
                             </div>
                         </div>
+                        {% if user.is_authenticated %}
                         <div class="ml-5">
                             <form id="reply-form-{{comment.comment.id}}" class="ml-5 reply-form" onSubmit="return false;">
                                 <div class="form-group">
