@@ -6,6 +6,15 @@ app_name = "poll_app"
 
 urlpatterns = [
     path("", views.index, name="index"),
+    path("home/", views.homepage, name="home"),
+    path("about/", views.about, name="about"),
+    path("rankings/", views.rankings, name="rankings"),
+    path("random_poll/", views.random, name="random"),
+    path("create_poll/", views.create, name="create"),
+    path("search/", views.search, name="search"),
+    path("login/", views.login, name="login"),
+    path("account/", views.account, name="account"),
+
     path("<slug:poll_slug>/results/", ResultsView.as_view(), name="results"),
     path("json/random/", JSONRandomPoll.as_view(), name="json-random"),
     path("json/poll-popular/", JSONPollByPopularity.as_view(), name="json-popularity"),

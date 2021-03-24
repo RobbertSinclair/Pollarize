@@ -1,0 +1,92 @@
+#main_logo{
+    display: block;
+    margin:auto;
+    max-height: 300px;
+}
+
+#title{
+    font-size: 4em;
+    font-weight: 800;
+    margin-top: 100px;
+}
+
+.divider{
+    margin: auto;
+    margin-top: -50px;
+    margin-bottom: 10px;
+    width:30%;
+    min-width: 450px;
+    height: 5px;
+    background-color: #ff9c00;
+    border-radius: 40px; 
+}
+
+.paragraph_text{
+    margin: auto;
+    margin-top: 30px;
+    text-align: center;
+    width: 60%;
+    min-width: 480px;
+}
+
+.main a{
+    color: #ff9c00;
+    font-weight: 800;
+}
+
+a:hover{
+    color: #da6200;
+}
+
+h2 {
+    font-weight: 700; /*Bold text*/
+    color:#505050;
+    text-align: center;
+    font-size: 1.6em;
+}
+
+h2 em{
+    color:#ff9c00
+}
+
+.orange_box{
+    margin-top: 100px;
+}
+
+.orange_box h2{
+    color: #505050;
+}
+
+.orange_box li{
+    color: #505050;
+}
+
+.orange_box em{
+    color:#f0f0f0;
+}
+
+.orange_box a{
+    color: #505050;
+}
+
+.orange_box a:hover{
+    color: #f0f0f0;
+}
+
+.action_buttons{
+    margin-top: 30px;
+}
+
+#login_button{
+    color: #f0f0f0;
+    margin-bottom: 100px;
+}
+
+.orange_box ul li::before {
+    color: #f0f0f0; /* Change the color */
+  }
+
+  #orange_box_header{
+    margin-top: 100px;
+  }
+

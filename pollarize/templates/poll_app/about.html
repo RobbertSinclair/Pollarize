@@ -1,0 +1,47 @@
+{% extends 'poll_app/base.html'%}
+{% load staticfiles %}
+
+{% block head_block %}
+       <link rel="stylesheet" href="{% static 'css/about.css' %}">
+       <title>Pollarize - About us</title>
+{% endblock %}
+
+{% block body_block %}
+    <img id="main_logo" src="{% static 'img/logo_colour.png' %}" alt="Pollarize Logo"></img>
+        <h1 id="title">About us</h1>
+        <div class="divider"></div>
+        <h2 class="paragraph_text">Want to know what everyone thinks about the big issues? Have a burning question you need to ask the world? Need somewhere to copy and paste that 3 page essay you wrote about how Goku would absolutely destroy Superman? From the <em>serious debate topics</em> to the <em>silliest arguments</em> - for the college students, the marketing experts, and the hardcore DC Comics fans - there's a <em>poll for everyone!</em></h2>
+        <div class="action_buttons">
+            <form action="#random_poll">
+                <button type="submit" class="orange_button">Try a random poll!</button>
+            </form>
+        </div>
+        <h2 class="paragraph_text">If you really can't find what you're looking for, you can always <em>create your own poll!</em></h2>
+        <div class="action_buttons">
+            <form action="#create_poll">
+                <button type="submit" class="grey_button">Make a poll!</button>
+            </form>
+        </div>
+
+         <h2 class="paragraph_text">The polls on our website are ranked by how <em>"Pollarizing"</em> they are (how close to a 50/50 answer rate they have) and the top polls are shown at the centre of our <em><a href="index.html">Homepage!</a></em></h2>
+        <div class="action_buttons">
+            <form action="#rankings">
+                <button type="submit" class="orange_button">Check out our rankings!</button>
+            </form>
+        </div>
+
+        <div class="orange_box">
+            <h2 id="orange_box_header">With a <em>Pollarize</em> account, you can: </h2>
+                <ul>
+                    <li>Vote in one of our many <a href="#random">polls!</a></li>
+                    <li>Leave a comment after voting</li>
+                    <li><a href="#create">Create your own polls</a> and top the <a href="#rankings">rankings!</a></li>
+                </ul>
+                <br />
+                <div class="action_buttons">
+                    <form action="#login">
+                        <button type="submit" class="grey_button" id="login_button">Log In / Sign Up</button>
+                    </form>
+            </div>
+        </div>
+{% endblock %}

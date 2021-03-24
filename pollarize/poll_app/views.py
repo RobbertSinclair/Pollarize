@@ -15,6 +15,29 @@ def index(request):
     context_dict["polls"] = polls
     return render(request, "poll_app/debug.html", context=context_dict)
 
+def homepage(request):
+    return render(request, "poll_app/index.html")
+
+def about(request):
+    return render(request, "poll_app/about.html")
+
+def rankings(request):
+    return render(request, "poll_app/rankings.html")
+
+def random(request):
+    return render(request, "poll_app/random.html")
+
+def create(request):
+    return render(request, "poll_app/create.html")
+
+def search(request):
+    return render(request, "poll_app/search.html")
+
+def login(request):
+    return render(request, "poll_app/login.html")
+
+def account(request):
+    return render(request, "poll_app/account.html")
 
 class ResultsView(View):
 

@@ -1,0 +1,420 @@
+/*
+This is the stylesheet for all the main parts of the CSS, including the navigation bar
+and elements which will be reused across multiple pages
+Author: Adam Fairlie (2461352F)
+*/
+
+
+/* General rules for body of all documents */
+body{
+    background-color: #f0f0f0;
+    /*Font information (downloaded from google fonts)*/
+    font-family: 'Open Sans', sans-serif; 
+    font-weight: 400;
+    /*Remove all white space at left and right of the page so navbar spans the whole webpage*/
+    margin: 0;
+    padding: 0;
+    width:100%;
+}
+
+/* General rules for specific elements */
+
+h1 {
+    font-weight: 700; /*Bold text*/
+    color:#505050;
+    text-align: center;
+    font-size: 1.8em;
+}
+
+em{
+    font-weight: 800; /*Extrabold text*/
+    font-style: normal; /*Remove italics*/
+}
+
+h1 em{
+    color: #ff9c00;
+}
+
+button{
+    cursor: pointer; /*Make buttons look more clickable by changing mouse icon*/
+}
+
+ul {
+    display: table;
+    margin: auto;
+    list-style: none;
+}
+  
+ul li::before {
+    content: ">";  /* Add content: \2022 is the CSS Code/unicode for a bullet */
+    color: #ff9c00; /* Change the color */
+    font-weight: 800; /* If you want it to be bold */
+    display: inline-block; /* Needed to add space between the bullet and the text */
+    width: 1em; /* Also needed for space (tweak if needed) */
+    margin-left: -1em; /* Also needed for space (tweak if needed) */
+  }
+
+li{
+    font-size: 1.5em;
+    font-weight: 700;
+    color:#505050;
+}
+
+.main {
+    margin-top: 140px; /* Avoid overlap with navigation bar */
+    /*Centre content horizontally*/
+    margin-left: auto; 
+    margin-right: auto;
+    /*Set rule for calculating box size*/
+    box-sizing: border-box
+  }
+
+
+/*Styling information for navigation bar (Adapted from https://www.w3schools.com/howto/howto_css_fixed_menu.asp) */
+
+.navbar {
+    overflow: hidden;
+    background-color: #505050;
+    position: fixed; /* Make navbar stay on top regardless of other elements*/
+    top: 0; 
+    width: 100%; /* Make navbar span page */
+  }
+
+    /* Links inside the navbar (including the logo) */
+    .navbar a {
+        float: left;  
+        display: block;
+        color: #ff9c00;
+        text-align: center;
+        padding: 15px 20px;
+        text-decoration: none;
+    }
+
+    /* Adjust positioning of logo */
+    #navbar_logo {
+        float:left;
+        margin-top: -6px;
+        padding-right: 25px;
+    }
+
+    /* Small version of logo shown at low resolutions */
+    #navbar_logo_small {
+        float:left;
+        margin-top: -6px;
+    }
+
+    /* Container for small logo */
+    #small_logo_container{
+        padding-left: 5px;
+        display: none; /* Hide on initial load of webpage */
+    }
+
+    /* Navbar icons for smaller screens */
+    #about_icon, #ranking_icon, #random_icon, #create_icon{
+        display: none; /* Hide initially */
+        padding: 15px 2px 5px 2px 
+    }
+
+   
+    /* Make login text/account picture float to the right */
+    .navbar_user{
+        float:right;
+        padding-bottom: 5px;
+        margin-right: 60px;
+        font-weight: 700; /*Bold text*/
+    }
+
+        /*Emphasise links in navbar on hover*/
+        .navbar a:hover{
+            color: #da6200; /* White text */
+        }
+
+        /* Styling for the search box */
+        .navbar input[type=text] {
+            float: left;
+            padding: 8px 12px;
+            margin-top: 8px;
+            margin-left: 5%;
+            font-size: 17px;
+            border: none;
+            color: #919191;
+            background-color: #f0f0f0;
+            width: 500px;
+          }
+
+        /* Give search box orange outline when selected */
+        .navbar input[type=text]:focus{
+            outline: 3px solid #ff9c00;
+        }
+
+        /* Styling for submit button */
+        .navbar button {
+            float: left;
+            width: 50px;
+            padding: 5.5px;
+            margin-top: 8px;
+            background: #ff9c00; /* Orange background */
+            font-size: 17px;
+            border: none;
+          }
+
+        /* Emphasise search button on hover */
+        .navbar button:hover{
+            background: #da6200;
+        }
+
+        /* Styling for profile picture icon */
+        #profile_icon{
+            margin-top: -6px;
+            margin-bottom: 0;
+            border-radius: 50%; /*Make circular*/
+        }
+
+        /* Adjust search box and logo size at smaller resolutions to keep navbar one line long */
+
+        @media only screen and (max-width: 1492px) {
+            /* Reduce search bar size */
+            .navbar input[type=text] {
+                width:250px;
+            }
+            /* Bring login button closer to the right */
+            #navbar_user{
+                margin-right: 16px;
+            }
+          }
+
+          @media only screen and (max-width: 1229px) {
+            /* Reduce search bar size */
+            .navbar input[type=text] {
+                width:150px;
+            }
+
+          }
+
+          @media only screen and (max-width: 1097px) {
+            /* Replace logo with smaller logo */
+            #logo_container {
+                display: none;
+            }
+             #small_logo_container{
+                    display: block;
+            }
+            /* Replace text with icons */ 
+            .navbar_text{
+                font-size: 0;
+            }
+            #about_icon, #ranking_icon, #random_icon, #create_icon{
+                display: block;
+            }
+          }
+
+          @media only screen and (max-width: 713px) {
+            /* Remove search function */
+            #search_container {
+                display:none;
+            }
+
+          }
+
+
+/*Styling for elements in main body*/
+
+
+.action_buttons{
+    margin: 0 auto;
+    text-align: center;
+}
+/* Buttons in different forms don't take new lines */
+.action_buttons form{
+    display:inline-block
+}
+
+/* General styling for buttons */
+.action_buttons button{
+    margin: 15px 15px;
+    padding: 7px 25px;
+    font-weight: 800;
+    font-size: 1.5em;
+    border: none;
+    outline: none;
+    border-radius: 10pt;
+    box-shadow: 0 0 10px rgba(0,0,0, 0.2); /* Drop shadow */
+    transition: all .1s ease-in-out; /* Animation properties for when hovered on */
+}
+
+.action_buttons button:hover{
+    transform: scale(1.1); /* Reduce search bar size */
+    box-shadow: 0 0 10px rgba(0,0,0, 0.5); /* Increase blackness of shadow */
+}
+
+/* Styling for orange action buttons (orange background, grey text) */
+.orange_button{
+    color: #505050;
+    background: linear-gradient(180deg, #ff9c00,#f08400);
+}
+
+/* Styling for grey action buttons (orange background, grey text) */
+.grey_button{
+    color:#ff9c00;
+    background: linear-gradient(180deg, #505050,#414141);
+}
+
+
+/* Create a box with orange gradient that spans the screen */
+.orange_box{
+    background-image: linear-gradient(180deg, #ff9c00,#da6200); /** Orange gradient */
+    /* Fill up all screen below div declaration */
+    width: 100%;
+    height:100%;
+    margin: 0;
+    overflow:hidden;
+}
+
+/* Make text inside the orange box white and larger*/
+.orange_box h1{
+    color: #f0f0f0;
+    font-weight: 800;
+    font-size: 3em;
+}
+
+
+/*Styling for boxes containing poll information*/
+
+
+.poll_box{
+    margin: auto; /* Centre box within its column */
+    background-color: #f0f0f0;
+    width: 90%; 
+    text-align: left;
+    margin-bottom: 30px;
+}
+
+.poll_box a{
+    text-decoration: none; /* Remove underline from links */
+    color:#505050; /*Set link colour back to default text colour*/
+}
+
+/* Styling for poll title header */
+.poll_box h1{
+    display: inline-block;
+    margin-left: 15px;
+    font-weight: 800;
+    font-size: 1.8em;
+    width: 95%;
+    text-align: left;
+    color:#505050;
+
+    /*Generate ellipses when text flows outside of poll box*/
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+/* Make titles orange on hover */
+.poll_box h1 a:hover{
+    color:#ffc073
+}
+
+/*Styling for poll author text*/
+.poll_box p{
+    color: #919191;
+    margin-left: 15px;
+    margin-top: -18px; /*Move up closer to title*/
+    font-weight: 700;
+}
+
+.poll_box p a{
+    color: #919191; /* Set links in author text back to original colour */
+}
+
+/* Darken and underline link to author on hover */
+.poll_box p a:hover{
+    text-decoration: underline;
+    color:#797979
+}
+
+/*Styling for bar showing percentage of votes*/
+.vote_bar{
+    display:inline-block;
+    margin-top: 5px;
+    width:55%;
+    height: 12px;
+    background-color: #ff9c00; /* Set default colour to orange before JavaScript is applied */
+}
+
+/* Styling for voting percentages */
+.orange_percent, .grey_percent{
+    display:inline-block;
+    font-weight: 800;
+    font-size: 1.3em;
+}
+
+/* Styling for orange percentage on the left */
+.orange_percent{
+    text-align: right;
+    padding-right: 10px;
+    color: #ff9c00;
+}
+
+/* Styling for grey percentage on the right */
+.grey_percent{
+    text-align: left;
+    padding-left: 10px;
+    color:#505050;
+}
+
+/* Styling for number of votes text */
+.box_votes{
+    padding-top: 20px;
+    padding-bottom: 10px;
+    text-align: center;
+}
+
+/* Centre the vote bar and percentages within the vote box */
+.vote_bar_container{
+    margin: 0 auto;
+    display:block;
+    width:90%;
+    text-align: center;
+}
+
+/*Add margin below all 3 columns of vote boxes*/
+#vote_boxes_container{
+    margin-bottom: 125px;
+}
+
+#vote_l1{
+    background: linear-gradient(90deg, #ff9c00 76.9%, #505050 77%); 
+}
+
+#vote_l2{
+    background: linear-gradient(90deg, #ff9c00 29.9%, #505050 30%); 
+}
+
+#vote_l3{
+    background: linear-gradient(90deg, #ff9c00 49.9%, #505050 50%); 
+}
+
+#vote_m1{
+    background: linear-gradient(90deg, #ff9c00 49.9%, #505050 50%); 
+}
+
+#vote_m2{
+    background: linear-gradient(90deg, #ff9c00 50.9%, #505050 51%); 
+}
+
+#vote_m3{
+    background: linear-gradient(90deg,  #ff9c00 46.9%, #505050 47%); 
+}
+
+#vote_r1{
+    background: linear-gradient(90deg, #ff9c00 46.9%, #505050 47%); 
+}
+
+#vote_r2{
+    background: linear-gradient(90deg, #ff9c00 98.9%, #505050 99%); 
+}
+
+#vote_r3{
+    background: linear-gradient(90deg, #ff9c00 0.9%, #505050 1%); 
+}

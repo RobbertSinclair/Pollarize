@@ -1,0 +1,70 @@
+/*
+This is the stylesheet for homepage-specific elements
+Author: Adam Fairlie (2461352F)
+*/
+
+
+/*Create 3 divs to span the screen on the same line (3 columns) */
+#left, #middle, #right{
+    display: inline-block;
+    text-align: center;
+    width:33%;
+    min-width: 400px;
+    overflow:hidden;
+}
+
+/* Align left and right boxes */
+
+#left{
+    float: left;
+}
+
+#right{
+    float: right;
+}
+
+/* Adjust alignments when screen only has space for 2 columns */
+@media only screen and (max-width: 1216px) {
+    /* Right align the middle column */
+    #middle {
+      float: right;
+      display: block;
+      margin:auto;
+    }
+    /* Centre the right column (which will be pushed under the other 2) */
+    #right{
+        float: none;
+        display: block;
+        margin:auto;
+    }
+
+  }
+
+/* Centre all columns when the screen only has space for one column */
+@media only screen and (max-width: 816px) {
+    #left, #middle{
+      float: none;
+      display: block;
+      margin:auto;
+    }
+  }
+
+  /* Ensure about section keeps on its own line */
+.about_section{
+    display: block;
+}
+
+/* Make about text white and increase button size */
+#about_button{
+    margin: 0;
+    color:#f0f0f0;
+    padding: 10px 35px;
+}
+
+#top_text{
+    padding-bottom: 6.5%;
+}
+
+.about_section{
+    margin-bottom: 150px;
+}

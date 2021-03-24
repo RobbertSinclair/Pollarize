@@ -1,0 +1,141 @@
+{% extends 'poll_app/base.html'%}
+{% load staticfiles %}
+
+{% block head_block %}
+
+       <link rel="stylesheet" href="{% static 'css/homepage.css' %}">
+       <title>Pollarize - Ranking the rankings</title>
+{% endblock %}
+
+{% block body_block %}
+          <div id="top_text">
+            <h1>Have a say in one of our many polls, or create your own and <br />
+            compete to become the <em>top pollarizer!</em></h1>
+            <div class="action_buttons">
+                <form action="#random_poll">
+                    <button type="submit" class="orange_button">Random poll</button>
+                </form>
+                <form action="#create_poll">
+                    <button type="submit" class="grey_button">Create poll</button>
+                </form>
+            </div>
+        </div>
+
+            <div class="orange_box">
+                <div id="vote_boxes_container">
+                    <div id="left">
+                        <h1>Popular</h1>
+                        <div class = "poll_box" id="content_l1">
+                            <h1><a href="#polls">Is pineapple on pizza a sin?</a></h1>
+                            <p>by <a href="#user">Adam F</a></p>
+                            <div class="vote_bar_container">
+                                <h3 class="orange_percent" id="percent_l11">77%</h3>
+                                <div class="vote_bar" id="vote_l1"></div>
+                                <h3 class="grey_percent" id="percent_l12">23%</h3>
+                            </div>
+                                <p class="box_votes">26.5K votes</p>
+                    </div>
+
+                        <div class = "poll_box" id="content_l2">
+                            <h1><a href="#polls">DC or Marvel Comics?</a></h1>
+                            <p>by <a href="#user">dc_fan2003</a></p>
+                            <div class="vote_bar_container">
+                                <h3 class="orange_percent" id="percent_l21">30%</h3>
+                                <div class="vote_bar" id="vote_l2"></div>
+                                <h3 class="grey_percent" id="percent_l22">70%</h3>
+                            </div>
+                                <p class="box_votes">2.3K votes</p>
+                        </div>
+
+                        <div class = "poll_box" id="content_l3">
+                            <h1><a href="#polls">Can we keep this 50/50?</a></h1>
+                            <p>by <a href="#user">Pollmaster</a></p>
+                            <div class="vote_bar_container">
+                                <h3 class="orange_percent" id="percent_l31">50%</h3>
+                                <div class="vote_bar" id="vote_l3"></div>
+                                <h3 class="grey_percent" id="percent_l32">50%</h3>
+                            </div>
+                                <p class="box_votes">891 votes</p>
+                        </div>
+                    </div>
+                    <div id="middle">
+                        <h1>Pollarizing</h1>
+                        <div class = "poll_box" id="content_m1">
+                            <h1><a href="#polls">Can we keep this 50/50?</a></h1>
+                            <p>by <a href="#user">Pollmaster</a></p>
+                            <div class="vote_bar_container">
+                                <h3 class="orange_percent" id="percent_m11">50%</h3>
+                                <div class="vote_bar" id="vote_m1"></div>
+                                <h3 class="grey_percent" id="percent_m12">50%</h3>
+                            </div>
+                                <p class="box_votes">891 votes</p>
+                        </div>
+
+                        <div class = "poll_box" id="content_m2">
+                            <h1><a href="#polls">Pokemon vs lions: Who wins?</a></h1>
+                            <p>by <a href="#user">Darren G.</a></p>
+                            <div class="vote_bar_container">
+                                <h3 class="orange_percent" id="percent_m21">51%</h3>
+                                <div class="vote_bar" id="vote_m2"></div>
+                                <h3 class="grey_percent" id="percent_m22">49%</h3>
+                            </div>
+                                <p class="box_votes">310 votes</p>
+                        </div>
+
+                        <div class = "poll_box" id="content_m3">
+                            <h1><a href="#polls">Does a straw have 1 or 2 holes?</a></h1>
+                            <p>by <a href="#user">ogra</a></p>
+                            <div class="vote_bar_container">
+                                <h3 class="orange_percent" id="percent_m31">47%</h3>
+                                <div class="vote_bar" id="vote_m3"></div>
+                                <h3 class="grey_percent" id="percent_m32">53%</h3>
+                            </div>
+                                <p class="box_votes">65 votes</p>
+                        </div>
+                    </div>
+                    <div id="right">
+                        <h1>Recent</h1>
+                        <div class = "poll_box" id="content_r1">
+                            <h1><a href="#polls">Does a straw have 1 or 2 holes?</a></h1>
+                            <p>by <a href="#user">ogra</a></p>
+                            <div class="vote_bar_container">
+                                <h3 class="orange_percent" id="percent_r11">47%</h3>
+                                <div class="vote_bar" id="vote_r1"></div>
+                                <h3 class="grey_percent" id="percent_r12">53%</h3>
+                            </div>
+                                <p class="box_votes">65 votes</p>
+                        </div>
+
+                        <div class = "poll_box" id="content_r2">
+                            <h1><a href="#polls">is this a poll?</a></h1>
+                            <p>by <a href="#user">Creative Username</a></p>
+                            <div class="vote_bar_container">
+                                <h3 class="orange_percent" id="percent_r21">100%</h3>
+                                <div class="vote_bar" id="vote_r2"></div>
+                                <h3 class="grey_percent" id="percent_r22">0%</h3>
+                            </div>
+                                <p class="box_votes">2 votes</p>
+                        </div>
+
+                        <div class = "poll_box" id="content_r3">
+                            <h1><a href="#polls">Pinaple on pizza?</a></h1>
+                            <p>by <a href="#user">ppqqrrss11223344</a></p>
+                            <div class="vote_bar_container">
+                                <h3 class="orange_percent" id="percent_r31">0%</h3>
+                                <div class="vote_bar" id="vote_r3"></div>
+                                <h3 class="grey_percent" id="percent_r32">100%</h3>
+                            </div>
+                                <p class="box_votes">4 votes</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="about_section">
+                    <h1>Want to find out more?</h1>
+                    <div class="action_buttons">
+                        <form action="about.html">
+                            <button type="submit" class="grey_button" id="about_button">About us</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+{% endblock %}
