@@ -75,6 +75,8 @@ class JSONPollResults(View):
         except Poll.DoesNotExist:
             raise Http404("Poll doesn't exist")
 
+
+
 class JSONRandomPoll(View):
 
     def get(self, request):
