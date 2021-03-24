@@ -43,9 +43,9 @@ function loadReplies(comment_id) {
                 $("#replies-" + comment_id).append("<div class='comment row' id='comment-" + the_comment.id + 
                 "'><div class='col'><img class='mr-3 rounded-circle profile-img' alt='Profile image' src='" + the_comment.profile_image + "'/><h3>" + the_comment.submitter + "</h3><p>" + the_comment.comment + "</p></div>" + 
                 "<div class='col'><button id='upvote-" + the_comment.id + "'class='upvote vote-button'" +
-                "onClick='addVote(1, " + the_comment.id + ", " + the_comment.votes + ")'>&#8593;</button>" +
+                "onClick='addVote(1, " + the_comment.id + ", " + the_comment.votes + ")'><ion-icon name='chevron-up-outline'></ion-icon></button>" +
                 "<label id='votes-" + the_comment.id + "'>" + the_comment.votes + "</label>" + 
-                "<button id='downvote-" + the_comment.id + "' class='downvote vote-button' onClick='addVote(-1, " + the_comment.id + ", " + the_comment.votes + ")'>&#8595;</button></div></div>");
+                "<button id='downvote-" + the_comment.id + "' class='downvote vote-button' onClick='addVote(-1, " + the_comment.id + ", " + the_comment.votes + ")'><ion-icon name='chevron-down-outline'></ion-icon></button></div></div>");
                 
             }
         });
@@ -111,9 +111,9 @@ function postComment(poll_slug, submitter, children, parent) {
                 + "<p>" + the_comment + "</p>"
                 + "</div>" 
                 + "<div class='col'>"
-                + "<button id='upvote-" + data.comment_id + "' class='upvote vote-button' onclick='addVote(1, " + data.comment_id + ", 0)'>&#8593;</button>"
+                + "<button id='upvote-" + data.comment_id + "' class='upvote vote-button' onclick='addVote(1, " + data.comment_id + ", 0)'><ion-icon name='chevron-up-outline'></ion-icon></button>"
                 + "<label id='votes-" + data.comment_id + "'>0</label>"
-                + "<button id='downvote-" + data.comment_id + "' class='downvote vote-button' onclick='addVote(-1, " + data.comment_id + ", 0)'>&#8595;</button>"
+                + "<button id='downvote-" + data.comment_id + "' class='downvote vote-button' onclick='addVote(-1, " + data.comment_id + ", 0)'><ion-icon name='chevron-down-outline'></ion-icon></button>"
                 + "</div>"
                 + "</div>"
                 + "</div>"; 

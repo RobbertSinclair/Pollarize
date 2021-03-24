@@ -9,6 +9,7 @@
         <script src="{% static 'js/comments.js' %}"></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
         <script src="{% static 'js/result.js' %}"></script>
+        <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
         <link rel="stylesheet" href="{% static 'css/comment.css' %}"/>
         <link rel="stylesheet" href="{% static 'css/backToTop.css' %}"/>
@@ -54,9 +55,9 @@
                                 {% endif %}
                             </div>
                             <div class="col">
-                                <button id="upvote-{{ comment.comment.id }}" class="upvote vote-button" onClick="addVote(1, {{ comment.comment.id }}, {{ comment.comment.votes }})">&#8593;</button>
+                                <button id="upvote-{{ comment.comment.id }}" class="upvote vote-button" onClick="addVote(1, {{ comment.comment.id }}, {{ comment.comment.votes }})"><ion-icon name="chevron-up-outline"></ion-icon></button>
                                 <label id="votes-{{comment.comment.id}}">{{ comment.comment.votes }}</label>
-                                <button id="downvote-{{ comment.comment.id }}" class="downvote vote-button" onClick="addVote(-1, {{ comment.comment.id }}, {{ comment.comment.votes }})">&#8595;</button>
+                                <button id="downvote-{{ comment.comment.id }}" class="downvote vote-button" onClick="addVote(-1, {{ comment.comment.id }}, {{ comment.comment.votes }})"><ion-icon name="chevron-down-outline"></ion-icon></button>
                             </div>
                         </div>
                         {% if user.is_authenticated %}
