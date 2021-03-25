@@ -25,8 +25,8 @@ def homepage(request):
     popular = sorted(popular, key=lambda x: x[1], reverse=True)
     popular = [poll[0] for poll in popular][:3]
 
-    pollarizing = [(poll, abs(poll.votes1 - poll.votes2) / poll.votes1 + poll.votes2) for poll in polls]
-    pollarizing = sorted(pollarizing, key=lambda x: x[1], reverse=True)
+    pollarizing = [(poll, abs(((poll.votes1 / (poll.votes1 + poll.votes2)) * 100) - 50)) for poll in polls]
+    pollarizing = sorted(pollarizing, key=lambda x: x[1])
     pollarizing = [poll[0] for poll in pollarizing][:3]
 
     context_dict = {"recent": recent,

@@ -1,9 +1,6 @@
-from datetime import datetime
-
 from django.db import models
 from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
-from django.db.models import F
 from django.utils import timezone
 
 # Create your models here.
@@ -25,7 +22,7 @@ class Poll(models.Model):
     answer2 = models.CharField(max_length=200, null=False)
     votes1 = models.IntegerField(default=0)
     votes2 = models.IntegerField(default=0)
-    pub_date = models.DateTimeField(default=datetime.now)
+    pub_date = models.DateTimeField(default=timezone.now)
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.question)
