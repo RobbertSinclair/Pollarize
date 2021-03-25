@@ -33,9 +33,9 @@
         <div class="orange_box">
             <h2 id="orange_box_header">With a <em>Pollarize</em> account, you can: </h2>
                 <ul>
-                    <li>Vote in one of our many <a href="#random">polls!</a></li>
+                    <li>Vote in one of our many <a href="{% url 'poll_app:random' %}">polls!</a></li>
                     <li>Leave a comment after voting</li>
-                    <li><a href="#create">Create your own polls</a> and top the <a href="#rankings">rankings!</a></li>
+                    <li><a href="{% url 'poll_app:create' %}">Create your own polls</a> and top the <a href="{% url 'poll_app:rankings' %}">rankings!</a></li>
                 </ul>
                 <br />
                 <div class="action_buttons">

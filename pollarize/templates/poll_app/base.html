@@ -38,6 +38,7 @@
         <!-- Search bar and button -->
         <div id="search_container">
         <form class="search_form" method="post" action="{% url 'poll_app:search' %}">
+            {% csrf_token %}
             <input type="text" placeholder="Search for polls..." name="search">
             <button type="submit"><img src="{% static 'img/search_icon.png' %}" id="search_icon" alt="Search" width="20px" height="20px"></i></button>
           </form>
