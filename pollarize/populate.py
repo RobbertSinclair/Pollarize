@@ -23,8 +23,8 @@ def populate():
     ]
     
     polls = [
-        {"question": "Does Pineapple belong on a pizza?", "answer1": "Yes", "answer2": "No", "votes1": random.randint(0, 100), "votes2": random.randint(0, 100), "submitter": "testUser1"},
-        {"question": "Star Wars or Star Trek?", "answer1": "Star Trek", "answer2": "Star Wars", "votes1": random.randint(501, 9999), "votes2": random.randint(501, 9999), "submitter": "testUser2", "pub_date": (timezone.now() - timedelta(days=1))},
+        {"question": "Does Pineapple belong on a pizza?", "answer1": "Yes", "answer2": "No", "votes1": random.randint(0, 100), "votes2": random.randint(0, 100), "submitter": "testUser1", "pub_date": (timezone.now())},
+        {"question": "Star Wars or Star Trek?", "answer1": "Star Trek", "answer2": "Star Wars", "votes1": random.randint(501, 9999), "votes2": random.randint(501, 9999), "submitter": "testUser2", "pub_date": (timezone.now() - timedelta(days=4))},
         {"question": "What are your thoughts on Marmite?", "answer1": "Love it", "answer2": "Hate it", "votes1": random.randint(500001, 999999), "votes2": random.randint(500001, 999999), "submitter": "testUser3", "pub_date": (timezone.now() - timedelta(days=3))}
     ]
 
@@ -72,7 +72,8 @@ def add_poll(poll):
         votes1=poll["votes1"],
         votes2=poll["votes2"],
         submitter=submitter,
-        poll_slug=slug
+        poll_slug=slug,
+        pub_date=poll["pub_date"]
         )[0]
     p.save()
     return p
