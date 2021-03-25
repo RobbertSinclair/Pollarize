@@ -18,7 +18,8 @@ def index(request):
 def homepage(request):
 
     recent = Poll.objects.order_by('-pub_date')[:3]
-
+    print(recent)
+    print([poll.pub_date for poll in recent])
     polls = Poll.objects.all()
 
     popular_polls = popular(polls)[:3]

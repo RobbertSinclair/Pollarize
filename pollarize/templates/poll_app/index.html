@@ -58,7 +58,7 @@
 
                     <div id="right">
                         <h1>Recent</h1>
-                        {% for poll in pollarizing%}
+                        {% for poll in recent%}
                         <div class = "poll_box" id="poll_{{ poll.poll_slug }}">
                             <h1><a href="{% url 'poll_app:results' poll.poll_slug %}">{{ poll.question }}</a></h1>
                             <p>by <a href="{% url 'poll_app:user' poll.submitter.id %}">{{ poll.submitter }}</a></p>
