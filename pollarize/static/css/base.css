@@ -387,6 +387,7 @@ li{
     margin-bottom: 125px;
 }
 
+/* Styling for back to top arrow */
 #back-to-top-div {
     position: fixed;
     left: 50%;
@@ -401,4 +402,25 @@ li{
     border: none;
     padding 10px 10px;
     cursor: pointer;
+}
+
+/* Custom scrollbar styling */
+::-webkit-scrollbar {
+  width: 10px; /*Set length to 8px*/
+}
+
+::-webkit-scrollbar-track {
+  /*Off-white background*/
+  background: #f0f0f0;
+}
+
+::-webkit-scrollbar-thumb {
+  /*Dark grey rounded scrollbar*/
+  background: #505050;
+  border-radius: 10px;
+}
+
+/*Darken on hover*/
+::-webkit-scrollbar-thumb:hover {
+  background: #414141;
 }
