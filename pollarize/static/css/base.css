@@ -422,3 +422,15 @@ li{
 #vote_r3{
     background: linear-gradient(90deg, #ff9c00 0.9%, #505050 1%); 
 }
+
+#back-to-top-div {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+}
+
+.back-to-top {
+    border: none;
+    font-family: 'Open Sans', sans-serif;
+    padding 10px 10px;
+}
