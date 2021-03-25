@@ -117,10 +117,14 @@ li{
 
    
     /* Make login text/account picture float to the right */
-    .navbar_user{
-        float:right;
+    #navbar_account, #navbar_login {
+        float: right;
         padding-bottom: 5px;
         margin-right: 60px;
+        font-weight: 700; /*Bold text*/
+    }
+
+        #navbar_login {
         font-weight: 700; /*Bold text*/
     }
 
@@ -178,7 +182,7 @@ li{
                 width:250px;
             }
             /* Bring login button closer to the right */
-            #navbar_user{
+            #navbar_account, #navbar_login {
                 margin-right: 16px;
             }
           }

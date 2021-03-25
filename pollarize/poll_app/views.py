@@ -16,7 +16,25 @@ def index(request):
     return render(request, "poll_app/debug.html", context=context_dict)
 
 def homepage(request):
-    return render(request, "poll_app/index.html")
+
+    recent = Poll.objects.order_by('-pub_date')[:3]
+
+    polls = Poll.objects.all()
+
+    popular = [(poll, poll.votes1 + poll.votes2) for poll in polls]
+    popular = sorted(popular, key=lambda x: x[1], reverse=True)
+    popular = [poll[0] for poll in popular][:3]
+
+    pollarizing = [(poll, abs(poll.votes1 - poll.votes2) / poll.votes1 + poll.votes2) for poll in polls]
+    pollarizing = sorted(pollarizing, key=lambda x: x[1], reverse=True)
+    pollarizing = [poll[0] for poll in pollarizing][:3]
+
+    context_dict = {"recent": recent,
+                    "popular": popular,
+                    "pollarizing": pollarizing}
+
+    response = render(request, 'poll_app/index.html', context=context_dict)
+    return response
 
 def about(request):
     return render(request, "poll_app/about.html")
@@ -38,6 +56,14 @@ def login(request):
 
 def account(request):
     return render(request, "poll_app/account.html")
+
+def vote(request, poll_slug):
+    #Test code
+    return render(request, "poll_app/about.html")
+
+def user(request, user_id):
+    #Test code
+    return render(request, "poll_app/rankings.html")
 
 class ResultsView(View):
 

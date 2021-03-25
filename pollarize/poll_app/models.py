@@ -1,7 +1,10 @@
+from datetime import datetime
+
 from django.db import models
 from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
-
+from django.db.models import F
+from django.utils import timezone
 
 # Create your models here.
 
@@ -22,6 +25,7 @@ class Poll(models.Model):
     answer2 = models.CharField(max_length=200, null=False)
     votes1 = models.IntegerField(default=0)
     votes2 = models.IntegerField(default=0)
+    pub_date = models.DateTimeField(default=datetime.now)
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.question)
@@ -49,7 +53,7 @@ class VotesIn(models.Model):
 # This is a linker model to only give a user one upvote or downvote
 class VotesInComment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    poll = models.ForeignKey(Poll, on_delete=models.CASCADE)
+    poll = models.ForeignKey(Poll, on_delete=models.CASCADE, null=True)
     comment = models.ForeignKey(Comment, on_delete=models.CASCADE)
     old_votes = models.IntegerField(default=0)
 
