@@ -21,20 +21,25 @@ def homepage(request):
 
     polls = Poll.objects.all()
 
-    popular = [(poll, poll.votes1 + poll.votes2) for poll in polls]
-    popular = sorted(popular, key=lambda x: x[1], reverse=True)
-    popular = [poll[0] for poll in popular][:3]
-
-    pollarizing = [(poll, abs(((poll.votes1 / (poll.votes1 + poll.votes2)) * 100) - 50)) for poll in polls]
-    pollarizing = sorted(pollarizing, key=lambda x: x[1])
-    pollarizing = [poll[0] for poll in pollarizing][:3]
+    popular_polls = popular(polls)[:3]
+    pollarizing_polls = pollarizing(polls)[:3]
 
     context_dict = {"recent": recent,
-                    "popular": popular,
-                    "pollarizing": pollarizing}
+                    "popular": popular_polls,
+                    "pollarizing": pollarizing_polls}
 
     response = render(request, 'poll_app/index.html', context=context_dict)
     return response
+
+def popular(polls):
+    popular = [(poll, poll.votes1 + poll.votes2) for poll in polls]
+    popular = sorted(popular, key=lambda x: x[1], reverse=True)
+    return [poll[0] for poll in popular]
+
+def pollarizing(polls):
+    pollarizing = [(poll, abs(((poll.votes1 / (poll.votes1 + poll.votes2)) * 100) - 50)) for poll in polls]
+    pollarizing = sorted(pollarizing, key=lambda x: x[1])
+    return [poll[0] for poll in pollarizing]
 
 def about(request):
     return render(request, "poll_app/about.html")
