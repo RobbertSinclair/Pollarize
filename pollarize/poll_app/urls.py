@@ -14,7 +14,10 @@ urlpatterns = [
     path("search/", views.search, name="search"),
     path("login/", views.login, name="login"),
     path("account/", views.account, name="account"),
-    path("<slug:poll_slug>/vote/", VoteView.as_view(), name="vote"),
+    path("vote/<slug:poll_slug>/", views.vote, name="vote"),
+    path("user/<int:user_id>/", views.user, name="user"),
+
+
     path("<slug:poll_slug>/results/", ResultsView.as_view(), name="results"),
     path("json/random/", JSONRandomPoll.as_view(), name="json-random"),
     path("json/poll-popular/", JSONPollByPopularity.as_view(), name="json-popularity"),

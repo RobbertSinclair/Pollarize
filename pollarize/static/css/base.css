@@ -117,10 +117,14 @@ li{
 
    
     /* Make login text/account picture float to the right */
-    .navbar_user{
-        float:right;
+    #navbar_account, #navbar_login {
+        float: right;
         padding-bottom: 5px;
         margin-right: 60px;
+        font-weight: 700; /*Bold text*/
+    }
+
+        #navbar_login {
         font-weight: 700; /*Bold text*/
     }
 
@@ -178,7 +182,7 @@ li{
                 width:250px;
             }
             /* Bring login button closer to the right */
-            #navbar_user{
+            #navbar_account, #navbar_login {
                 margin-right: 16px;
             }
           }
@@ -383,50 +387,40 @@ li{
     margin-bottom: 125px;
 }
 
-#vote_l1{
-    background: linear-gradient(90deg, #ff9c00 76.9%, #505050 77%); 
-}
-
-#vote_l2{
-    background: linear-gradient(90deg, #ff9c00 29.9%, #505050 30%); 
-}
-
-#vote_l3{
-    background: linear-gradient(90deg, #ff9c00 49.9%, #505050 50%); 
-}
-
-#vote_m1{
-    background: linear-gradient(90deg, #ff9c00 49.9%, #505050 50%); 
-}
-
-#vote_m2{
-    background: linear-gradient(90deg, #ff9c00 50.9%, #505050 51%); 
-}
-
-#vote_m3{
-    background: linear-gradient(90deg,  #ff9c00 46.9%, #505050 47%); 
-}
-
-#vote_r1{
-    background: linear-gradient(90deg, #ff9c00 46.9%, #505050 47%); 
-}
-
-#vote_r2{
-    background: linear-gradient(90deg, #ff9c00 98.9%, #505050 99%); 
-}
-
-#vote_r3{
-    background: linear-gradient(90deg, #ff9c00 0.9%, #505050 1%); 
-}
-
+/* Styling for back to top arrow */
 #back-to-top-div {
     position: fixed;
+    left: 50%;
+    margin-left: -25px;
     bottom: 10px;
-    right: 10px;
+    background: rgba(0,0,0, 0.4);
+    border-radius: 50%;
 }
 
 .back-to-top {
+    margin: auto;
     border: none;
-    font-family: 'Open Sans', sans-serif;
     padding 10px 10px;
+    cursor: pointer;
+}
+
+/* Custom scrollbar styling */
+::-webkit-scrollbar {
+  width: 10px; /*Set length to 8px*/
+}
+
+::-webkit-scrollbar-track {
+  /*Off-white background*/
+  background: #f0f0f0;
+}
+
+::-webkit-scrollbar-thumb {
+  /*Dark grey rounded scrollbar*/
+  background: #505050;
+  border-radius: 10px;
+}
+
+/*Darken on hover*/
+::-webkit-scrollbar-thumb:hover {
+  background: #414141;
 }
