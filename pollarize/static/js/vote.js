@@ -5,5 +5,7 @@ $(document).ready(function() {
     $(".answer-button").click(function(){
         var id = this.id;
         alert(id);
+        var postUrl = "/json/" + poll_slug + "/add-vote";
+        alert(postUrl);
     })
 })
