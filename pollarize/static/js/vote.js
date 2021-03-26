@@ -4,10 +4,11 @@ $(document).ready(function() {
 
     $(".answer-button").click(function(){
         var id = this.id;
-        var postUrl = "/json/" + poll_slug + "/add-vote";
+        var postUrl = "/json/add-vote";
         var data = {
             poll_slug: poll_slug,
-            answerid: id,
+            answer_id: id,
+            csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
         }
         $.ajax({
             type: "POST",
@@ -15,7 +16,8 @@ $(document).ready(function() {
             data: data,
             success: function(data) {
                 alert("Success you voted for " + $(this.id).val());
-                window.location.href = poll_slug + "/result/";
+                var newUrl = poll_slug + "/result/"
+                window.location.href = newUrl;
             },
             failure: function(data) {
                 alert("Failed");

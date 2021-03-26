@@ -297,24 +297,21 @@ class JSONChildComments(View):
         return JsonResponse(dictionary)
 
 
+def JSONAddVote(request):
+    context_dict = {}
+    user = request.user
+    if request.method == "POST" and user.is_authenticated:
+        poll_slug = request.POST["poll_slug"]
+        answer_id = request.POST["answer_id"]
+        the_poll = Poll.requests.get(poll_slug=poll_slug)
+        if answer_id == "answer1":
+            the_poll.votes1 += 1
+        else:
+            the_poll.votes2 += 1
+        the_poll.save()
+    return HttpResponse("Success")
 
 
 
-
-
-
-
-
-
-
-
-
-        
 
     
-
-
-
-
-
-
