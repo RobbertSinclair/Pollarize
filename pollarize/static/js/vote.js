@@ -1,6 +1,7 @@
 $(document).ready(function() {
     var the_url = window.location.pathname;
     var poll_slug = the_url.split("/")[1];
+    var origin = window.location.origin;
 
     $(".answer-button").click(function(){
         var id = this.id;
@@ -15,8 +16,8 @@ $(document).ready(function() {
             url: postUrl,
             data: data,
             success: function(data) {
-                alert("Success you voted for " + $(this.id).val());
-                var newUrl = poll_slug + "/result/"
+                alert("Success you voted for " + $(this.id).text());
+                var newUrl = origin + "/" + poll_slug + "/results/";
                 window.location.href = newUrl;
             },
             failure: function(data) {
