@@ -44,7 +44,7 @@
         </div>
 
         {% if user.is_authenticated %}
-        <a class="navbar_user" href="{% url 'poll_app:account' %}"><img id="profile_icon" src="{{ user.profile_image.url }}" alt="Profile" width=35px height=35px></img> </a>
+        <a class="navbar_user" href="{% url 'poll_app:account' %}"><img id="profile_icon" src="{{ user.profile_image.url }}" alt="Profile" width=35px height=35px></img> {{ user.username }} </a>
         {% else %}
         <a class="navbar_user" href="{% url 'poll_app:login' %}">Log In</a>
         {% endif %}

@@ -1,6 +1,6 @@
 from django.urls import path
 from poll_app import views
-from poll_app.views import JSONRandomPoll, JSONPollByPopularity, JSONComments, JSONChildComments, ResultsView, add_votes, JSONPollResults
+from poll_app.views import JSONRandomPoll, JSONPollByPopularity, JSONComments, JSONChildComments, ResultsView, add_votes, JSONPollResults, VoteView
 
 app_name = "poll_app"
 
@@ -9,12 +9,12 @@ urlpatterns = [
     path("home/", views.homepage, name="home"),
     path("about/", views.about, name="about"),
     path("rankings/", views.rankings, name="rankings"),
-    path("random_poll/", views.random, name="random"),
+    path("random_poll/", views.random_poll, name="random"),
     path("create_poll/", views.create, name="create"),
     path("search/", views.search, name="search"),
     path("login/", views.login, name="login"),
     path("account/", views.account, name="account"),
-
+    path("<slug:poll_slug>/vote/", VoteView.as_view(), name="vote"),
     path("<slug:poll_slug>/results/", ResultsView.as_view(), name="results"),
     path("json/random/", JSONRandomPoll.as_view(), name="json-random"),
     path("json/poll-popular/", JSONPollByPopularity.as_view(), name="json-popularity"),

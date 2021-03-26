@@ -4,6 +4,7 @@ from django.views import View
 from poll_app.models import Poll, Comment, UserProfile, VotesIn, VotesInComment
 from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.decorators import login_required
 import json
 import random
 
@@ -24,8 +25,14 @@ def about(request):
 def rankings(request):
     return render(request, "poll_app/rankings.html")
 
-def random(request):
-    return render(request, "poll_app/random.html")
+def random_poll(request):
+    polls = Poll.objects.all()
+    the_poll = random.choice(polls)
+    the_slug = the_poll.poll_slug
+    if request.user.is_authenticated:
+        return redirect("poll_app:vote", poll_slug=the_slug)
+    else:
+        return redirect("poll_app:results", poll_slug=the_slug)
 
 def create(request):
     return render(request, "poll_app/create.html")
@@ -57,6 +64,19 @@ class ResultsView(View):
             return render(request, "poll_app/comment.html", context=context_dict)
         except Poll.DoesNotExist:
             raise Http404("Poll question doesn't exist")
+
+
+class VoteView(View):
+
+    def get(self, request, poll_slug):
+        context_dict = {}
+        try:
+            poll = Poll.objects.get(poll_slug=poll_slug)
+            context_dict["poll"] = poll
+            return render(request, "poll_app/vote.html", context=context_dict)
+        except Poll.DoesNotExist:
+            raise Http404("Poll question doesn't exist")
+
 
 
 # JSON views here

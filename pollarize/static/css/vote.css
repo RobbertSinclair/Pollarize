@@ -1,0 +1,51 @@
+.vote-div h1 {
+    font-size: 90px;
+}
+
+.voting-form button{
+    border: none;
+    font-size: 60px;
+    padding: 20px;
+    text-align: center;
+}
+
+.voting-form {
+    margin-top: 5%;
+    margin-left: 30%;
+    margin-right: 30%;
+    width: 40%;
+}
+
+#answer1 {
+    float: left;
+}
+
+#answer1:hover {
+    background-color: #505050 !important;
+    color: #FF9C00 !important;
+}
+
+#answer2 {
+    float: right;
+}
+
+#answer2:hover {
+    background-color: #FF9C00 !important;
+    color: #505050 !important;
+}
+
+@media only screen and (max-width: 700px) {
+    .vote-div h1 {
+        font-size: 30px;
+    }
+
+    .voting-form button {
+        font-size: 20px;
+    }
+}
+
+@media only screen and (max-width: 1100px) and (min-width: 700px) {
+    .vote-div h1 {
+        font-size: 60px;
+    }
+}
