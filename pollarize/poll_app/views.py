@@ -71,8 +71,9 @@ def account(request):
     return render(request, "poll_app/account.html")
 
 def vote(request, poll_slug):
-    #Test code
-    return render(request, "poll_app/about.html")
+    poll = Poll.objects.get(poll_slug=poll_slug)
+    context_dict = {"poll": poll}
+    return render(request, "poll_app/vote.html", context=context_dict)
 
 def user(request, user_id):
     #Test code

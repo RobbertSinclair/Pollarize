@@ -14,7 +14,7 @@ urlpatterns = [
     path("search/", views.search, name="search"),
     path("login/", views.login, name="login"),
     path("account/", views.account, name="account"),
-    path("vote/<slug:poll_slug>/", views.vote, name="vote"),
+    path("<slug:poll_slug>/vote/", views.vote, name="vote"),
     path("user/<int:user_id>/", views.user, name="user"),
 
 
