@@ -1,6 +1,6 @@
 from django.urls import path
 from poll_app import views
-from poll_app.views import JSONRandomPoll, JSONPollByPopularity, JSONComments, JSONChildComments, ResultsView, add_votes, JSONPollResults, VoteView, JSONAddVote
+from poll_app.views import JSONRandomPoll, JSONPollByPopularity, JSONComments, JSONChildComments, ResultsView, JSONPollResults, VoteView, JSONAddVote
 
 app_name = "poll_app"
 
