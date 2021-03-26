@@ -24,6 +24,6 @@ urlpatterns = [
     path("json/add-comment/", views.add_comment, name="add-comment"),
     path("json/add-vote/", views.add_votes, name="add-vote"),
     path("json/<slug:poll_slug>/results/", JSONPollResults.as_view(), name="json-results"),
-    path("json/add-vote/", JSONAddVote.as_view(), name="json-add-vote")
+    path("json/add-vote/", views.JSONAddVote, name="json-add-vote")
     
 ]
