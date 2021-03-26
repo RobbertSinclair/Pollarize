@@ -4,7 +4,7 @@ $(document).ready(function() {
 
     $(".answer-button").click(function(){
         var id = this.id;
-        var postUrl = "/json/add-vote";
+        var postUrl = "/json/add-vote/";
         var data = {
             poll_slug: poll_slug,
             answer_id: id,

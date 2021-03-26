@@ -22,7 +22,7 @@ urlpatterns = [
     path("json/<slug:poll_slug>/comments/", JSONComments.as_view(), name="json-comments"),
     path("json/<int:comment_id>/child-comments/", JSONChildComments.as_view(), name="json-child-comments"),
     path("json/add-comment/", views.add_comment, name="add-comment"),
-    path("json/add-vote/", views.add_votes, name="add-vote"),
+    path("json/add-comment-vote/", views.add_comment_votes, name="add-vote"),
     path("json/<slug:poll_slug>/results/", JSONPollResults.as_view(), name="json-results"),
     path("json/add-vote/", views.JSONAddVote, name="json-add-vote")
     

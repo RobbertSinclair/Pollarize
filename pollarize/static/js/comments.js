@@ -154,7 +154,7 @@ function addVote(vote_amount, comment_id, votes) {
         csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
     }
     console.log(post_data);
-    var the_url = "/json/add-vote/";
+    var the_url = "/json/add-comment-vote/";
     $.ajax({
         type: "POST",
         url: the_url,

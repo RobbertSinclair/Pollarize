@@ -236,7 +236,7 @@ def add_comment(request):
 
         return JsonResponse(context_dict)
 
-def add_votes(request):
+def add_comment_votes(request):
     context_dict = {}
     user = request.user
     if request.method == "POST" and user.is_authenticated:
