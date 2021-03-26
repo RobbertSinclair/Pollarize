@@ -1,6 +1,6 @@
 from django.urls import path
 from poll_app import views
-from poll_app.views import JSONRandomPoll, JSONPollByPopularity, JSONComments, JSONChildComments, ResultsView, add_votes, JSONPollResults, VoteView
+from poll_app.views import JSONRandomPoll, JSONPollByPopularity, JSONComments, JSONChildComments, ResultsView, add_votes, JSONPollResults, VoteView, JSONAddVote
 
 app_name = "poll_app"
 
@@ -16,8 +16,6 @@ urlpatterns = [
     path("account/", views.account, name="account"),
     path("<slug:poll_slug>/vote/", views.vote, name="vote"),
     path("user/<int:user_id>/", views.user, name="user"),
-
-
     path("<slug:poll_slug>/results/", ResultsView.as_view(), name="results"),
     path("json/random/", JSONRandomPoll.as_view(), name="json-random"),
     path("json/poll-popular/", JSONPollByPopularity.as_view(), name="json-popularity"),
@@ -25,6 +23,7 @@ urlpatterns = [
     path("json/<int:comment_id>/child-comments/", JSONChildComments.as_view(), name="json-child-comments"),
     path("json/add-comment/", views.add_comment, name="add-comment"),
     path("json/add-vote/", views.add_votes, name="add-vote"),
-    path("json/<slug:poll_slug>/results/", JSONPollResults.as_view(), name="json-results")
+    path("json/<slug:poll_slug>/results/", JSONPollResults.as_view(), name="json-results"),
+    path("json/<slug:poll_slug>/add-vote/", JSONAddVote.as_view(), name="json-add-vote")
     
 ]
