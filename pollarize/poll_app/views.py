@@ -303,7 +303,10 @@ def JSONAddVote(request):
     if request.method == "POST" and user.is_authenticated:
         poll_slug = request.POST["poll_slug"]
         answer_id = request.POST["answer_id"]
+        the_answer = request.POST["the_answer"]
         the_poll = Poll.objects.get(poll_slug=poll_slug)
+        vote_in = VotesIn.objects.create(poll=the_poll, user=user, option=the_answer)
+        vote_in.save()
         if answer_id == "answer1":
             the_poll.votes1 += 1
         else:

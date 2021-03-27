@@ -9,6 +9,7 @@ $(document).ready(function() {
         var data = {
             poll_slug: poll_slug,
             answer_id: id,
+            the_answer: $("#" + this.id).text(),
             csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
         }
         $.ajax({
@@ -16,7 +17,7 @@ $(document).ready(function() {
             url: postUrl,
             data: data,
             success: function(data) {
-                alert("Success you voted for " + $(this.id).text());
+                alert("Success you voted for " + $("#" + this.id).text());
                 var newUrl = origin + "/" + poll_slug + "/results/";
                 window.location.href = newUrl;
             },
