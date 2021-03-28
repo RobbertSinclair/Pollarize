@@ -13,6 +13,7 @@ urlpatterns = [
     path("create_poll/", views.create, name="create"),
     path("search/", views.search, name="search"),
     path("login/", views.login, name="login"),
+    path("register/", views.register, name="register"),
     path("account/", views.account, name="account"),
     path("<slug:poll_slug>/vote/", views.vote, name="vote"),
     path("user/<int:user_id>/", views.user, name="user"),
