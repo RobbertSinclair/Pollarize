@@ -17,7 +17,6 @@ $(document).ready(function() {
             url: postUrl,
             data: data,
             success: function(data) {
-                alert("Success you voted for " + $("#" + this.id).text());
                 var newUrl = origin + "/" + poll_slug + "/results/";
                 window.location.href = newUrl;
             },

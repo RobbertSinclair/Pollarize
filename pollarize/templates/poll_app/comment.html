@@ -14,7 +14,7 @@
     <h1>{{ poll.question }}</h1>
     {% if user.is_authenticated and votes_in %}
     <h1>You voted for {{ votes_in.option }} <a href="{% url 'poll_app:vote' poll.poll_slug %}">Click here to change your vote.</a></h1>
-    {% else %}
+    {% elif user.is_authenticated %}
     <h1>You haven't voted in this poll yet. <a href="{% url 'poll_app:vote' poll.poll_slug %}">Click here to vote.</a></h1>
     {% endif %}
     <div id="canvas-space" class="canvas">

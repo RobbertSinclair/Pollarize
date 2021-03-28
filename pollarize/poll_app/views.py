@@ -6,6 +6,9 @@ from poll_app.forms import CreatePollForm, UserProfileForm
 from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
+from django.template.defaultfilters import slugify
+from django.utils import timezone
+from django.urls import reverse
 import json
 import random
 
@@ -80,14 +83,12 @@ def create(request):
     if form.is_valid():
         poll_list = Poll.objects.order_by("id")
         obj = form.save(commit=False)
-        obj.id = poll_list[0].id + 1
         obj.submitter = user
-        obj.pub_date = timezone.now
-        obj.save(update_fields=['question','answer1','answer2'])
-            
+        obj.pub_date = timezone.now()
+        obj.poll_slug = slugify(obj.question)
+        obj.save()
         form = CreatePollForm()
-        poll_slug = Poll.objects.get(id=(obj.id))
-        return redirect(reverse("poll_app:vote",poll_slug))
+        return redirect(reverse("poll_app:vote", kwargs={'poll_slug': obj.poll_slug}))
     else:
         obj = form.save(commit=False)
         obj.submitter = user
