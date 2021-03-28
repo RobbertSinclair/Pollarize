@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse, HttpResponseNotFound, Http404
 from django.views import View
 from poll_app.models import Poll, Comment, UserProfile, VotesIn, VotesInComment
+from poll_app.forms import CreatePollForm, UserProfileForm
 from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
@@ -70,10 +71,50 @@ def random_poll(request):
         return redirect("poll_app:results", poll_slug=the_slug)
 
 def create(request):
-    return render(request, "poll_app/create.html")
+    context_dict = {}
+
+    user = request.user
+    if not user.is_authenticated:
+        return redirect(reverse('poll_app:login'))
+    form = CreatePollForm(request.POST or None)
+    if form.is_valid():
+        poll_list = Poll.objects.order_by("id")
+        obj = form.save(commit=False)
+        obj.id = poll_list[0].id + 1
+        obj.submitter = user
+        obj.pub_date = timezone.now
+        obj.save(update_fields=['question','answer1','answer2'])
+            
+        form = CreatePollForm()
+        poll_slug = Poll.objects.get(id=(obj.id))
+        return redirect(reverse("poll_app:vote",poll_slug))
+    else:
+        obj = form.save(commit=False)
+        obj.submitter = user
+        obj.save()
+    context_dict['form'] = form
+
+    return render(request, "poll_app/create.html", context=context_dict)
 
 def search(request):
     return render(request, "poll_app/search.html")
+
+def register(request):
+    form = UserProfileForm()
+
+    if request.method == 'POST':
+        print(request.POST)
+        form = UserProfileForm(request.POST, request.FILES)
+        if form.is_valid():
+            user_profile = form.save(commit=False)
+            user_profile.user = request.user
+            user_profile.save()
+            return redirect(reverse('poll_app:homepage'))
+        else:
+            print(form.errors)
+    context_dict = {'form': form}
+    
+    return render(request, 'poll_app/register.html', context_dict)
 
 def login(request):
     return render(request, "poll_app/login.html")

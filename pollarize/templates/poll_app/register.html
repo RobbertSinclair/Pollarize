@@ -1,0 +1,40 @@
+{% extends 'poll_app/base.html'%}
+{% load staticfiles %}
+
+{% block head_block %}
+       <title>Pollarize - Register</title>
+{% endblock %}
+
+{% block body_block %}
+<div class="container col-lg-7 offset-lg-1">
+	<div class="row">
+		<div class="col-lg-7 offset-lg-1">
+            <form id="pollarize_form" method="post" action=".">{% csrf_token %}
+
+
+                {% for hidden in form.hidden_fields %} 
+                    {{ hidden }} 
+                {% endfor %} 
+
+
+                {% for field in form.visible_fields %} 
+
+                    <div class="card bg-dark border curved text-white">
+                           
+                        <p class="centre">{{ field.name }}</p>
+                        {{ field.help_text }}
+                        <p class="centre">{{field}}</p>
+                   
+                    </div>
+
+                    </br>
+         
+                {% endfor %} 
+                
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
+                
+            </form>
+        </div>
+	</div>
+</div>
+{% endblock %}

@@ -3,23 +3,26 @@ from poll_app.models import UserProfile, Poll, Comment
 from django.contrib.auth.models import User
 
 
-class PollForm(forms.ModelForm):
-    question = forms.CharField(help_text="Enter a question")
-    answer1 = forms.CharField(help_text="Answer 1")
-    answer2 = forms.CharField(help_text="Answer 2")
-    votes1 = forms.CharField(widget=forms.HiddenInput(), initial=0)
-    votes2 = forms.CharField(widget=forms.HiddenInput(), initial=0)
-    poll_slug = forms.CharField(widget=forms.HiddenInput(), required=False)
+class CreatePollForm(forms.ModelForm):
+    # user input
+    question = forms.CharField(max_length=128, help_text="Please enter the poll question.") 
+    answer1 = forms.CharField(max_length=5000, help_text="Please enter the first option.") 
+    answer2 = forms.CharField(max_length=5000, help_text="Please enter the second option.") 
+
+    # hidden fields
+    votes1 = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
+    votes2 = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
+    poll_slug = forms.SlugField(widget=forms.HiddenInput(), required=False)
 
     class Meta:
         model = Poll
-        exclude = ('submitter',)
+        fields = ['question', 'answer1', 'answer2']
 
 class UserProfileForm(forms.ModelForm):
 
     class Meta:
         model = UserProfile
-        fields = ('picture',)
+        fields = ('profile_image',)
 
 class UserForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())
