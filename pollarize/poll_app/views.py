@@ -82,18 +82,32 @@ def user(request, user_id):
 class ResultsView(View):
 
     def get(self, request, poll_slug):
+        user = request.user
+        context_dict = {}
         try:
             comment_list = []
             poll = Poll.objects.get(poll_slug=poll_slug)
             comments = Comment.objects.filter(poll=poll, parent=None).order_by("-votes")
+            try:
+                votes_in = VotesIn.objects.get(poll=poll, user=user)
+                context_dict["votes_in"] = votes_in
+            except:
+                pass
             for comment in comments:
-                user = comment.submitter
-                user_profile = UserProfile.objects.get(user=user)
-                comment_dict = {"comment": comment}
+                comment_dict = {}
+                submitter = comment.submitter
+                try:
+                    submitter_vote_in = VotesIn.objects.get(poll=poll, user=submitter)
+                    comment_dict["submitter_vote"] = submitter_vote_in
+                except:
+                    pass
+                user_profile = UserProfile.objects.get(user=submitter)
+                comment_dict["comment"] = comment
                 comment_dict["children"] = len(Comment.objects.filter(parent=comment))
                 comment_dict["image"] = user_profile.profile_image.url
                 comment_list.append(comment_dict)
-            context_dict = {"poll": poll, "comments": comment_list}
+            context_dict["poll"] = poll
+            context_dict["comments"] = comment_list
             return render(request, "poll_app/comment.html", context=context_dict)
         except Poll.DoesNotExist:
             raise Http404("Poll question doesn't exist")
@@ -305,13 +319,26 @@ def JSONAddVote(request):
         answer_id = request.POST["answer_id"]
         the_answer = request.POST["the_answer"]
         the_poll = Poll.objects.get(poll_slug=poll_slug)
-        vote_in = VotesIn.objects.create(poll=the_poll, user=user, option=the_answer)
-        vote_in.save()
-        if answer_id == "answer1":
-            the_poll.votes1 += 1
-        else:
-            the_poll.votes2 += 1
-        the_poll.save()
+        try:
+            vote_in = VotesIn.objects.get(poll=the_poll, user=user)
+            old_answer = vote_in.option
+            vote_in.option = the_answer
+            if old_answer != the_answer:
+                if answer_id == "answer1":
+                    the_poll.votes2 -= 1
+                    the_poll.votes1 += 1
+                else:
+                    the_poll.votes1 -= 1
+                    the_poll.votes2 += 1
+        except VotesIn.DoesNotExist:
+            vote_in = VotesIn.objects.create(poll=the_poll, user=user, option=the_answer)
+            if answer_id == "answer1":
+                the_poll.votes1 += 1
+            else:
+                the_poll.votes2 += 1
+        finally:
+            vote_in.save()
+            the_poll.save()
     return HttpResponse("Success")
 
 

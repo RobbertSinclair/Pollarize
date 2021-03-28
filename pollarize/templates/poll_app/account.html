@@ -7,4 +7,7 @@
 
 {% block body_block %}
 <h1>This is the <em>Account</em> page!</h1>
+{% if user.is_authenticated %}
+<h1>Username: {{ user.username }}</h1>
+{% endif %}
 {% endblock %}
