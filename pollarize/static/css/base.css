@@ -72,6 +72,26 @@ li{
     box-sizing: border-box
   }
 
+/*Styling for the drop down menu when the account logo is pressed*/
+#account_drop_down {
+    position: fixed;
+    background-color: #505050;
+    top: 40px;
+    right: 25px;
+    border-radius: 10px;
+    height: 150px;
+    width: 150px;
+}
+
+#account_drop_down a{
+    color: #ff9c00;
+    font-size: 0.6em;
+    text-decoration: none;
+}
+
+#account_drop_down a:hover {
+    color: #da6200;
+}
 
 /*Styling information for navigation bar (Adapted from https://www.w3schools.com/howto/howto_css_fixed_menu.asp) */
 
@@ -188,6 +208,11 @@ li{
             #navbar_account, #navbar_login {
                 margin-right: 16px;
             }
+
+            #account_drop_down {
+                right: 0px;
+            }
+
           }
 
           @media only screen and (max-width: 1229px) {
