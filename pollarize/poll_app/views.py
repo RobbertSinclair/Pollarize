@@ -67,6 +67,10 @@ def search(request):
 def login(request):
     return render(request, "poll_app/login.html")
 
+#This is a placeholder view. Feel free to replace with a logout view.
+def logout(request):
+    return render(request, "poll_app/logout.html")
+
 def account(request):
     return render(request, "poll_app/account.html")
 

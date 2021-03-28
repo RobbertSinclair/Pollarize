@@ -23,6 +23,7 @@
     <div id="comment-space" class="comments-div">
         {% if user.is_authenticated %}
         <div class="row" id="comment-form">
+            {% if votes_in %}
             <form onsubmit="return false">
                 {% csrf_token %}
                 <div class="form-group">
@@ -31,6 +32,9 @@
                 </div>
                 <button class="btn btn-link" onclick="postComment('{{ poll.poll_slug }}', '{{ user.username }}', 0, null)">Submit</button>
             </form>
+            {% else %} 
+            <h1><a href="{% url 'poll_app:vote' poll.poll_slug %}">You must vote before commenting</a></h1>
+            {% endif %}
         </div>
         {% else %}
         {% csrf_token %}
@@ -51,7 +55,7 @@
                             <button id="load-replies-{{ comment.comment.id }}" class="btn btn-link" value="{{ comment.children }}" onClick="loadReplies({{ comment.comment.id }})">Load Replies ({{ comment.children }}) &#8595;</button>
                             <button id="hide-replies-{{ comment.comment.id }}" class="hide-replies btn btn-link" onClick="hideReplies({{ comment.comment.id }})">Hide Replies &#8593;</button>
                             {% endif %}
-                            {% if user.is_authenticated %}
+                            {% if user.is_authenticated and votes_in %}
                                 <button id="add-reply-{{ comment.comment.id }}" class="add-reply btn btn-link" onClick="showReplyForm({{comment.comment.id}})">Reply</button>
                                 <button id="hide-reply-form-{{comment.comment.id}}" class="hide-reply-form btn btn-link" onClick="hideReplyForm({{comment.comment.id}})">Cancel</button>
                             {% endif %}
