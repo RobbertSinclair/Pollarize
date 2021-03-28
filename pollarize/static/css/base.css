@@ -4,7 +4,6 @@ and elements which will be reused across multiple pages
 Author: Adam Fairlie (2461352F)
 */
 
-
 /* General rules for body of all documents */
 body{
     background-color: #f0f0f0;
@@ -15,6 +14,10 @@ body{
     margin: 0;
     padding: 0;
     width:100%;
+}
+
+a {
+    color: inherit;
 }
 
 /* General rules for specific elements */
@@ -295,7 +298,6 @@ li{
 
 .poll_box a{
     text-decoration: none; /* Remove underline from links */
-    color:#505050; /*Set link colour back to default text colour*/
 }
 
 /* Styling for poll title header */
@@ -325,10 +327,6 @@ li{
     margin-left: 15px;
     margin-top: -18px; /*Move up closer to title*/
     font-weight: 700;
-}
-
-.poll_box p a{
-    color: #919191; /* Set links in author text back to original colour */
 }
 
 /* Darken and underline link to author on hover */
@@ -424,3 +422,49 @@ li{
 ::-webkit-scrollbar-thumb:hover {
   background: #414141;
 }
+
+
+/*Create 3 divs to span the screen on the same line (3 columns) */
+#left, #middle, #right{
+    display: inline-block;
+    text-align: center;
+    width:33%;
+    min-width: 400px;
+    overflow:hidden;
+}
+
+/* Align left and right boxes */
+
+#left{
+    float: left;
+}
+
+#right{
+    float: right;
+}
+
+/* Adjust alignments when screen only has space for 2 columns */
+@media only screen and (max-width: 1216px) {
+    /* Right align the middle column */
+    #middle {
+      float: right;
+      display: block;
+      margin:auto;
+    }
+    /* Centre the right column (which will be pushed under the other 2) */
+    #right{
+        float: none;
+        display: block;
+        margin:auto;
+    }
+
+  }
+
+/* Centre all columns when the screen only has space for one column */
+@media only screen and (max-width: 816px) {
+    #left, #middle{
+      float: none;
+      display: block;
+      margin:auto;
+    }
+  }

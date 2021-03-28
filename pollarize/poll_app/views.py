@@ -17,10 +17,7 @@ def index(request):
     return render(request, "poll_app/debug.html", context=context_dict)
 
 def homepage(request):
-
     recent = Poll.objects.order_by('-pub_date')[:3]
-    print(recent)
-    print([poll.pub_date for poll in recent])
     polls = Poll.objects.all()
 
     popular_polls = popular(polls)[:3]
@@ -47,7 +44,21 @@ def about(request):
     return render(request, "poll_app/about.html")
 
 def rankings(request):
-    return render(request, "poll_app/rankings.html")
+    recent = Poll.objects.order_by('-pub_date')[:10]
+    polls = Poll.objects.all()
+
+    popular_polls = popular(polls)[:10]
+    pollarizing_polls = pollarizing(polls)[:10]
+
+    champion = pollarizing_polls[0]
+
+    context_dict = {"champion": champion,
+                    "recent": recent,
+                    "popular": popular_polls,
+                    "pollarizing": pollarizing_polls}
+
+    response = render(request, 'poll_app/rankings.html', context=context_dict)
+    return response
 
 def random_poll(request):
     polls = Poll.objects.all()

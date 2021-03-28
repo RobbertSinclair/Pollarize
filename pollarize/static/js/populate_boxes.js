@@ -1,7 +1,7 @@
 $(document).ready(function(){
-    console.log("homepage.js loaded successfully");
+    console.log("populate_boxes.js loaded successfully");
     //populate all poll boxes
-    $(".poll_box").each(function() {
+    $(".poll_box, .champion_poll_box").each(function() {
     populateBox(this)
     });
 
