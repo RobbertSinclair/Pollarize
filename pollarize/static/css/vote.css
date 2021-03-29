@@ -20,6 +20,11 @@
     float: left;
 }
 
+.vote-div h2 {
+    text-align: center;
+    font-size: 60px;
+}
+
 #answer1:hover {
     background-color: #505050 !important;
     color: #FF9C00 !important;
@@ -39,13 +44,29 @@
         font-size: 30px;
     }
 
-    .voting-form button {
+    .vote-div h2 {
         font-size: 20px;
+    }
+
+    .voting-form button {
+        font-size: 30px;
+    }
+
+    .voting-form {
+        margin-left: 10%;
+        margin-right: 10%;
+        width: 80%;
     }
 }
 
 @media only screen and (max-width: 1100px) and (min-width: 700px) {
     .vote-div h1 {
         font-size: 60px;
+    }
+
+    .voting-form {
+        margin-left: 15%;
+        margin-right: 15%;
+        width: 70%;
     }
 }
