@@ -137,3 +137,5 @@ migrations/
 
 #HOST
 hosts.py
+
+.idea/

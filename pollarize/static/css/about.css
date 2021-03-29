@@ -10,17 +10,6 @@
     margin-top: 100px;
 }
 
-.divider{
-    margin: auto;
-    margin-top: -50px;
-    margin-bottom: 10px;
-    width:30%;
-    min-width: 450px;
-    height: 5px;
-    background-color: #ff9c00;
-    border-radius: 40px; 
-}
-
 .paragraph_text{
     margin: auto;
     margin-top: 30px;

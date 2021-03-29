@@ -133,8 +133,45 @@ def vote(request, poll_slug):
     return render(request, "poll_app/vote.html", context=context_dict)
 
 def user(request, user_id):
+
+    profile = UserProfile.objects.get(id=user_id)
+    polls = Poll.objects.filter(submitter=profile.id)
+
+    polls = pollarizing(polls)
+
+    context_dict = {"profile": profile,
+                    "user_polls": polls}
+
+    champion = pollarizing(Poll.objects.all())[0].submitter
+
+    if profile.id == champion.id:
+        context_dict["is_champion"] = True
+
+    no_polls = len(polls)
+    if no_polls == 1:
+        context_dict["no_polls"] = "1 poll"
+    else:
+        context_dict["no_polls"] = str(no_polls) + " polls"
+
+    no_votes = 0
+    for poll in polls:
+        no_votes += (poll.votes1 + poll.votes2)
+
+    if no_votes < 1000:
+        votesString = str(no_votes) + " votes"
+    elif no_votes < 1000000:
+        votesString = str(round((no_votes / 1000), 1)) + "K votes"
+    else:
+        votesString = str(round((no_votes / 1000000), 1)) + "M votes"
+
+    context_dict["no_votes"] = votesString
+
+    response = render(request, 'poll_app/user.html', context=context_dict)
+    return response
+
+
     #Test code
-    return render(request, "poll_app/rankings.html")
+    return render(request, "poll_app/rankings.html", context=context_dict)
 
 class ResultsView(View):
 
