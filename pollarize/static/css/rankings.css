@@ -57,8 +57,22 @@
     display: block;
     margin: 0 auto;
     text-align: center;
+    transition: all .1s ease-in-out;
+    cursor: pointer;
 }
+
+#trophy:hover{
+    transform: scale(1.35);
+}
+
 
 #top_text a:hover {
     color: #da6200;
+}
+
+.balloon{
+    position: absolute;
+    top: 800px;
+    z-index: -1;
+    transition: ease-in-out;
 }
