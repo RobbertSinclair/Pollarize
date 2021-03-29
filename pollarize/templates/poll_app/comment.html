@@ -12,6 +12,7 @@
 
 {% block body_block %}
     <h1>{{ poll.question }}</h1>
+    <h2>Submitted by - {{ poll.submitter.username }}</h2>
     {% if user.is_authenticated and votes_in %}
     <h1>You voted for {{ votes_in.option }} <a href="{% url 'poll_app:vote' poll.poll_slug %}">Click here to change your vote.</a></h1>
     {% elif user.is_authenticated %}

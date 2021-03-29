@@ -10,6 +10,7 @@
 {% block body_block %}
 <div class="vote-div">
     <h1>{{ poll.question }}</h1>
+    <h2>Submitted by - {{ poll.submitter.username }}</h2>
     <div class="voting-form">
         {% if user.is_authenticated %}
         {% csrf_token %}
