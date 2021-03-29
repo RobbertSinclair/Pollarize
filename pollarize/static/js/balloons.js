@@ -44,10 +44,4 @@ $(document).ready(function(){
         }
     });
 
-    $('.balloon').click(function() {
-        console.log("Clicked a balloon");
-        $(this).remove();
-        console.log("popped a balloon!");
-    });
-
 })
