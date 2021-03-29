@@ -30,20 +30,20 @@
     <!-- Create navbar -->
     <div class="navbar">
         <!-- Homepage logo (and smaller logo for smaller resolutions) -->
-        <a href="{% url 'poll_app:home' %}" id="logo_container"><img id="navbar_logo" src="{% static 'img/logo_text_small.png' %}" alt="Homepage" height="30px"></a>
-        <a href="{% url 'poll_app:home' %}" id="small_logo_container"><img id="navbar_logo_small" src="{% static 'img/logo_mono.png' %}" alt="Homepage" height="35px"></a>
+        <a href="{% url 'poll_app:home' %}" id="logo_container" title="Homepage"><img id="navbar_logo" src="{% static 'img/logo_text_small.png' %}" alt="Homepage" height="30px"></a>
+        <a href="{% url 'poll_app:home' %}" id="small_logo_container" title="Homepage"><img id="navbar_logo_small" src="{% static 'img/logo_mono.png' %}" alt="Homepage" height="35px"></a>
         <!-- About text (and logo for smaller resolutions) -->
         <a href="{% url 'poll_app:about' %}" class="navbar_text">About</a>
-        <a href="{% url 'poll_app:about' %}" id="about_icon"><img src="{% static 'img/about_icon.png' %}" alt="About" height="25px" width="25px"></a>
+        <a href="{% url 'poll_app:about' %}" id="about_icon"><img src="{% static 'img/about_icon.png' %}" alt="About" height="25px" width="25px" title="About"></a>
         <!-- Rankings text (and logo for smaller resolutions) -->
         <a href="{% url 'poll_app:rankings' %}" class="navbar_text">Rankings</a>
-        <a href="{% url 'poll_app:rankings' %}" id="ranking_icon"><img src="{% static 'img/ranking_icon.png' %}" alt="Rankings" height="25px" width="25px"></a>
+        <a href="{% url 'poll_app:rankings' %}" id="ranking_icon" title="Rankings"><img src="{% static 'img/ranking_icon.png' %}" alt="Rankings" height="25px" width="25px"></a>
         <!-- Random poll text (and logo for smaller resolutions) -->
         <a href="{% url 'poll_app:random' %}" class="navbar_text">Random Poll</a>
-        <a href="{% url 'poll_app:random' %}" id="random_icon"><img src="{% static 'img/random_icon.png' %}" alt="Random Poll" height="25px" width="25px"></a>
+        <a href="{% url 'poll_app:random' %}" id="random_icon" title="Random Poll"><img src="{% static 'img/random_icon.png' %}" alt="Random Poll" height="25px" width="25px"></a>
         <!-- Create poll text (and logo for smaller resolutions) -->
         <a href="{% url 'poll_app:create' %}" class="navbar_text">Create Poll</a>
-        <a href="{% url 'poll_app:create' %}" id="create_icon"><img src="{% static 'img/create_icon.png' %}" alt="Create Poll" height="25px" width="25px"></a>
+        <a href="{% url 'poll_app:create' %}" id="create_icon" title="Create Poll"><img src="{% static 'img/create_icon.png' %}" alt="Create Poll" height="25px" width="25px"></a>
         <!-- Search bar and button -->
         <div id="search_container">
         <form class="search_form" method="post" action="{% url 'poll_app:search' %}">
