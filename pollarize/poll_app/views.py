@@ -15,10 +15,7 @@ import random
 # Create your views here.
 
 def index(request):
-    context_dict = {}
-    polls = Poll.objects.all()
-    context_dict["polls"] = polls
-    return render(request, "poll_app/debug.html", context=context_dict)
+    return redirect("poll_app:home")
 
 def homepage(request):
     recent = Poll.objects.order_by('-pub_date')[:3]
