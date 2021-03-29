@@ -29,7 +29,7 @@
             <div class = "centre_poll_box" id="poll_{{ poll.poll_slug }}">
                 <h1><a href="{% url 'poll_app:results' poll.poll_slug %}">{{ poll.question }}</a></h1>
                 <div class="action_buttons">
-                    <form action="{% url 'poll_app:results' poll.poll_slug %}">
+                    <form action="{% url 'poll_app:vote' poll.poll_slug %}">
                         <button type="submit" class="orange_button">Vote!</button>
                     </form>
                 </div>

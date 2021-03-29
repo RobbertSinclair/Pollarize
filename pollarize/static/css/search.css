@@ -1,0 +1,21 @@
+#search-results {
+    position: relative;
+    width: 500px;
+    display: inner-block;
+    background-color: white;
+    margin: 0;
+    padding: 0;
+}
+
+ul {
+    list-style-type: none;
+}
+
+.search-item {
+    list-style-type: none;
+    font-size: 16px;
+}
+
+.search-item.hover {
+    background-color: grey;
+}

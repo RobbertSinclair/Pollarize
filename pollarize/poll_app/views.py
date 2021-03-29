@@ -435,6 +435,19 @@ def JSONAddVote(request):
             the_poll.save()
     return HttpResponse("Success")
 
+def JSONSearch(request):
+    context_dict = {"polls": []}
+    if request.method == "POST":
+        search_term = request.POST["search_term"]
+        the_polls = Poll.objects.filter(question__contains=search_term)
+        for poll in the_polls:
+            poll_dict = {
+                "question": poll.question,
+                "question_link": reverse('poll_app:results', kwargs={"poll_slug": poll.poll_slug})
+            }
+            context_dict["polls"].append(poll_dict)
+        return JsonResponse(context_dict)
+
 
 
 

@@ -47,7 +47,7 @@
                         <div class="col-md">
                             <img class="mr-3 rounded-circle profile-img" alt="Profile image" src="{{ comment.image }}" />
                             {% if comment.submitter_vote %}
-                            <h3>{{ comment.comment.submitter }} - Voted for {{ comment.submitter_vote.option }}</h3>
+                            <h3><a href="{% url 'poll_app:user' comment.comment.submitter.id %}">{{ comment.comment.submitter }}</a> - Voted for {{ comment.submitter_vote.option }}</h3>
                             {% else %}
                             <h3>{{comment.comment.submitter}}</h3>
                             {% endif %}
