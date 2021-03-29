@@ -75,24 +75,22 @@ def random_poll(request):
 
 def create(request):
     context_dict = {}
-
+    form = CreatePollForm()
     user = request.user
     if not user.is_authenticated:
         return redirect(reverse('poll_app:login'))
-    form = CreatePollForm(request.POST or None)
-    if form.is_valid():
-        poll_list = Poll.objects.order_by("id")
-        obj = form.save(commit=False)
-        obj.submitter = user
-        obj.pub_date = timezone.now()
-        obj.poll_slug = slugify(obj.question)
-        obj.save()
-        form = CreatePollForm()
-        return redirect(reverse("poll_app:vote", kwargs={'poll_slug': obj.poll_slug}))
-    else:
-        obj = form.save(commit=False)
-        obj.submitter = user
-        obj.save()
+    if request.method == "POST":
+        form = CreatePollForm(request.POST)
+        if form.is_valid():
+            poll_list = Poll.objects.order_by("id")
+            obj = form.save(commit=False)
+            obj.submitter = user
+            obj.pub_date = timezone.now()
+            obj.poll_slug = slugify(obj.question)
+            obj.save()
+            return redirect(reverse("poll_app:vote", kwargs={'poll_slug': obj.poll_slug}))
+        else:
+            print(form.errors)
     context_dict['form'] = form
 
     return render(request, "poll_app/create.html", context=context_dict)

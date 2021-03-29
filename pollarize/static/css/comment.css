@@ -1,8 +1,47 @@
 
 .profile-img {
-    width: 50px;
-    height: 50px;
+    padding-left: 5px;
+    width: 75px;
+    height: 75px;
     object-fit: cover;
+    border-radius: 50%;
+}
+
+#canvas-space {
+    margin-left: 3%;
+    margin-right: 3%;
+}
+
+#poll-question {
+    font-size: 55px;
+}
+
+#comment-space {
+    margin-left: 3%;
+}
+
+#add-comment {
+    padding: 10px;
+    font-family: 'Open Sans', sans-serif;
+    border-radius: 10px;
+    border: solid 2px #505050;
+    font-size: 18px;
+}
+
+#add-comment:focus {
+    border-radius: 10px;
+    border: solid 4px #505050;
+}
+
+@media only screen and (max-width: 700px) {
+    .profile-img {
+        width: 60px;
+        height: 60px;
+    }
+
+    #add-comment {
+        font-size: 14px;
+    }
 }
 
 .loading-image {
@@ -47,5 +86,3 @@
 #comments {
     margin-top: 15px;
 }
-
-

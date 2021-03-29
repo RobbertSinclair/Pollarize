@@ -11,8 +11,8 @@
 {% endblock %}
 
 {% block body_block %}
-    <h1>{{ poll.question }}</h1>
-    <h2>Submitted by - {{ poll.submitter.username }}</h2>
+    <h1 id="poll-question">{{ poll.question }}</h1>
+    <h1>Submitted by - <a href="{% url 'poll_app:user' poll.submitter.id %}">{{ poll.submitter.username }}</a></h1>
     {% if user.is_authenticated and votes_in %}
     <h1>You voted for {{ votes_in.option }} <a href="{% url 'poll_app:vote' poll.poll_slug %}">Click here to change your vote.</a></h1>
     {% elif user.is_authenticated %}
