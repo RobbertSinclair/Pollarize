@@ -64,7 +64,7 @@ li{
 }
 
 .main {
-    margin-top: 70px; /* Avoid overlap with navigation bar */
+    margin-top: 150px; /* Avoid overlap with navigation bar */
     /*Centre content horizontally*/
     margin-left: auto; 
     margin-right: auto;
@@ -561,3 +561,11 @@ li{
       margin:auto;
     }
   }
+
+/* Balloons for pollarize champion */
+.balloon{
+    position: absolute;
+    top: 800px;
+    z-index: -1;
+    transition: ease-in-out;
+}

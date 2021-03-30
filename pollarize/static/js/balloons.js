@@ -1,4 +1,6 @@
 var balloons_on = false;
+var balloons_on_load = 20;
+var min_time = 125; var dev_time = 300;
 
 $(document).ready(function(){
     console.log("balloons.js loaded successfully");
@@ -6,8 +8,8 @@ $(document).ready(function(){
     function make_balloon() {
 
         var padding = 100;
-        var min_ms = 750; var dev_ms = 800;
-        var min_time = 125; var dev_time = 300;
+        var min_ms = 650; var dev_ms = 1250;
+
 
 
         var choice = Math.floor(Math.random() * balloon_images.length);
@@ -17,7 +19,7 @@ $(document).ready(function(){
         var animation_time = min_ms + Math.floor(Math.random() * dev_ms);
 
         $(balloonHTML).appendTo(".main")
-        .css("left", left_val)
+        .css({"left": left_val, "top": $(window).height()})
         .animate({top: "-160px"}, animation_time, function () {
         if($(this).length){
             $(this).remove();
@@ -43,5 +45,10 @@ $(document).ready(function(){
             console.log("Turned off balloons!");
         }
     });
+
+    for (i = 0; i < balloons_on_load; i++) {
+        var delay = min_time + Math.floor(Math.random() * dev_time);
+        setTimeout(make_balloon, delay);
+    }
 
 })

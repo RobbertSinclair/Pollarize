@@ -3,17 +3,7 @@
 
 {% block head_block %}
        <script src="{% static 'js/populate_boxes.js' %}"></script>
-        <script type="text/javascript">
-            var balloon_images = ["{% static "img/red-balloon.png" %}",
-                          "{% static "img/blue-balloon.png" %}",
-                          "{% static "img/cyan-balloon.png" %}",
-                          "{% static "img/black-balloon.png" %}",
-                          "{% static "img/pink-balloon.png" %}",
-                          "{% static "img/green-balloon.png" %}",
-                          "{% static "img/orange-balloon.png" %}",
-                         ];
-        </script>
-       <script src="{% static 'js/balloons.js' %}"></script>
+        {% include "poll_app/load_balloons.html" %}
        <link rel="stylesheet" href="{% static 'css/rankings.css' %}">
        <title>Pollarize - Rankings</title>
 {% endblock %}

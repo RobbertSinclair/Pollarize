@@ -15,9 +15,3 @@
     color: #da6200;
 }
 
-.balloon{
-    position: absolute;
-    top: 800px;
-    z-index: -1;
-    transition: ease-in-out;
-}
