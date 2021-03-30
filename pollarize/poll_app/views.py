@@ -260,7 +260,7 @@ class JSONPollResults(View):
                 "latest_option": latest.option,
             }
             return JsonResponse(dictionary)
-        except VotesIn.DoesNotExist:
+        except IndexError:
             dictionary = {
                 "answer1": the_poll.answer1,
                 "votes1": the_poll.votes1,
