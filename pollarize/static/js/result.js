@@ -1,15 +1,16 @@
+var theChart;
 
 $(document).ready(function(){
     console.log("result.js loaded successfully");
     var the_url = window.location.pathname;
     var theCanvas = document.getElementById("poll-chart");
-    var theChart;
     var poll_slug = the_url.split("/")[1];
     var request_url = "/json/" + poll_slug + "/results/"
     $.get(request_url, function(data) {
         chartData = displayChart(data.answer1, data.votes1, data.answer2, data.votes2);
         theChart = new Chart(theCanvas, chartData)
     });
+    UpdateChart();
 });
 
 
@@ -34,4 +35,18 @@ function displayChart(answer1, votes1, answer2, votes2) {
     };
 
     return chartData;
+}
+
+function UpdateChart() {
+    var poll_slug = window.location.pathname.split("/")[1];
+    var request_url = "/json/" + poll_slug + "/results/";
+    $.get(request_url, function(data) {
+        votes1 = data.votes1;
+        votes2 = data.votes2;
+        var chartData = theChart.data.datasets[0].data;
+        chartData[0] = votes1;
+        chartData[1] = votes2;
+        theChart.update();
+    })
+    setTimeout(UpdateChart, 2000);
 }
