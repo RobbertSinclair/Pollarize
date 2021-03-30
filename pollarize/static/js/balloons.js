@@ -22,7 +22,7 @@ $(document).ready(function(){
 
         //Create balloon and animate to top of screen
         $(balloonHTML).appendTo(".main")
-        .css({"left": left_val, "top": $(window).height()})
+        .css({"left": left_val, "top": ($(window).scrollTop() + $(window).height())})
         .animate({top: "-160px"}, animation_time, function () {
         //Delete balloon when it reaches the top of screen
         if($(this).length){
