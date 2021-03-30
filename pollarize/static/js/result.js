@@ -48,7 +48,7 @@ function UpdateChart() {
         theChart.data.datasets[0].data[0] = votes1;
         theChart.data.datasets[0].data[1] = votes2;
         theChart.update();
-        console.log(theChart.data.datasets[0].data);
+        $("#latest").html("LATEST: " + data.latest_user + " voted for " + data.latest_option);
     })
     setTimeout(UpdateChart, 2000);
 }

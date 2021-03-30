@@ -18,6 +18,7 @@
     {% elif user.is_authenticated %}
     <h1>You haven't voted in this poll yet. <a href="{% url 'poll_app:vote' poll.poll_slug %}">Click here to vote.</a></h1>
     {% endif %}
+    <h1 id="latest"></h1>
     <div id="canvas-space" class="canvas">
         <canvas id="poll-chart" width="500" height="155"></canvas>
     </div>

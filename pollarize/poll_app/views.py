@@ -249,11 +249,15 @@ class JSONPollResults(View):
     def get(self, request, poll_slug):
         try:
             the_poll = Poll.objects.get(poll_slug=poll_slug)
+            votes_in = VotesIn.objects.filter(poll=the_poll).order_by("-vote_time")
+            latest = votes_in[0]
             dictionary = {
                 "answer1": the_poll.answer1,
                 "votes1": the_poll.votes1,
                 "answer2": the_poll.answer2,
-                "votes2": the_poll.votes2
+                "votes2": the_poll.votes2,
+                "latest_user": latest.user.username,
+                "latest_option": latest.option,
             }
             return JsonResponse(dictionary)
         except Poll.DoesNotExist:
@@ -439,7 +443,9 @@ def JSONAddVote(request):
         try:
             vote_in = VotesIn.objects.get(poll=the_poll, user=user)
             old_answer = vote_in.option
+            print(old_answer)
             vote_in.option = the_answer
+            print(the_answer)
             if old_answer != the_answer:
                 if answer_id == "answer1":
                     the_poll.votes2 -= 1
@@ -454,6 +460,7 @@ def JSONAddVote(request):
             else:
                 the_poll.votes2 += 1
         finally:
+            vote_in.vote_time = timezone.now()
             vote_in.save()
             the_poll.save()
     return HttpResponse("Success")

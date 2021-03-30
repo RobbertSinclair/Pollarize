@@ -46,6 +46,7 @@ class VotesIn(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     poll = models.ForeignKey(Poll, on_delete=models.CASCADE)
     option = models.CharField(max_length=100)
+    vote_time = models.DateTimeField('date voted', default=timezone.now)
 
 
 # This is a linker model to only give a user one upvote or downvote
