@@ -37,6 +37,7 @@ function displayChart(answer1, votes1, answer2, votes2) {
     return chartData;
 }
 
+// This function checks for if there is a change to the results and then it 
 function UpdateChart() {
     var poll_slug = window.location.pathname.split("/")[1];
     var request_url = "/json/" + poll_slug + "/results/";
@@ -44,8 +45,8 @@ function UpdateChart() {
         votes1 = data.votes1;
         votes2 = data.votes2;
         var chartData = theChart.data.datasets[0].data;
-        chartData[0] = votes1;
-        chartData[1] = votes2;
+        theChart.data.datasets[0].data[0] = votes1;
+        theChart.data.datasets[0].data[1] = votes2;
         theChart.update();
     })
     setTimeout(UpdateChart, 2000);
