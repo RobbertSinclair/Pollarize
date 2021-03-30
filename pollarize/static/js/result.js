@@ -48,6 +48,7 @@ function UpdateChart() {
         theChart.data.datasets[0].data[0] = votes1;
         theChart.data.datasets[0].data[1] = votes2;
         theChart.update();
+        console.log(theChart.data.datasets.data);
     })
     setTimeout(UpdateChart, 2000);
 }
