@@ -1,0 +1,10 @@
+<div class = "poll_box" id="poll_{{ poll.poll_slug }}">
+    <h1><a href="{% url 'poll_app:results' poll.poll_slug %}">{{ poll.question }}</a></h1>
+    <p>by <a href="{% url 'poll_app:user' poll.submitter.id %}">{{ poll.submitter }}</a></p>
+    <div class="vote_bar_container">
+        <h3 class="orange_percent">-%</h3>
+        <div class="vote_bar"></div>
+        <h3 class="grey_percent">-%</h3>
+    </div>
+    <p class="box_votes">--- votes</p>
+</div>

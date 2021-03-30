@@ -27,48 +27,21 @@
                     <div id="left">
                         <h1>Popular</h1>
                         {% for poll in popular %}
-                        <div class = "poll_box" id="poll_{{ poll.poll_slug }}">
-                            <h1><a href="{% url 'poll_app:results' poll.poll_slug %}">{{ poll.question }}</a></h1>
-                            <p>by <a href="{% url 'poll_app:user' poll.submitter.id %}">{{ poll.submitter }}</a></p>
-                            <div class="vote_bar_container">
-                                <h3 class="orange_percent">-%</h3>
-                                <div class="vote_bar"></div>
-                                <h3 class="grey_percent">-%</h3>
-                            </div>
-                                <p class="box_votes">--- votes</p>
-                        </div>
+                            {% include "poll_app/poll_box.html" with poll=poll %}
                         {% endfor %}
                     </div>
 
                     <div id="middle">
                         <h1>Pollarizing</h1>
                         {% for poll in pollarizing %}
-                        <div class = "poll_box" id="poll_{{ poll.poll_slug }}">
-                            <h1><a href="{% url 'poll_app:results' poll.poll_slug %}">{{ poll.question }}</a></h1>
-                            <p>by <a href="{% url 'poll_app:user' poll.submitter.id %}">{{ poll.submitter }}</a></p>
-                            <div class="vote_bar_container">
-                                <h3 class="orange_percent">-%</h3>
-                                <div class="vote_bar"></div>
-                                <h3 class="grey_percent">-%</h3>
-                            </div>
-                                <p class="box_votes">--- votes</p>
-                        </div>
+                            {% include "poll_app/poll_box.html" with poll=poll %}
                         {% endfor %}
                     </div>
 
                     <div id="right">
                         <h1>Recent</h1>
                         {% for poll in recent %}
-                        <div class = "poll_box" id="poll_{{ poll.poll_slug }}">
-                            <h1><a href="{% url 'poll_app:results' poll.poll_slug %}">{{ poll.question }}</a></h1>
-                            <p>by <a href="{% url 'poll_app:user' poll.submitter.id %}">{{ poll.submitter }}</a></p>
-                            <div class="vote_bar_container">
-                                <h3 class="orange_percent">-%</h3>
-                                <div class="vote_bar"></div>
-                                <h3 class="grey_percent">-%</h3>
-                            </div>
-                                <p class="box_votes">--- votes</p>
-                        </div>
+                            {% include "poll_app/poll_box.html" with poll=poll %}
                         {% endfor %}
                     </div>
 

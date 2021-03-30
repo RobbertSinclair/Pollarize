@@ -14,6 +14,24 @@ import random
 
 # Create your views here.
 
+def popular(polls):
+    popular = [(poll, poll.votes1 + poll.votes2) for poll in polls]
+    popular = sorted(popular, key=lambda x: x[1], reverse=True)
+    return [poll[0] for poll in popular]
+
+def pollarizing(polls):
+    pollarizing = [(poll, abs(((poll.votes1 / (poll.votes1 + poll.votes2)) * 100) - 50)) for poll in polls]
+    pollarizing = sorted(pollarizing, key=lambda x: x[1])
+    return [poll[0] for poll in pollarizing]
+
+def votes_string(no_votes):
+    if no_votes < 1000:
+        return str(no_votes) + " votes"
+    elif no_votes < 1000000:
+        return str(round((no_votes / 1000), 1)) + "K votes"
+    else:
+        return str(round((no_votes / 1000000), 1)) + "M votes"
+
 def index(request):
     return redirect("poll_app:home")
 
@@ -30,16 +48,6 @@ def homepage(request):
 
     response = render(request, 'poll_app/index.html', context=context_dict)
     return response
-
-def popular(polls):
-    popular = [(poll, poll.votes1 + poll.votes2) for poll in polls]
-    popular = sorted(popular, key=lambda x: x[1], reverse=True)
-    return [poll[0] for poll in popular]
-
-def pollarizing(polls):
-    pollarizing = [(poll, abs(((poll.votes1 / (poll.votes1 + poll.votes2)) * 100) - 50)) for poll in polls]
-    pollarizing = sorted(pollarizing, key=lambda x: x[1])
-    return [poll[0] for poll in pollarizing]
 
 def about(request):
     return render(request, "poll_app/about.html")
@@ -152,14 +160,7 @@ def user(request, user_id):
     for poll in polls:
         no_votes += (poll.votes1 + poll.votes2)
 
-    if no_votes < 1000:
-        votesString = str(no_votes) + " votes"
-    elif no_votes < 1000000:
-        votesString = str(round((no_votes / 1000), 1)) + "K votes"
-    else:
-        votesString = str(round((no_votes / 1000000), 1)) + "M votes"
-
-    context_dict["no_votes"] = votesString
+    context_dict["no_votes"] = votes_string(no_votes)
 
     response = render(request, 'poll_app/user.html', context=context_dict)
     return response

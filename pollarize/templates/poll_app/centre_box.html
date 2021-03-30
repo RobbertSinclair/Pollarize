@@ -1,0 +1,15 @@
+<div class = "centre_poll_box" id="poll_{{ poll.poll_slug }}">
+    <h1><a href="{% url 'poll_app:results' poll.poll_slug %}">{{ poll.question }}</a></h1>
+    <div class="action_buttons">
+        <form action="{% url 'poll_app:results' poll.poll_slug %}">
+            <button type="submit" class="orange_button">Vote!</button>
+        </form>
+    </div>
+
+    <div class="vote_bar_container">
+        <h3 class="orange_percent">-%</h3>
+        <div class="vote_bar"></div>
+        <h3 class="grey_percent">-%</h3>
+    </div>
+    <p class="box_votes">--- votes</p>
+</div>
