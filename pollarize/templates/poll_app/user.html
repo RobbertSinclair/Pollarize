@@ -1,8 +1,9 @@
 {% extends 'poll_app/base.html'%}
 {% load staticfiles %}
-
+<!--Fill in page title and load css/javascript-->
 {% block head_block %}
        <script src="{% static 'js/populate_boxes.js' %}"></script>
+        <!--Load balloons if user is pollarize champion-->
         {% if is_champion %}
             {% include "poll_app/load_balloons.html" %}
         {% endif %}
@@ -27,6 +28,7 @@
         <div class="divider"></div>
         <h1 id="polls_title"><em>Polls:</em></h1>
 
+        <!--List of user polls-->
         <div id="vote_boxes_container">
         {% for poll in user_polls %}
             {% include "poll_app/centre_box.html" with poll=poll %}

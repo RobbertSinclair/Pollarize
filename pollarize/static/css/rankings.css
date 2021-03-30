@@ -1,16 +1,18 @@
+/* Central trophy icon */
 #trophy{
     display: block;
     margin: 0 auto;
     text-align: center;
     transition: all .1s ease-in-out;
-    cursor: pointer;
+    cursor: pointer; /* Make image look clickable */
 }
 
+/* Make trophy larger when hovered */
 #trophy:hover{
     transform: scale(1.35);
 }
 
-
+/* Make links dark orange on hover */
 #top_text a:hover {
     color: #da6200;
 }

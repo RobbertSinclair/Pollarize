@@ -1,9 +1,11 @@
+/* Centre logo on page */
 #main_logo{
     display: block;
     margin:auto;
     max-height: 300px;
 }
 
+/* Page text styling */
 #title{
     font-size: 4em;
     font-weight: 800;
@@ -11,18 +13,22 @@
 }
 
 .paragraph_text{
-    margin: auto;
-    margin-top: 30px;
+    /* Centre text */
     text-align: center;
+    margin: auto;
+
+    margin-top: 30px;
+    /* Resize text */
     width: 60%;
     min-width: 480px;
 }
 
+/* Make links orange and extrabold */
 .main a{
     color: #ff9c00;
     font-weight: 800;
 }
-
+/* Make links dark orange on hover */
 a:hover{
     color: #da6200;
 }
@@ -34,9 +40,13 @@ h2 {
     font-size: 1.6em;
 }
 
+/* Make emphasised text orange */
 h2 em{
     color:#ff9c00
 }
+
+
+/*Styling for elements inside orange box*/
 
 .orange_box{
     margin-top: 100px;
@@ -62,6 +72,16 @@ h2 em{
     color: #f0f0f0;
 }
 
+.orange_box ul li::before {
+    color: #f0f0f0; /* Change the color */
+  }
+
+  #orange_box_header{
+    margin-top: 100px;
+  }
+
+/* Styling for buttons */
+
 .action_buttons{
     margin-top: 30px;
 }
@@ -71,11 +91,5 @@ h2 em{
     margin-bottom: 100px;
 }
 
-.orange_box ul li::before {
-    color: #f0f0f0; /* Change the color */
-  }
 
-  #orange_box_header{
-    margin-top: 100px;
-  }
 

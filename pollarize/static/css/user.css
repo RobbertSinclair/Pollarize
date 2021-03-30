@@ -1,11 +1,15 @@
+/* User profile picture styling */
 #profile_img{
     display: block;
     height: 200px;
     width: 200px;
-    margin: 0 auto;
-    border-radius: 50%;
+    margin: 0 auto; /* Centre */
+    border-radius: 50%; /* Make circular */
     object-fit: cover;
 }
+
+
+/*Title text styling*/
 
 #username {
     font-size: 4em;
@@ -25,19 +29,27 @@ h2 {
     margin-bottom: 50px;
 }
 
+/* Pollarize champion tag styling */
 #champion_tag {
+    /* Centre content */
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 250px;
-    height:30px;
     margin: auto;
     text-align: center;
-    background-color: #ffd600;
-    border-radius: 20px;
+    /* Size and margin settings */
+    width: 250px;
+    height:30px;
     margin-bottom: 10px;
+    /* Make gold*/
+    background-color: #ffd600;
+    /* Rounded border */
+    border-radius: 20px;
 
 }
+
+
+/* Styling for elements inside champion tag */
 
 #champion_tag img {
     display: inline-block;
@@ -46,6 +58,6 @@ h2 {
 
 #champion_tag p{
     display: inline-block;
-    color: #f0f0f0;
+    color: #f0f0f0; /* White text*/
     font-weight: 700;
 }

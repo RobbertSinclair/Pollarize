@@ -14,21 +14,27 @@ import random
 
 # Create your views here.
 
+# Sort polls by popularity and return sorted list
 def popular(polls):
     popular = [(poll, poll.votes1 + poll.votes2) for poll in polls]
     popular = sorted(popular, key=lambda x: x[1], reverse=True)
     return [poll[0] for poll in popular]
 
+# Sort polls by pollarizing (closeness to 50/50 answer rate) and return sorted list
 def pollarizing(polls):
+    # Calculate and sort by difference of percentage of option 1 with 50% (ascending order)
     pollarizing = [(poll, abs(((poll.votes1 / (poll.votes1 + poll.votes2)) * 100) - 50)) for poll in polls]
     pollarizing = sorted(pollarizing, key=lambda x: x[1])
     return [poll[0] for poll in pollarizing]
 
+# Format votes string on about page depending on number of votes
 def votes_string(no_votes):
     if no_votes < 1000:
         return str(no_votes) + " votes"
+    # Round to nearest 100 with more than 1,000 votes
     elif no_votes < 1000000:
         return str(round((no_votes / 1000), 1)) + "K votes"
+    # Round to nearest 100,000 with more than 1,000,000 votes
     else:
         return str(round((no_votes / 1000000), 1)) + "M votes"
 
@@ -36,16 +42,21 @@ def index(request):
     return redirect("poll_app:home")
 
 def homepage(request):
+    # Get recent polls
     recent = Poll.objects.order_by('-pub_date')[:3]
+
     polls = Poll.objects.all()
 
+    # Get pollarizing and popular polls
     popular_polls = popular(polls)[:3]
     pollarizing_polls = pollarizing(polls)[:3]
 
+    #Populate dictionary
     context_dict = {"recent": recent,
                     "popular": popular_polls,
                     "pollarizing": pollarizing_polls}
 
+    #Create response render
     response = render(request, 'poll_app/index.html', context=context_dict)
     return response
 
@@ -53,26 +64,41 @@ def about(request):
     return render(request, "poll_app/about.html")
 
 def rankings(request):
+    # Get recent polls
     recent = Poll.objects.order_by('-pub_date')[:10]
+
     polls = Poll.objects.all()
 
+    # Get pollarizing and popular polls
     popular_polls = popular(polls)[:10]
-    pollarizing_polls = pollarizing(polls)[:10]
+    pollarizing_polls = pollarizing(polls)
 
+    #Get most pollarizing poll as champion to show separately on page
     champion = pollarizing_polls[0]
 
+    # Remove champion poll from secondary list if there are enough polls to fill space
+    if len(pollarizing_polls) > 10:
+        pollarizing_polls = pollarizing_polls[1:11]
+    else:
+        pollarizing_polls = pollarizing_polls[:10]
+
+    #Populate dictionary
     context_dict = {"champion": champion,
                     "recent": recent,
                     "popular": popular_polls,
                     "pollarizing": pollarizing_polls}
 
+    #Create response render
     response = render(request, 'poll_app/rankings.html', context=context_dict)
     return response
 
 def random_poll(request):
+    # Get a random poll
     polls = Poll.objects.all()
     the_poll = random.choice(polls)
     the_slug = the_poll.poll_slug
+
+    # Redirect to results or vote page depending on if logged in
     if request.user.is_authenticated:
         return redirect("poll_app:vote", poll_slug=the_slug)
     else:
@@ -137,37 +163,38 @@ def vote(request, poll_slug):
 
 def user(request, user_id):
 
+    # Get user and all their polls
     profile = UserProfile.objects.get(id=user_id)
     polls = Poll.objects.filter(submitter=profile.id)
 
+    # Sort by pollarizing
     polls = pollarizing(polls)
 
+    # Create and populate dictionary
     context_dict = {"profile": profile,
                     "user_polls": polls}
 
+    # Check if user is pollarize champion
     champion = pollarizing(Poll.objects.all())[0].submitter
-
     if profile.id == champion.id:
         context_dict["is_champion"] = True
 
+    # Format text for number of polls
     no_polls = len(polls)
     if no_polls == 1:
         context_dict["no_polls"] = "1 poll"
     else:
         context_dict["no_polls"] = str(no_polls) + " polls"
 
+    #Get total number of votes on all user polls
     no_votes = 0
     for poll in polls:
         no_votes += (poll.votes1 + poll.votes2)
 
+    #Fill dictionary and return response
     context_dict["no_votes"] = votes_string(no_votes)
-
     response = render(request, 'poll_app/user.html', context=context_dict)
     return response
-
-
-    #Test code
-    return render(request, "poll_app/rankings.html", context=context_dict)
 
 class ResultsView(View):
 

@@ -58,6 +58,7 @@
           <datalist id="search-results"></dataset>
         </div>
 
+        <!-- Account picture or login option if no account is logged in -->
         {% if user.is_authenticated %}
             <a id="navbar_account"><img id="profile_icon" src="{{ user.profile_image.url }}" alt="Profile" width=35px height=35px></img> </a>
         {% else %}
@@ -73,7 +74,7 @@
         {% block body_block %}
         {% endblock %}
       </div>
-
+    <!-- Back to top button -->
       <div id="back-to-top-div">
         <script src="{% static 'js/top_scroll.js' %}"></script>
         <img class="back-to-top" id="back-to-top-img" src="{% static 'img/top_arrow.png' %}" height="50px"></img>

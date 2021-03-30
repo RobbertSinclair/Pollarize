@@ -1,6 +1,8 @@
 {% load staticfiles %}
 
+<!--Define global variables for use in balloons.js-->
 <script type="text/javascript">
+
     var balloon_images = ["{% static "img/red-balloon.png" %}",
                           "{% static "img/blue-balloon.png" %}",
                           "{% static "img/cyan-balloon.png" %}",
@@ -10,4 +12,5 @@
                           "{% static "img/orange-balloon.png" %}",
                          ];
 </script>
+<!--Load balloons.js script-->
 <script src="{% static 'js/balloons.js' %}"></script>
