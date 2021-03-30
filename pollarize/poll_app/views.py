@@ -260,6 +260,8 @@ class JSONPollResults(View):
                 "latest_option": latest.option,
             }
             return JsonResponse(dictionary)
+        except VotesIn.DoesNotExist:
+            raise Http404("Votes In doesn't exist")
         except Poll.DoesNotExist:
             raise Http404("Poll doesn't exist")
 
