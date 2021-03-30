@@ -261,7 +261,13 @@ class JSONPollResults(View):
             }
             return JsonResponse(dictionary)
         except VotesIn.DoesNotExist:
-            raise Http404("Votes In doesn't exist")
+            dictionary = {
+                "answer1": the_poll.answer1,
+                "votes1": the_poll.votes1,
+                "answer2": the_poll.answer2,
+                "votes2": the_poll.votes2
+            }
+            return JsonResponse(dictionary)
         except Poll.DoesNotExist:
             raise Http404("Poll doesn't exist")
 
