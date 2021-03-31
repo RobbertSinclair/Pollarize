@@ -569,3 +569,9 @@ li{
     z-index: -1;
     transition: ease-in-out;
 }
+
+#profile-icon {
+    height: 35px;
+    width: 35px;
+    object-fit:cover;
+}

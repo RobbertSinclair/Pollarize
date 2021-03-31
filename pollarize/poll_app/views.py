@@ -168,8 +168,16 @@ def logout_view(request):
     logout(request)
     return redirect(reverse('poll_app:home'))
 
+@login_required
 def account(request):
-    return render(request, "poll_app/account.html")
+    user = request.user
+    profile = UserProfile.objects.get(user=user)
+    context_dict = {"profile": profile}
+    context_dict["polls"] = len(Poll.objects.filter(submitter=user))
+    context_dict["votes_in"] = len(VotesIn.objects.filter(user=user))
+    context_dict["comments"] = len(Comment.objects.filter(submitter=user))
+    return render(request, "poll_app/account.html", context=context_dict)
+
 
 def vote(request, poll_slug):
     poll = Poll.objects.get(poll_slug=poll_slug)

@@ -3,11 +3,41 @@
 
 {% block head_block %}
        <title>Pollarize - Account</title>
+       <script type="text/javascript" src="{% static 'js/account.js' %}"></script> 
+       <link rel="stylesheet" href="{% static 'css/account.css' %}">
 {% endblock %}
 
 {% block body_block %}
-<h1>This is the <em>Account</em> page!</h1>
 {% if user.is_authenticated %}
-<h1>Username: {{ user.username }}</h1>
+<div class="container">
+       <div class="grid-item" id="item1">
+              <img src="{{ profile.profile_image.url }}" id="profile_img" class="profile"></img>
+              <div class="overlay">
+                     <div id="center-image">
+                            <a href="" id="change-image-link">
+                                   Change Profile Image
+                            </a>
+                     </div>
+              </div>
+              <div class="upload_form">
+                     <form id="image_upload">
+                            <input type="file" id="file_upload">
+                            <input type="submit">
+                     </form>
+              </div>
+       </div>
+       <div class="grid-item" id="item2">
+              <h1>Stats</h1>
+              <ul>
+                     <li>Username: {{ user.username }}</li>
+                     {% if user.email %}
+                     <li>Email: {{ user.email }}</li>
+                     {% endif %}
+                     <li>Polls Submitted: {{ polls }}</li>
+                     <li>You have voted in {{ votes_in }} polls</li>
+                     <li>Comments: {{ comments }}</li>
+              </ul>
+       </div>
+</div>
 {% endif %}
 {% endblock %}
