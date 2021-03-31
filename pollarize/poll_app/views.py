@@ -11,6 +11,7 @@ from django.utils import timezone
 from django.urls import reverse
 import json
 import random
+from django.contrib.auth import authenticate, login, logout
 
 # Create your views here.
 
@@ -139,19 +140,36 @@ def register(request):
             user_profile = form.save(commit=False)
             user_profile.user = request.user
             user_profile.save()
-            return redirect(reverse('poll_app:homepage'))
+            return redirect(reverse('poll_app:home'))
         else:
             print(form.errors)
     context_dict = {'form': form}
     
     return render(request, 'poll_app/register.html', context_dict)
 
-def login(request):
-    return render(request, "poll_app/login.html")
+def login_view(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
 
-#This is a placeholder view. Feel free to replace with a logout view.
-def logout(request):
-    return render(request, "poll_app/logout.html")
+        user = authenticate(username=username, password=password)
+
+        if user:
+            if user.is_active:
+                login(request, user)
+                return redirect(reverse('poll_app:home'))
+            else:
+                return HttpResponse("Your Pollarize account is disabled.")
+        else:
+            return HttpResponse("Invalid login details supplied.")
+    else:
+        return render(request, 'poll_app/login.html')
+
+
+@login_required
+def logout_view(request):
+    logout(request)
+    return redirect(reverse('poll_app:home'))
 
 def account(request):
     return render(request, "poll_app/account.html")
