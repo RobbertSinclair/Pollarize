@@ -99,11 +99,8 @@ def random_poll(request):
     the_poll = random.choice(polls)
     the_slug = the_poll.poll_slug
 
-    # Redirect to results or vote page depending on if logged in
-    if request.user.is_authenticated:
-        return redirect("poll_app:vote", poll_slug=the_slug)
-    else:
-        return redirect("poll_app:results", poll_slug=the_slug)
+    return redirect("poll_app:vote", poll_slug=the_slug)
+
 
 def create(request):
     context_dict = {}
@@ -177,7 +174,12 @@ def account(request):
 def vote(request, poll_slug):
     poll = Poll.objects.get(poll_slug=poll_slug)
     context_dict = {"poll": poll}
-    return render(request, "poll_app/vote.html", context=context_dict)
+
+    # Redirect to results or vote page depending on if logged in
+    if request.user.is_authenticated:
+        return render(request, "poll_app/vote.html", context=context_dict)
+    else:
+        return redirect("poll_app:results", poll_slug=poll_slug)
 
 def user(request, user_id):
 
