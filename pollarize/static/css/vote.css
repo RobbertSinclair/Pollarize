@@ -1,72 +1,76 @@
-.vote-div h1 {
-    font-size: 90px;
+#question {
+    color: #FF9C00;
+    font-size: 4em;
+    font-weight: 800;
 }
 
+
 .voting-form button{
-    border: none;
-    font-size: 60px;
-    padding: 20px;
-    text-align: center;
+    padding: 10px;
+    font-size: 2em;
 }
 
 .voting-form {
     margin-top: 5%;
-    margin-left: 30%;
-    margin-right: 30%;
-    width: 40%;
-}
-
-#answer1 {
-    float: left;
+    margin-left: 5%;
+    margin-right: 5%;
 }
 
 .vote-div h2 {
     text-align: center;
-    font-size: 60px;
+    font-size: 1.5em;
+    color: #505050;
+    margin-top: -40px
 }
 
-#answer1:hover {
-    background-color: #505050 !important;
-    color: #FF9C00 !important;
+h3 {
+    color: #505050;
+    font-size: 2.5em;
 }
 
-#answer2 {
+#left_option, #right_option{
+    display: inline-block;
+    text-align: center;
+    width:45%;
+    min-width: 300px;
+    overflow:hidden;
+    border: 3px solid #505050;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+#left_option{
+    float: left;
+}
+
+#right_option {
     float: right;
 }
 
-#answer2:hover {
-    background-color: #FF9C00 !important;
-    color: #505050 !important;
+.vertical_divider{
+    display: inline-block;
+    margin: auto;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    width:5px;
+    height: 300px;
+    background-color: #ff9c00;
+    border-radius: 40px;
 }
 
-@media only screen and (max-width: 700px) {
-    .vote-div h1 {
-        font-size: 30px;
+@media only screen and (max-width: 735px) {
+    #left_option, #right_option{
+      float: none;
+      display: block;
+      margin:auto;
+      margin-top: 25px;
+      margin-bottom: 25px;
     }
 
-    .vote-div h2 {
-        font-size: 20px;
+    .vertical_divider {
+        display: none;
     }
 
-    .voting-form button {
-        font-size: 30px;
-    }
-
-    .voting-form {
-        margin-left: 10%;
-        margin-right: 10%;
-        width: 80%;
-    }
-}
-
-@media only screen and (max-width: 1100px) and (min-width: 700px) {
-    .vote-div h1 {
-        font-size: 60px;
-    }
-
-    .voting-form {
-        margin-left: 15%;
-        margin-right: 15%;
-        width: 70%;
-    }
-}
+  }

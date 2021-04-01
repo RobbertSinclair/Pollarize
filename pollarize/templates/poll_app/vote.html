@@ -8,17 +8,26 @@
 {% endblock %} 
 
 {% block body_block %}
-<div class="vote-div">
-    <h1>{{ poll.question }}</h1>
-    <h2>Submitted by - {{ poll.submitter.username }}</h2>
-    <div class="voting-form">
-        {% if user.is_authenticated %}
-        {% csrf_token %}
-        <button class="orange_button answer-button" id="answer1">{{ poll.answer1 }}</button>
-        <button class="grey_button answer-button" id="answer2">{{ poll.answer2 }}</button>
-        {% else %}
-        <h1><a href="{% url 'poll_app:login' %}">Login</a> to vote.</h1>
-        {% endif %}
-    </div>
-</div>
+        <div class="vote-div">
+            <h1 id="question">{{ poll.question }}</h1>
+            <h2>Submitted by - {{ poll.submitter.username }}</h2>
+            <div class="voting-form">
+                <div id="left_option">
+                    {% csrf_token %}
+                    <h3 class="answer1">{{ poll.answer1 }}</h3>
+                    <div class="action_buttons">
+                        <button class="orange_button answer-button" id="answer1">Vote!</button>
+                    </div>
+                </div>
+
+                <div class="vertical_divider"></div>
+
+                <div id="right_option">
+                    <h3 class="answer2">{{ poll.answer2 }}</h3>
+                    <div class="action_buttons">
+                        <button class="grey_button answer-button" id="answer2">Vote!</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 {% endblock %}

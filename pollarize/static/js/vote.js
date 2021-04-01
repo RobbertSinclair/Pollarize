@@ -9,7 +9,7 @@ $(document).ready(function() {
         var data = {
             poll_slug: poll_slug,
             answer_id: id,
-            the_answer: $("#" + this.id).text(),
+            the_answer: $("." + this.id).text(),
             csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
         }
         $.ajax({
