@@ -87,6 +87,29 @@ class JSONRepliesViewTests(TestCase):
         self.assertEqual(response.status_code, 200)
         for reply in json_dict["comments"]:
             self.assertEqual((reply["id"] == the_comment.id), False)
+        
+class JSONPollResultsTests(TestCase):
+
+    def setUp(self):
+        user = User.objects.get_or_create(username="testUser", password="testPass")[0]
+        user.save()
+        profile = UserProfile.objects.get_or_create(user=user)[0]
+        profile.save()
+        the_poll = Poll.objects.create(question="The Question for this test", answer1="left", answer2="right", user=user)
+        the_poll.save()
+    
+    def test_correct_response(self):
+        the_poll = Poll.objects.get(question="The Question for this test")
+        print(the_poll)
+        the_slug = the_poll.poll_slug
+        print(the_slug)
+        response = self.client.get(reverse("poll_app:json-results", kwargs={"poll_slug": the_slug}))
+        self.assertEqual(response.status_code, 200)
+        json_dict = json.loads(response.content)
+        print(json_dict)
+
+
+
     
 
 
