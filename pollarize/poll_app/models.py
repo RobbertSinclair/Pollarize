@@ -27,6 +27,10 @@ class Poll(models.Model):
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.question)
+        if self.votes1 < 0:
+            self.votes1 = 0
+        if self.votes2 < 0:
+            self.votes2 
         super(Poll, self).save(*args, **kwargs)
 
     def __str__(self):
@@ -39,6 +43,11 @@ class Comment(models.Model):
     votes = models.IntegerField(default=0)
     parent = models.ForeignKey("self", null=True, related_name="comments", on_delete=models.CASCADE, blank=True)
 
+    def save(self, *args, **kwargs):
+        if self.parent == self:
+            self.parent = None
+        super(Comment, self).save(*args, **kwargs) 
+    
     def __str__(self):
         return self.comment
 
