@@ -1,6 +1,7 @@
 from django.test import TestCase
 from poll_app.models import UserProfile, Poll, VotesIn, VotesInComment, Comment
 from django.contrib.auth.models import User
+from django.template.defaultfilters import slugify
 from django.urls import reverse
 import json
 
@@ -95,24 +96,54 @@ class JSONPollResultsTests(TestCase):
         user.save()
         profile = UserProfile.objects.get_or_create(user=user)[0]
         profile.save()
-        the_poll = Poll.objects.create(question="The Question for this test", answer1="left", answer2="right", user=user)
+        the_poll = Poll.objects.create(id=250, question="The Question for this test", answer1="left", answer2="right", submitter=user)
+        the_poll.poll_slug = slugify(the_poll.question)
         the_poll.save()
     
     def test_correct_response(self):
-        the_poll = Poll.objects.get(question="The Question for this test")
+        slug = slugify("The Question for this test")
+        the_poll = Poll.objects.get(id=250)
         print(the_poll)
         the_slug = the_poll.poll_slug
         print(the_slug)
-        response = self.client.get(reverse("poll_app:json-results", kwargs={"poll_slug": the_slug}))
+        response = self.client.get(reverse("poll_app:json-results", kwargs={"poll_slug": slug}))
         self.assertEqual(response.status_code, 200)
         json_dict = json.loads(response.content)
-        print(json_dict)
+        self.assertEqual(json_dict["answer1"], the_poll.answer1)
+        self.assertEqual(json_dict["votes1"], the_poll.votes1)
+        self.assertEqual(json_dict["answer2"], the_poll.answer2)
+        self.assertEqual(json_dict["votes2"], the_poll.votes2)
 
+class JSONAddComment(TestCase):
 
+    def setUp(self):
+        self.user = User.objects.get_or_create(username="testUser", password="testPass")[0]
+        self.user.save()
+        self.profile = UserProfile.objects.get_or_create(user=self.user)[0]
+        self.profile.save()
+        self.poll = Poll.objects.get_or_create(id=251, question="The Question for this test", answer1="left", answer2="right", submitter=self.user)[0]
+        self.poll.poll_slug = slugify(self.poll.question)
+        self.poll.save()
+
+    def test_update_comment(self):
+        test_data = {
+            "comment": "Hello World",
+            "poll": self.poll.poll_slug,
+            "submitter": self.user.username,
+            "parent": "",
+            "children": 0
+        }
+        print(test_data)
+        slug = self.poll.poll_slug
+        response = self.client.post(reverse("poll_app:add-comment"), test_data)
+        self.assertEqual(response.status_code, 200)
+        try:
+            the_comment = Comment.objects.get(poll=self.poll, submitter=self.user, comment=test_data["comment"])
+            exists = True
+        except Comment.DoesNotExist:
+            exists = False
+        self.assertEqual(exists, True)
 
     
 
 
-        
-
-# Create your tests here.
