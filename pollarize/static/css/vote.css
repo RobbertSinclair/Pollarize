@@ -24,8 +24,15 @@
 }
 
 h3 {
-    color: #505050;
     font-size: 2.5em;
+}
+
+h3.answer1 {
+    color: #505050;
+}
+
+h3.answer2 {
+    color: #ff9c00;
 }
 
 #left_option, #right_option{
@@ -34,17 +41,18 @@ h3 {
     width:45%;
     min-width: 300px;
     overflow:hidden;
-    border: 3px solid #505050;
     margin-top: 20px;
     margin-bottom: 20px;
 }
 
 #left_option{
     float: left;
+    background: linear-gradient(180deg, #ff9c00,#f08400);
 }
 
 #right_option {
     float: right;
+    background: linear-gradient(180deg, #505050,#414141);
 }
 
 .vertical_divider{
