@@ -37,7 +37,7 @@ function displayChart(answer1, votes1, answer2, votes2) {
     return chartData;
 }
 
-// This function checks for if there is a change to the results and then it 
+// This function checks every 2 seconds to get the most up to date chart.
 function UpdateChart() {
     var poll_slug = window.location.pathname.split("/")[1];
     var request_url = "/json/" + poll_slug + "/results/";
