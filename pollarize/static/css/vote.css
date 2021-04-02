@@ -83,3 +83,7 @@ h3.answer2 {
     }
 
   }
+
+  a:hover{
+    color: #ff9c00;
+  }

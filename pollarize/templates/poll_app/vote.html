@@ -10,7 +10,7 @@
 {% block body_block %}
         <div class="vote-div">
             <h1 id="question">{{ poll.question }}</h1>
-            <h2>Submitted by - {{ poll.submitter.username }}</h2>
+            <h2>Submitted by <a href="{% url 'poll_app:user' poll.submitter.id %}">{{ poll.submitter.username }}</a></h2>
             <div class="voting-form">
                 <div id="left_option">
                     {% csrf_token %}
