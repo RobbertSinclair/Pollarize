@@ -50,9 +50,22 @@
     border: solid 4px #505050;
 }
 
+#comments {
+    margin: auto;
+    margin-top: 15px;
+    width: 35%;
+    min-width: 600px;
+    padding: 10px;
+}
+
 @media only screen and (max-width: 700px) {
     #add-comment {
         font-size: 14px;
+    }
+
+    #comments {
+        width: 300px;
+        min-width: 300px;
     }
 }
 
@@ -91,14 +104,6 @@
 .form-control {
     width: 80%;
     min-width: 280px;
-}
-
-#comments {
-    margin: auto;
-    margin-top: 15px;
-    width: 30%;
-    min-width: 300px;
-    padding: 10px;
 }
 
 a:hover {
