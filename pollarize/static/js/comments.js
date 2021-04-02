@@ -6,6 +6,13 @@ $(document).ready(function(){
     $(".reply-form").hide();
     $(".hide-reply-form").hide();
     repliesResize();
+    var auth;
+    var username;
+    $.get("/json/user/", function(data) {
+        auth = data.authenticated;
+        username = data.username;
+        console.log(data);
+    });
 
     $(".load-replies").each(function() {
         var id = $(this).attr("id");
@@ -27,6 +34,14 @@ $(document).ready(function(){
             $("#add-comment").attr('rows', 5);
         }
         repliesResize();
+    });
+
+    $(".submit-reply").click(function() {
+        console.log($(this).attr("id") + " add reply clicked");
+        var poll_slug = window.location.pathname.split("/")[1];
+        var parent = $(this).attr("id").replaceAll(/\D/g, "");
+        var children = parseInt($(this).attr("val"));
+        postComment(poll_slug, username, children, parent); 
     })
     
 })
@@ -123,27 +138,56 @@ function postComment(poll_slug, submitter, children, parent) {
                     var vote_string = "Has not Voted";
                 }
                 var profile_pic = data.profile_image;
-                var html_string = "<div class='comment' id='comment-" + data.comment_id + ">"
+                var html_string = "<div class='comment' id='comment-" + data.comment_id + "'>"
                 + "<div class='row'>"
                 + "<div class='col-md'>"
                 + "<div id='comment_title'>"
                 + "<img class='mr-3 rounded-circle profile-img' alt='Profile image' src='" + profile_pic + "' />" 
                 + "<h3>" + submitter + " - " + vote_string + "</h3>"
                 + "</div>"
-                + "<p>" + the_comment + "</p>"
-                + "</div>"
-                + "</div>"
-                + "</div>"; 
+                + "<p>" + the_comment + "</p>"; 
                 
                 if(parent == null) {
+                    var post_comment_string = "postComment('" + poll_slug + "', \'" + submitter + "\', " + data.comment_id + ")";
+                    console.log(post_comment_string);
                     
+                    html_string = html_string + "<button id='load-replies-" + data.comment_id + "' class='btn btn-link orange_button load-replies' value='0' onClick='loadReplies(" + data.comment_id + ")'>Load Replies (0) &#8595;</button>"
+                    + "<button id='hide-replies-" + data.comment_id + "' class='hide-replies btn btn-link orange_button' onClick='hideReplies(" + data.comment_id + ")'>Hide Replies &#8593;</button>"
+                    + "<button id='add-reply-" + data.comment_id + "' class='add-reply btn btn-link grey_button' onClick='showReplyForm(" + data.comment_id + ")'>Reply</button>"
+                    + "<button id='hide-reply-form-" + data.comment_id + "' class='hide-reply-form btn btn-link grey_button' onClick='hideReplyForm(" + data.comment_id + ")'>Cancel</button>"
+                    + "</div>"
+                    + "<div class='col-sm'>"
+                    + "<button id='upvote-" + data.comment_id + "' class='upvote vote-button' onClick='addVote(1, " + data.comment_id + ", 0)'><ion-icon name='chevron-up-outline'></ion-icon></button>"
+                    + "<label id='votes-" + data.comment_id + "'>0</label>"
+                    + "<button id='downvote-" + data.comment_id + "' class='downvote vote-button' onClick='addVote(-1, " + data.comment_id + ", 0)'><ion-icon name='chevron-down-outline'></ion-icon></button>"
+                    + "</div>"
+                    + "<div class='ml-5'>"
+                    + "<form id='reply-form-" + data.comment_id + "' class='ml-5 reply-form' onSubmit='return false;'>"
+                    + "<div class='form-group'>"
+                    + "<label for='reply-text'>Enter Reply:</label><br>"
+                    + "<textarea name='reply-text' class='form-control' cols='30' rows='2' id='add-reply-text-" + data.comment_id + "'></textarea><br>"
+                    + "</div>"
+                    + "<button class='btn btn-link grey_button submit-reply' id='submit-reply-" + data.comment_id + "'>Submit</button>"
+                    + "</form>"
+                    + "</div>"
+                    + "<div id='replies-" + data.comment_id + "' class='row-ml-5 replies'>"
+                    + "</div>"
+                    + "</div>";
+                    
+                    $("#submit-reply-" + parent).attr("val", children + 1);
                     $("#comments").prepend(html_string);
+                    $("#replies-" + data.comment_id).hide();
+                    $("#hide-replies-" + data.comment_id).hide();
+                    $("#load-replies-" + data.comment_id).hide();
+                    $("#reply-form-" + data.comment_id).hide();
+                    $("#hide-reply-form-" + data.comment_id).hide();
 
                     $("#add-comment").val("");
                 } else {
+                    html_string = html_string + "</div></div></div>";
                     $("#replies-" + parent).prepend(html_string);
                     $("#load-replies-" + parent).html("Load Replies (" + data.children + ") &#8595;");
-                    if($("#load-replies-" + parent).is(":hidden") && $("hide-replies-" + parent).is(":hidden")) {
+                    if($("#load-replies-" + parent).is(":hidden") && post_data.children == 0) {
                         $("#load-replies-" + parent).show();
                     }
                     $("#add-reply-text-" + parent).val("");

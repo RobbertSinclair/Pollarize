@@ -27,6 +27,7 @@ urlpatterns = [
     path("json/add-comment-vote/", views.add_comment_votes, name="add-vote"),
     path("json/<slug:poll_slug>/results/", JSONPollResults.as_view(), name="json-results"),
     path("json/add-vote/", views.JSONAddVote, name="json-add-vote"),
-    path("json/search/", views.JSONSearch, name="json-search")
+    path("json/search/", views.JSONSearch, name="json-search"),
+    path("json/user/", views.JSONGetCurrentUser, name="json-user")
     
 ]

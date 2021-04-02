@@ -529,6 +529,14 @@ def JSONSearch(request):
             context_dict["polls"].append(poll_dict)
         return JsonResponse(context_dict)
 
+def JSONGetCurrentUser(request):
+    user = request.user
+    context_dict = {"authenticated": user.is_authenticated}
+    if user.is_authenticated:
+        context_dict["username"] = user.username
+    else:
+        context_dict["username"] = None
+    return JsonResponse(context_dict)
 
 
 
