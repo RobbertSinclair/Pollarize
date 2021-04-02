@@ -495,7 +495,6 @@ class JSONChildComments(View):
                     try:
                         user_vote = VotesInComment.objects.get(poll=parent_comment.poll, user=request.user, comment=comment)
                         new_object["user_vote"] = user_vote.old_votes
-                        print(new_object["user_vote"])
                     except VotesInComment.DoesNotExist:
                         new_object["user_vote"] = 0
                 else:
