@@ -27,7 +27,10 @@ function populateBox(box) {
                var percent2 = 100 - percent1;
 
                //calculate vote string
-               if(total < 1000){
+               if(total == 1){
+                totalString = "1 vote";
+               }
+               else if(total < 1000){
                 totalString = total + " votes";
                }
                else if(total < 1000000){
