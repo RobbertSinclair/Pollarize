@@ -15,6 +15,10 @@
     padding: 5px;
 }
 
+.replies {
+    border-left: 3px solid #505050;
+}
+
 #canvas-space {
     margin-left: 3%;
     margin-right: 3%;
