@@ -69,13 +69,20 @@ function loadReplies(comment_id) {
                 } else {
                     var votes_for = "Has not voted yet";
                 }
-                $("#replies-" + comment_id).append("<div class='comment row' id='comment-" + the_comment.id + 
+                $("#replies-" + comment_id).append("<div class='comment row replies' id='comment-" + the_comment.id +
                 "'><div class='col'><img class='mr-3 rounded-circle profile-img' alt='Profile image' src='" + the_comment.profile_image + "'/><h3>" + the_comment.submitter + " - " + votes_for + "</h3><p>" + the_comment.comment + "</p></div>" + 
                 "<div class='col'><button id='upvote-" + the_comment.id + "'class='upvote vote-button'" +
                 "onClick='addVote(1, " + the_comment.id + ", " + the_comment.votes + ")'><ion-icon name='chevron-up-outline'></ion-icon></button>" +
                 "<label id='votes-" + the_comment.id + "'>" + the_comment.votes + "</label>" + 
                 "<button id='downvote-" + the_comment.id + "' class='downvote vote-button' onClick='addVote(-1, " + the_comment.id + ", " + the_comment.votes + ")'><ion-icon name='chevron-down-outline'></ion-icon></button></div></div>");
-                
+
+                if (the_comment.user_vote > 0){
+                    $("#upvote-" + the_comment.id).addClass("upvote-selected");
+                }
+                else if (the_comment.user_vote < 0){
+                    $("#downvote-" + the_comment.id).addClass("downvote-selected");
+                }
+
             }
         });
         

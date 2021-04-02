@@ -15,6 +15,10 @@
     padding: 5px;
 }
 
+.replies {
+    border-left: 3px solid #505050;
+}
+
 #canvas-space {
     margin-left: 3%;
     margin-right: 3%;
@@ -22,6 +26,11 @@
 
 #poll-question {
     font-size: 55px;
+}
+
+#author_text {
+    font-size: 1.5em;
+    margin-top: -30px;
 }
 
 #comment-form {
@@ -41,9 +50,22 @@
     border: solid 4px #505050;
 }
 
+#comments {
+    margin: auto;
+    margin-top: 15px;
+    width: 35%;
+    min-width: 600px;
+    padding: 10px;
+}
+
 @media only screen and (max-width: 700px) {
     #add-comment {
         font-size: 14px;
+    }
+
+    #comments {
+        width: 300px;
+        min-width: 300px;
     }
 }
 
@@ -82,14 +104,6 @@
 .form-control {
     width: 80%;
     min-width: 280px;
-}
-
-#comments {
-    margin: auto;
-    margin-top: 15px;
-    width: 30%;
-    min-width: 300px;
-    padding: 10px;
 }
 
 a:hover {

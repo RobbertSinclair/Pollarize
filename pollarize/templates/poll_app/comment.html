@@ -2,17 +2,18 @@
 {% load staticfiles %}
 
 {% block head_block %}
-    <title>Poll Results</title>
+    <title>Pollarize - Results</title>
     <script src="{% static 'js/comments.js' %}"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
     <script src="{% static 'js/result.js' %}"></script>
+    <script src="{% static 'js/comment_ratings.js' %}"></script>
     <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
     <link rel="stylesheet" href="{% static 'css/comment.css' %}"/>
 {% endblock %}
 
 {% block body_block %}
-    <h1 id="poll-question">{{ poll.question }}</h1>
-    <h1>Submitted by - <a href="{% url 'poll_app:user' poll.submitter.id %}">{{ poll.submitter.username }}</a></h1>
+    <h1 id="poll-question"><em>{{ poll.question }}</em></h1>
+    <h1 id="author_text">Submitted by - <a href="{% url 'poll_app:user' poll.submitter.id %}">{{ poll.submitter.username }}</a></h1>
     {% if user.is_authenticated and votes_in %}
     <h1>You voted for {{ votes_in.option }} <a href="{% url 'poll_app:vote' poll.poll_slug %}">Click here to change your vote.</a></h1>
     {% elif user.is_authenticated %}

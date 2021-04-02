@@ -24,9 +24,15 @@ def popular(polls):
 # Sort polls by pollarizing (closeness to 50/50 answer rate) and return sorted list
 def pollarizing(polls):
     # Calculate and sort by difference of percentage of option 1 with 50% (ascending order)
-    pollarizing = [(poll, abs(((poll.votes1 / (poll.votes1 + poll.votes2)) * 100) - 50)) for poll in polls]
+    pollarizing = [(poll, pollarizing_score(poll)) for poll in popular(polls)]
     pollarizing = sorted(pollarizing, key=lambda x: x[1])
     return [poll[0] for poll in pollarizing]
+
+def pollarizing_score(poll):
+    total = poll.votes1 + poll.votes2
+    if total == 0:
+        return 100
+    return abs(((poll.votes1 / (total)) * 100) - 50)
 
 # Format votes string on about page depending on number of votes
 def votes_string(no_votes):
@@ -446,6 +452,21 @@ def add_comment_votes(request):
         context_dict = {"votes": the_comment.votes, "voted_before": voted_before }
         return JsonResponse(context_dict)
 
+def get_comment_votes(request, comment_id):
+    context_dict = {}
+    user = request.user
+
+    the_comment = Comment.objects.get(id=comment_id)
+    the_poll = the_comment.poll
+    if user.is_authenticated:
+        try:
+            votes_in = VotesInComment.objects.get(user=user, poll=the_poll, comment=the_comment)
+            print(votes_in)
+            context_dict["vote"] = votes_in.old_votes
+        except VotesInComment.DoesNotExist:
+            context_dict["vote"] = 0
+    return JsonResponse(context_dict)
+
 
 
 class JSONChildComments(View):
@@ -475,6 +496,15 @@ class JSONChildComments(View):
                     new_object["vote_option"] = vote_in.option
                 except VotesIn.DoesNotExist:
                     new_object["vote_option"] = None
+
+                if request.user.is_authenticated:
+                    try:
+                        user_vote = VotesInComment.objects.get(poll=parent_comment.poll, user=request.user, comment=comment)
+                        new_object["user_vote"] = user_vote.old_votes
+                    except VotesInComment.DoesNotExist:
+                        new_object["user_vote"] = 0
+                else:
+                    new_object["user_vote"] = 0
                 dictionary["comments"].append(new_object)
 
         except Comment.DoesNotExist:
