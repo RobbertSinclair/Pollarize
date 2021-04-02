@@ -54,7 +54,7 @@ function loadReplies(comment_id) {
                 } else {
                     var votes_for = "Has not voted yet";
                 }
-                var reply_html = $("#replies-" + comment_id).append("<div class='comment row replies' id='comment-" + the_comment.id +
+                $("#replies-" + comment_id).append("<div class='comment row replies' id='comment-" + the_comment.id +
                 "'><div class='col'><img class='mr-3 rounded-circle profile-img' alt='Profile image' src='" + the_comment.profile_image + "'/><h3>" + the_comment.submitter + " - " + votes_for + "</h3><p>" + the_comment.comment + "</p></div>" + 
                 "<div class='col'><button id='upvote-" + the_comment.id + "'class='upvote vote-button'" +
                 "onClick='addVote(1, " + the_comment.id + ", " + the_comment.votes + ")'><ion-icon name='chevron-up-outline'></ion-icon></button>" +
