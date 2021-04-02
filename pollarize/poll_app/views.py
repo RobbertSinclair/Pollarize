@@ -24,9 +24,15 @@ def popular(polls):
 # Sort polls by pollarizing (closeness to 50/50 answer rate) and return sorted list
 def pollarizing(polls):
     # Calculate and sort by difference of percentage of option 1 with 50% (ascending order)
-    pollarizing = [(poll, abs(((poll.votes1 / (poll.votes1 + poll.votes2)) * 100) - 50)) for poll in polls]
+    pollarizing = [(poll, pollarizing_score(poll)) for poll in popular(polls)]
     pollarizing = sorted(pollarizing, key=lambda x: x[1])
     return [poll[0] for poll in pollarizing]
+
+def pollarizing_score(poll):
+    total = poll.votes1 + poll.votes2
+    if total == 0:
+        return 100
+    return abs(((poll.votes1 / (total)) * 100) - 50)
 
 # Format votes string on about page depending on number of votes
 def votes_string(no_votes):
