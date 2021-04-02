@@ -7,6 +7,15 @@ $(document).ready(function(){
     $(".hide-reply-form").hide();
     repliesResize();
 
+    $(".load-replies").each(function() {
+        var id = $(this).attr("id");
+        var the_string = $(this).html();
+        var reply_length = parseInt(the_string.replaceAll(/\D/g, ""), 10);
+        if (reply_length == 0) {
+            $("#" + id).hide();
+        }
+    });
+    
     if(window.innerWidth <= 500) {
         $("#add-comment").attr('rows', 2);
     }
@@ -37,10 +46,16 @@ function loadReplies(comment_id) {
     $("#loading-" + comment_id).show();
     if (reply_children_count == 1) {
         $.get("/json/" + comment_id + "/child-comments", function( data ) {
+            console.log(data);
             for (var i = 0; i < data.comments.length; i++) {
                 var the_comment = data.comments[i];
+                if (the_comment.vote_option != null) {
+                    var votes_for = "Voted for " + the_comment.vote_option;
+                } else {
+                    var votes_for = "Has not voted yet";
+                }
                 $("#replies-" + comment_id).append("<div class='comment row' id='comment-" + the_comment.id + 
-                "'><div class='col'><img class='mr-3 rounded-circle profile-img' alt='Profile image' src='" + the_comment.profile_image + "'/><h3>" + the_comment.submitter + "</h3><p>" + the_comment.comment + "</p></div>" + 
+                "'><div class='col'><img class='mr-3 rounded-circle profile-img' alt='Profile image' src='" + the_comment.profile_image + "'/><h3>" + the_comment.submitter + " - " + votes_for + "</h3><p>" + the_comment.comment + "</p></div>" + 
                 "<div class='col'><button id='upvote-" + the_comment.id + "'class='upvote vote-button'" +
                 "onClick='addVote(1, " + the_comment.id + ", " + the_comment.votes + ")'><ion-icon name='chevron-up-outline'></ion-icon></button>" +
                 "<label id='votes-" + the_comment.id + "'>" + the_comment.votes + "</label>" + 
@@ -101,13 +116,19 @@ function postComment(poll_slug, submitter, children, parent) {
             data: post_data,
             success:function(data)
             {
+                console.log(data);
+                if (data.vote_option != null) {
+                    var vote_string = "Voted for " + data.vote_option;
+                } else {
+                    var vote_string = "Has not Voted";
+                }
                 var profile_pic = data.profile_image;
                 var html_string = "<div class='comment' id='comment-" + data.comment_id + ">"
                 + "<div class='row'>"
                 + "<div class='col-md'>"
                 + "<div id='comment_title'>"
                 + "<img class='mr-3 rounded-circle profile-img' alt='Profile image' src='" + profile_pic + "' />" 
-                + "<h3>" + submitter + "</h3>"
+                + "<h3>" + submitter + " - " + vote_string + "</h3>"
                 + "</div>"
                 + "<p>" + the_comment + "</p>"
                 + "</div>"
@@ -122,6 +143,9 @@ function postComment(poll_slug, submitter, children, parent) {
                 } else {
                     $("#replies-" + parent).prepend(html_string);
                     $("#load-replies-" + parent).html("Load Replies (" + data.children + ") &#8595;");
+                    if($("#load-replies-" + parent).is(":hidden") && $("hide-replies-" + parent).is(":hidden")) {
+                        $("#load-replies-" + parent).show();
+                    }
                     $("#add-reply-text-" + parent).val("");
                     $("#reply-form-" + parent).slideUp();
                     $("#add-reply-" + parent).show();

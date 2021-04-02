@@ -342,7 +342,6 @@ class JSONComments(View):
 
     def get(self, request, poll_slug):
         
-
         try:
             poll = Poll.objects.get(poll_slug=poll_slug)
             
@@ -353,14 +352,20 @@ class JSONComments(View):
             for comment in comments:
                 the_user = comment.submitter
                 user_profile = UserProfile.objects.get(user=the_user)
+                VoteIn = VotesIn.objects.get(user=the_user, poll=poll)
                 new_object = { 
                     "id": comment.id, 
                     "comment": comment.comment, 
                     "submitter": the_user.username,
                     "profile_image": user_profile.profile_image.url, 
                     "votes": comment.votes, 
-                    "parent": comment.parent
+                    "parent": comment.parent,
                     }
+                try:
+                    VoteIn = VotesIn.objects.get(user=the_user, poll=poll)
+                    new_object["option"] = VoteIn.option
+                except VotesIn.DoesNotExist:
+                    new_object["option"] = None
                 dictionary["comments"].append(new_object)
         
         except Comment.DoesNotExist:
@@ -403,6 +408,11 @@ def add_comment(request):
         context_dict["profile_image"] = user_profile.profile_image.url
         context_dict["comment_id"] = new_comment.id
         context_dict["children"] = children + 1
+        try:
+            vote_in = VotesIn.objects.get(user=user, poll=the_poll)
+            context_dict["vote_option"] = vote_in.option
+        except VotesIn.DoesNotExist:
+            context_dict["vote_option"] = None
         context_dict["message"] = "SUCCESS"
 
         return JsonResponse(context_dict)
@@ -460,6 +470,11 @@ class JSONChildComments(View):
                     "profile_image": user_profile.profile_image.url, 
                     "votes": comment.votes,
                     }
+                try:
+                    vote_in = VotesIn.objects.get(poll=parent_comment.poll, user=comment.submitter)
+                    new_object["vote_option"] = vote_in.option
+                except VotesIn.DoesNotExist:
+                    new_object["vote_option"] = None
                 dictionary["comments"].append(new_object)
 
         except Comment.DoesNotExist:

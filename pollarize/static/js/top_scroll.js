@@ -4,14 +4,10 @@ $(document).ready(function() {
     $(".back-to-top").hide();
     
     $(window).scroll(function() {
-        console.log($(this).scrollTop());
         var max_scroll = 100;
-
         if($(this).scrollTop() > max_scroll) {
-            console.log("Back To Top shows")
             $(".back-to-top").show();
         } else {
-            console.log("Back to top does not show");
             $(".back-to-top").hide();
         }
     });
