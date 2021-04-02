@@ -2,6 +2,10 @@
 
 WAD2 Team 9b project. A web application based around polling
 
+* Robbert Sinclair - 2432710S
+* Adam Fairlie - {PUT STUDENT ID HERE}
+* Ciaran Carr - {PUT STUDENT ID HERE}
+
 # Technologies Used
 
 For this project we made use of several technologies these include
