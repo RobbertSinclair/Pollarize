@@ -490,6 +490,16 @@ class JSONChildComments(View):
                     new_object["vote_option"] = vote_in.option
                 except VotesIn.DoesNotExist:
                     new_object["vote_option"] = None
+
+                if request.user.is_authenticated:
+                    try:
+                        user_vote = VotesInComment.objects.get(poll=parent_comment.poll, user=request.user, comment=comment)
+                        new_object["user_vote"] = user_vote.old_votes
+                        print(new_object["user_vote"])
+                    except VotesInComment.DoesNotExist:
+                        new_object["user_vote"] = 0
+                else:
+                    new_object["user_vote"] = 0
                 dictionary["comments"].append(new_object)
 
         except Comment.DoesNotExist:
