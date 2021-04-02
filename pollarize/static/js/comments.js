@@ -19,7 +19,6 @@ $(document).ready(function(){
         }
         repliesResize();
     })
-
     
 })
 
@@ -103,21 +102,17 @@ function postComment(poll_slug, submitter, children, parent) {
             success:function(data)
             {
                 var profile_pic = data.profile_image;
-                var html_string = "<div class='comment' id='comment-" + data.comment_id + "' />"
+                var html_string = "<div class='comment' id='comment-" + data.comment_id + ">"
                 + "<div class='row'>"
-                + "<div class='col'>"
+                + "<div class='col-md'>"
+                + "<div id='comment_title'>"
                 + "<img class='mr-3 rounded-circle profile-img' alt='Profile image' src='" + profile_pic + "' />" 
-                + "<h3>" + submitter + "</h3>" 
+                + "<h3>" + submitter + "</h3>"
+                + "</div>"
                 + "<p>" + the_comment + "</p>"
-                + "</div>" 
-                + "<div class='col'>"
-                + "<button id='upvote-" + data.comment_id + "' class='upvote vote-button' onclick='addVote(1, " + data.comment_id + ", 0)'><ion-icon name='chevron-up-outline'></ion-icon></button>"
-                + "<label id='votes-" + data.comment_id + "'>0</label>"
-                + "<button id='downvote-" + data.comment_id + "' class='downvote vote-button' onclick='addVote(-1, " + data.comment_id + ", 0)'><ion-icon name='chevron-down-outline'></ion-icon></button>"
                 + "</div>"
                 + "</div>"
                 + "</div>"; 
-                
                 
                 if(parent == null) {
                     

@@ -343,7 +343,7 @@ li{
 
 /* Make titles orange on hover */
 .poll_box h1 a:hover{
-    color:#ffc073
+    color: #ffc073;
 }
 
 /*Styling for poll author text*/
