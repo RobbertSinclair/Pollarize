@@ -446,6 +446,21 @@ def add_comment_votes(request):
         context_dict = {"votes": the_comment.votes, "voted_before": voted_before }
         return JsonResponse(context_dict)
 
+def get_comment_votes(request, comment_id):
+    context_dict = {}
+    user = request.user
+
+    the_comment = Comment.objects.get(id=comment_id)
+    the_poll = the_comment.poll
+    if user.is_authenticated:
+        try:
+            votes_in = VotesInComment.objects.get(user=user, poll=the_poll, comment=the_comment)
+            print(votes_in)
+            context_dict["vote"] = votes_in.old_votes
+        except VotesInComment.DoesNotExist:
+            context_dict["vote"] = 0
+    return JsonResponse(context_dict)
+
 
 
 class JSONChildComments(View):

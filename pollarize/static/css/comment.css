@@ -28,6 +28,11 @@
     font-size: 55px;
 }
 
+#author_text {
+    font-size: 1.5em;
+    margin-top: -30px;
+}
+
 #comment-form {
     margin-left: 3%;
 }
