@@ -14,16 +14,10 @@
               <img src="{{ profile.profile_image.url }}" id="profile_img" class="profile"></img>
               <div class="overlay">
                      <div id="center-image">
-                            <a href="" id="change-image-link">
+                            <a href="{% url 'poll_app:register' %}" id="change-image-link">
                                    Change Profile Image
                             </a>
                      </div>
-              </div>
-              <div class="upload_form">
-                     <form id="image_upload">
-                            <input type="file" id="file_upload">
-                            <input type="submit">
-                     </form>
               </div>
        </div>
        <div class="grid-item" id="item2">

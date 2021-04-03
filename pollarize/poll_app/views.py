@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.template.defaultfilters import slugify
 from django.utils import timezone
 from django.urls import reverse
+from django.db.utils import IntegrityError
 import json
 import random
 from django.contrib.auth import authenticate, login, logout
@@ -143,11 +144,20 @@ def register(request):
 
     if request.method == 'POST':
         print(request.POST)
+        print(request.FILES)
         form = UserProfileForm(request.POST, request.FILES)
         if form.is_valid():
             user_profile = form.save(commit=False)
-            user_profile.user = request.user
-            user_profile.save()
+            try:
+                user_profile.user = request.user
+                user_profile.save()
+            except IntegrityError:
+                the_file = request.FILES["profile_image"]
+                old_profile = UserProfile.objects.get(user=request.user)
+                old_profile.profile_image = the_file
+                print("User Profile Exists")
+                old_profile.save()
+                
             return redirect(reverse('poll_app:home'))
         else:
             print(form.errors)

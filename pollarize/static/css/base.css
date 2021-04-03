@@ -199,6 +199,9 @@ li{
             margin-top: -6px;
             margin-bottom: 0;
             border-radius: 50%; /*Make circular*/
+            height: 35px;
+            width: 35px;
+            object-fit: cover;
         }
 
         /* Adjust search box and logo size at smaller resolutions to keep navbar one line long */
