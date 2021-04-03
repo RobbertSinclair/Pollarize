@@ -16,6 +16,7 @@ urlpatterns = [
     path("logout/", views.logout_view, name="logout"),
     path("register/", views.register, name="register"),
     path("account/", views.account, name="account"),
+    path('register/', views.register, name='register'),
     path("<slug:poll_slug>/vote/", views.vote, name="vote"),
     path("user/<int:user_id>/", views.user, name="user"),
     path("<slug:poll_slug>/results/", ResultsView.as_view(), name="results"),
