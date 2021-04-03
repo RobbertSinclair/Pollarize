@@ -17,6 +17,8 @@ For this project we made use of several technologies these include
 * The Upvote and Downvote buttons contains icons from https://ionicons.com
   * The Upvote icon is the "chevron-up-outline" icon
   * The Downvote icon is the "chevron-down-outline" icon
+* We have made use of Google Fonts. We have used the "Open Sans" font
+  * Link: https://fonts.google.com/specimen/Open+Sans#standard-styles
 
 # Hosting
 
