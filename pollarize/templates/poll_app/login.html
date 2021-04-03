@@ -7,6 +7,9 @@
 {% endblock %}
 
 {% block body_block %}
+       {% if error %}
+              <div class="error_box">{{ error }}</div>
+       {% endif %}
        <h1 id="title">Welcome back to <em>Pollarize!</em></h1>
        <div class="divider"></div>
        <div id="login_box">

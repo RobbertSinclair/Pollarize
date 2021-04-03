@@ -150,7 +150,7 @@ def register(request):
     
     return render(request, 'poll_app/register.html', context_dict)
 
-def login_view(request):
+def login_view(request, error=None):
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -162,16 +162,17 @@ def login_view(request):
                 login(request, user)
                 return redirect(reverse('poll_app:home'))
             else:
-                return HttpResponse("Your Pollarize account is disabled.")
+                return render(request, 'poll_app/login.html',
+                context={"error": "Your Pollarize account is disabled."})
         else:
-            return HttpResponse("Invalid login details supplied.")
+            return render(request, 'poll_app/login.html', context = {"error": "Your username and password don't match, try again"})
     else:
         return render(request, 'poll_app/login.html')
 
 
-@login_required
 def logout_view(request):
-    logout(request)
+    if request.user.is_authenticated:
+        logout(request)
     return redirect(reverse('poll_app:home'))
 
 @login_required

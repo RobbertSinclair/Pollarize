@@ -16,6 +16,10 @@ body{
     width:100%;
 }
 
+::selection {
+  background: #ffc073; /* WebKit/Blink Browsers */
+}
+
 a {
     color: inherit;
 }
