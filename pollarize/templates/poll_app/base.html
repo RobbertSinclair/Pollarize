@@ -63,6 +63,7 @@
             <a id="navbar_account"><img id="profile_icon" src="{{ user.user_profile.profile_image.url }}" alt="Profile" width=35px height=35px></img> </a>
         {% else %}
             <a id="navbar_login" href="{% url 'poll_app:login' %}">Log In</a>
+            <a id="navbar_register" href="{% url 'registration_register' %}">Register</a>
         {% endif %}
 
     </div>
