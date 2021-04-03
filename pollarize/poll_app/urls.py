@@ -30,6 +30,7 @@ urlpatterns = [
     path("json/add-vote/", views.JSONAddVote, name="json-add-vote"),
     path("json/search/", views.JSONSearch, name="json-search"),
     path("json/user/", views.JSONGetCurrentUser, name="json-user"),
-    path("json/<int:comment_id>/rating/", views.get_comment_votes, name="json-comment-rating")
+    path("json/<int:comment_id>/rating/", views.get_comment_votes, name="json-comment-rating"),
+    path("json/delete-comment/", views.JSONDeleteComment, name="json-delete-comment")
     
 ]

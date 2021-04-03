@@ -574,6 +574,14 @@ def JSONGetCurrentUser(request):
         context_dict["username"] = None
     return JsonResponse(context_dict)
 
-
+def JSONDeleteComment(request):
+    if request.method == "POST":
+        comment_id = request.POST["comment_id"]
+        try:
+            comment = Comment.objects.get(id=comment_id)
+            comment.delete()
+            return HttpResponse("Success")
+        except Comment.DoesNotExist:
+            raise Http404("Comment Not Found")
 
     

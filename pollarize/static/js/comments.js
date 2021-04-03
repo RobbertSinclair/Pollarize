@@ -39,12 +39,39 @@ $(document).ready(function(){
     $(".submit-reply").click(function() {
         console.log($(this).attr("id") + " add reply clicked");
         var poll_slug = window.location.pathname.split("/")[1];
-        var parent = $(this).attr("id").replaceAll(/\D/g, "");
+        var parent = getCommentId($(this).attr("id"));
         var children = parseInt($(this).attr("val"));
         postComment(poll_slug, username, children, parent); 
+    });
+
+    $(".delete-btn").click(function() {
+        var the_id = $(this).attr("id");
+        the_id = parseInt(getCommentId(the_id));
+        deleteComment(the_id);
     })
     
-})
+});
+
+function getCommentId(the_id) {
+    var the_id = the_id.replaceAll(/\D/g, "");
+    return the_id;
+}
+
+function deleteComment(the_id) {
+    var deleteData = {
+        comment_id: the_id,
+        csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val()
+    };
+    var the_url = "/json/delete-comment/"
+    $.ajax({
+        type: "POST",
+        url: the_url,
+        data: deleteData,
+        success: function(data) {
+            $("#comment-" + the_id).remove();
+        }
+    })
+}
 
 function repliesResize() {
     if(window.innerWidth <= 1000) {
