@@ -7,20 +7,11 @@
 {% endblock %}
 
 {% block body_block %}
-<<<<<<< HEAD
 <style type="text/css">
     
        .input{
               width: 100%;
        }
-=======
-<div class="container">
-       <h1>Create Poll</h1>
-	<div class="row">
-              
-		<div class="col-lg-7 offset-lg-1">
-                     <form id="workout_form" method="post" action="/create_poll/">{% csrf_token %}
->>>>>>> f7ce870d4d34d784cac6116852bd52af645319d5
 
        .container{
               padding:20px;
@@ -65,7 +56,6 @@
                                    <div class="alert alert-warning">
                                           <strong>Warning!</strong> A poll must have a question and two answers.
                                    </div>
-<<<<<<< HEAD
                                    {% endif %}
        
                                    {% for hidden in form.hidden_fields %} 
@@ -91,12 +81,6 @@
                                    <button class="orange_button" formaction='/create_poll/'>Create Poll</button>
                             </form>
                      </div>
-=======
-                    
-                            {% endfor %}
-                            <button class="btn button_green" formaction='{% url "poll_app:create" %}'>Create Poll</button>
-                     </form>
->>>>>>> f7ce870d4d34d784cac6116852bd52af645319d5
               </div>
        </div>
 </div>
