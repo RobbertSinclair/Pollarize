@@ -76,7 +76,7 @@
                         <form id="reply-form-{{comment.comment.id}}" class="ml-5 reply-form" onSubmit="return false;">
                             <div class="form-group">
                                 <label for="reply-text">Enter Reply:</label><br>
-                                <textarea name="reply-text" class="form-control" cols="30" rows="2" id="add-reply-text-{{comment.comment.id}}"></textarea><br>
+                                <textarea name="reply-text" class="form-control reply-text" cols="30" rows="2" id="add-reply-text-{{comment.comment.id}}"></textarea><br>
                             </div>
                             <button class="btn btn-link grey_button submit-reply" val="{{ comment.children }}" id="submit-reply-{{comment.comment.id}}">Submit</button>
                         </form>

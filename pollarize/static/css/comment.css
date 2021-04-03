@@ -58,16 +58,7 @@
     padding: 10px;
 }
 
-@media only screen and (max-width: 700px) {
-    #add-comment {
-        font-size: 14px;
-    }
 
-    #comments {
-        width: 300px;
-        min-width: 300px;
-    }
-}
 
 .loading-image {
     width: 20px;
@@ -156,4 +147,29 @@ h3 a:hover {
 
 p {
     margin-left: 10px;
+}
+
+.reply-text {
+    padding: 10px;
+    font-size: 15px;
+    font-family: 'Open Sans', sans-serif;
+    border-radius: 10px;
+    border: solid 2px;
+    
+}
+
+@media only screen and (max-width: 700px) {
+    #add-comment {
+        font-size: 14px;
+    }
+
+    #comments {
+        width: 300px;
+        min-width: 300px;
+    }
+
+    .reply-text {
+        padding: 3px;
+        font-size: 12px;
+    }
 }
