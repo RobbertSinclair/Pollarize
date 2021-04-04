@@ -30,7 +30,7 @@ class Poll(models.Model):
         if self.votes1 < 0:
             self.votes1 = 0
         if self.votes2 < 0:
-            self.votes2 
+            self.votes2 = 0
         super(Poll, self).save(*args, **kwargs)
 
     def __str__(self):

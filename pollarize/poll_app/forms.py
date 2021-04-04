@@ -16,7 +16,7 @@ class CreatePollForm(forms.ModelForm):
 
     class Meta:
         model = Poll
-        fields = ['question', 'answer1', 'answer2']
+        fields = ('question', 'answer1', 'answer2')
 
 class UserProfileForm(forms.ModelForm):
 
