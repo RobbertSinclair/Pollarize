@@ -577,8 +577,23 @@ li{
     transition: ease-in-out;
 }
 
+/* Profile picture styling */
 #profile-icon {
     height: 35px;
     width: 35px;
     object-fit:cover;
 }
+
+/* Box for showing validation errors to user */
+  .error_box {
+    background-color: #ff9393;
+    color: #cf0303;
+    margin: auto;
+    width: 50%;
+    min-width: 300px;
+    text-align: center;
+    font-weight: 700;
+    border: 5px solid #cf0303;
+    border-radius: 30px;
+    padding: 20px 0px;
+  }

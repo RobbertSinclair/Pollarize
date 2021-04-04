@@ -193,8 +193,27 @@ def logout_view(request):
 @login_required
 def account(request):
     user = request.user
+
     profile = UserProfile.objects.get(user=user)
     context_dict = {"profile": profile}
+
+    if request.method == 'POST':
+        password = request.POST.get('password')
+
+        user = authenticate(username=user.username, password=password)
+
+        if user:
+            logout(request)
+            try:
+                user_to_delete = User.objects.get(username=user.username)
+                user_to_delete.delete()
+            except:
+                print("User not found")
+
+            return redirect(reverse('poll_app:home'))
+        else:
+            context_dict["error"] = "Couldn't delete account, did you enter your password correctly?"
+
     context_dict["polls"] = len(Poll.objects.filter(submitter=user))
     context_dict["votes_in"] = len(VotesIn.objects.filter(user=user))
     context_dict["comments"] = len(Comment.objects.filter(submitter=user))
