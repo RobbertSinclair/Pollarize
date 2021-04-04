@@ -602,14 +602,23 @@ ul li::before {
 
 /* Box for showing validation errors to user */
   .error_box {
-    background-color: #ff9393;
-    color: #cf0303;
+    background-color: #ff9393; /* Light red background */
+    color: #cf0303; /* Dark red text */
+
     margin: auto;
+    text-align: center;
+    padding: 20px 0px;
+    border: 5px solid #cf0303; /* Dark red border */
+    border-radius: 30px; /* Rounded border */
+
     width: 50%;
     min-width: 300px;
-    text-align: center;
     font-weight: 700;
-    border: 5px solid #cf0303;
-    border-radius: 30px;
-    padding: 20px 0px;
   }
+
+@media only screen and (max-width: 400px) {
+     /* Reduce Poll box size */
+     .poll_box, .centre_poll_box {
+          max-width: 300px;
+     }
+}
