@@ -5,10 +5,14 @@
     max-height: 300px;
 }
 
+li{
+    font-size: 1.5em;
+    font-weight: 700;
+    color:#505050;
+}
+
 /* Page text styling */
-#title{
-    font-size: 4em;
-    font-weight: 800;
+.about_title{
     margin-top: 100px;
 }
 

@@ -3,11 +3,11 @@
     text-align:left;
     margin-block-start: 10px !important;
     margin-block-end: 0 !important;
-    font-size: 14px !important;
+    font-size: 1em !important;
 }
 
 .form-message {
-    font-size: 20px;
+    font-size: 1em;
 }
 
 #password1-div {
@@ -52,4 +52,67 @@
     .form-message {
         font-size: 16px;
     }
+}
+
+.centre {
+    margin: auto;
+    text-align: center;
+
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    padding: 20px 10px;
+    margin-top: 30px;
+    width: 50%;
+    min-width: 800px;
+    height: 500px;
+    background: linear-gradient(180deg, #505050, #414141);
+    border-radius: 50px;
+}
+
+#registration_form{
+    margin: auto;
+    text-align: center;
+}
+
+#registration_form input{
+    margin: auto;
+    text-align: center;
+    width: 250px;
+}
+
+#registration_form input:focus {
+    outline: 2px solid #ff9c00;
+}
+
+.help_text{
+    margin: auto;
+    text-align: center;
+    font-size: 1em;
+    font-weight: 700;
+    color: #ff9c00;
+    margin-top: 5px;
+}
+
+h3 {
+    font-size: 1.8em;
+    color: #ff9c00;
+    font-weight: 800;
+}
+
+h2 {
+    font-size: 2em;
+    text-align: center;
+    margin-top: 50px;
+    color: #505050;
+    margin-bottom: -5px;
+}
+
+form {
+    margin: auto;
+    text-align: center;
 }

@@ -149,12 +149,20 @@ def register(request):
                 the_file = request.FILES["profile_image"]
                 old_profile = UserProfile.objects.get(user=request.user)
                 old_profile.profile_image = the_file
-                print("User Profile Exists")
                 old_profile.save()
                 
             return redirect(reverse('poll_app:home'))
         else:
             print(form.errors)
+    else:
+        user = request.user
+        if user.is_authenticated:
+            profile = UserProfile.objects.get_or_create(user=request.user)[0]
+            print(profile)
+            if not profile.profile_image:
+                profile.profile_image = 'default.png'
+                profile.save()
+
     context_dict = {'form': form}
     
     return render(request, 'poll_app/registration.html', context_dict)

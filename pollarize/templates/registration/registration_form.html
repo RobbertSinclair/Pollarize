@@ -8,6 +8,9 @@
 {% endblock %}
 
 {% block body_block %}
+<h1 id="title">Create an <em>Account!</em></h1>
+<div class="divider"></div>
+
 <div class="container col-lg-7 offset-lg-1">
 	<div class="row">
 		<div class="col-lg-7 offset-lg-1">
@@ -23,20 +26,31 @@
 
                     <div class="card bg-dark border curved text-white">
                            
-                        <p class="centre">{{ field.name }}</p>
-                        {{ field.help_text }}
-                        <p class="centre">{{field}}</p>
-                   
+                        <h3 class="centre field_name" id="name_{{ field.name }}">{{ field.name }}</h3>
+                        <p class="centre field_input" id="field_{{ field.name }}">{{field}}</p>
+                        <div class="help_text" id="help_{{ field.name }}">
+                            {{ field.help_text }}
+                        </div>
+
                     </div>
 
                     </br>
          
                 {% endfor %} 
-                
-                <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
+                <div class="action_buttons">
+                    <button type="submit">Register</button>
+                </div>
+
                 
             </form>
         </div>
 	</div>
 </div>
+       <h2>Already have an account?</h2>
+       <div class="action_buttons">
+              <form action="{% url 'poll_app:login' %}">
+                     <button type="submit" class="grey_button" id="login_button">Log in</button>
+              </form>
+       </div>
+
 {% endblock %}

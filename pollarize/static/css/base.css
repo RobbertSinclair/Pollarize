@@ -33,6 +33,11 @@ h1 {
     font-size: 1.8em;
 }
 
+#title {
+    font-weight: 800;
+    font-size: 4em;
+}
+
 em{
     font-weight: 800; /*Extrabold text*/
     font-style: normal; /*Remove italics*/
@@ -53,19 +58,12 @@ ul {
 }
   
 ul li::before {
-    content: ">";  /* Add content: \2022 is the CSS Code/unicode for a bullet */
-    color: #ff9c00; /* Change the color */
-    font-weight: 800; /* If you want it to be bold */
-    display: inline-block; /* Needed to add space between the bullet and the text */
-    width: 1em; /* Also needed for space (tweak if needed) */
-    margin-left: -1em; /* Also needed for space (tweak if needed) */
+    content: ">";
+    display: inline-block;
+    width: 1em;
+    margin-left: -1em;
+    font-weight: 800;
   }
-
-li{
-    font-size: 1.5em;
-    font-weight: 700;
-    color:#505050;
-}
 
 .main {
     margin-top: 150px; /* Avoid overlap with navigation bar */
@@ -311,6 +309,11 @@ li{
     background: linear-gradient(180deg, #505050,#414141);
 }
 
+/* Styling for grey action buttons (red background, white text) */
+.red_button {
+    background: linear-gradient(180deg, #cf0303,#aa0c0c);
+    color:#f0f0f0;
+}
 
 /* Create a box with orange gradient that spans the screen */
 .orange_box{

@@ -63,8 +63,8 @@
                             {% if user.is_authenticated and votes_in %}
                                 <button id="add-reply-{{ comment.comment.id }}" class="add-reply btn btn-link grey_button" onClick="showReplyForm({{comment.comment.id}})">Reply</button>
                                 <button id="hide-reply-form-{{comment.comment.id}}" class="hide-reply-form btn btn-link grey_button" onClick="hideReplyForm({{comment.comment.id}})">Cancel</button>
-                                {% if user.is_superuser or comment.comment.submitter == user.username %} 
-                                    <button id="delete-{{comment.comment.id}}" class="delete-btn">Delete</button>
+                                {% if user.is_superuser or comment.comment.submitter.id == user.id %}
+                                    <button id="delete-{{comment.comment.id}}" class="btn delete-btn red_button">Delete</button>
                                 {% endif %}
                             {% endif %}
                         </div>

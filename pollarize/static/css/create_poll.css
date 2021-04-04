@@ -4,30 +4,32 @@
        }
 
        .container{
-              padding:20px;
+              padding: 20px;
+              text-align: center;
        }
 
        .orange{
               color: #ff9c00;
-              font-size: 20px;
+              font-size: 1.4em;
+              margin: auto;
        }
 
        #poll_form {
           margin: auto;
-          width: 40%;
+          width: 50%;
           font-weight: 700;
           min-width: 300px;
-       }
-
-       .form-group {
-          margin: auto;
-          text-align: centre;
+          background: linear-gradient(180deg, #505050, #414141);
+          padding: 40px 10px;
+          border-radius: 50px;
        }
 
        #poll_form input {
             margin: auto;
             width: 80%;
             min-width: 200px;
+            height: 20px;
+            font-size: 1.2em;
        }
 
        #poll_form input:focus {
