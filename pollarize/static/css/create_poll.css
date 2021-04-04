@@ -1,0 +1,35 @@
+       .input{
+              width: 100%;
+              margin: auto;
+       }
+
+       .container{
+              padding:20px;
+       }
+
+       .orange{
+              color: #ff9c00;
+              font-size: 20px;
+       }
+
+       #poll_form {
+          margin: auto;
+          width: 40%;
+          font-weight: 700;
+          min-width: 300px;
+       }
+
+       .form-group {
+          margin: auto;
+          text-align: centre;
+       }
+
+       #poll_form input {
+            margin: auto;
+            width: 80%;
+            min-width: 200px;
+       }
+
+       #poll_form input:focus {
+            outline: 2px solid #ff9c00;
+       }

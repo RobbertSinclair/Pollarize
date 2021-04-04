@@ -144,13 +144,14 @@ li{
 
    
     /* Make login text/account picture float to the right */
-    #navbar_account, #navbar_login {
+    #navbar_account, #navbar_login, #navbar_register {
         float: right;
         padding-bottom: 5px;
-        margin-right: 60px;
         font-weight: 700; /*Bold text*/
     }
-
+    #navbar_account, #navbar_login {
+        margin-right: 60px;
+    }
         #navbar_login {
         font-weight: 700; /*Bold text*/
     }
@@ -206,7 +207,7 @@ li{
 
         /* Adjust search box and logo size at smaller resolutions to keep navbar one line long */
 
-        @media only screen and (max-width: 1492px) {
+        @media only screen and (max-width: 1596px) {
             /* Reduce search bar size */
             .navbar input[type=text] {
                 width:250px;
@@ -222,10 +223,22 @@ li{
 
           }
 
-          @media only screen and (max-width: 1229px) {
+          @media only screen and (max-width: 1287px) {
             /* Reduce search bar size */
             .navbar input[type=text] {
                 width:150px;
+            }
+
+          }
+
+          @media only screen and (max-width: 1182px) {
+            /* Reduce search bar size */
+            #navbar_register {
+                display: none;
+            }
+
+            #navbar_login {
+                float: left;
             }
 
           }

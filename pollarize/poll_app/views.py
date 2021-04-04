@@ -125,7 +125,7 @@ def create(request):
             obj.poll_slug = slugify(obj.question)
             obj.save()
             return redirect(reverse("poll_app:vote", kwargs={'poll_slug': obj.poll_slug}))
-        
+
         else:
             print(form.errors)
 
