@@ -1,8 +1,9 @@
-from django.test import TestCase
+from django.test import TestCase, Client
 from poll_app.models import UserProfile, Poll, VotesIn, VotesInComment, Comment
 from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
 from django.urls import reverse
+from django.contrib.auth import authenticate, login, logout
 import json
 
 class PollModelTests(TestCase):
@@ -37,13 +38,13 @@ class CommentModelTests(TestCase):
     def setUp(self):
         self.the_user = User.objects.create(username="testUserComments", password="testCommPass")
         self.the_user.save()
+        self.the_poll = Poll(question="Random Test Poll", submitter=self.the_user, answer1="left", votes1=-1, votes2=0)
+        self.the_poll.save()
 
-    def check_comment_belongs_to_poll(self):
-        the_comment = Comment(comment="Hello World", poll=None, user=self.the_user, votes=0)
-
-        self.assertEqual(the_comment.poll, True)
-
-
+    def test_check_comment_belongs_to_poll(self):
+        the_comment = Comment(comment="Hello World", poll=self.the_poll, submitter=self.the_user, votes=0)
+        the_comment.save()
+        self.assertEqual((the_comment.poll != None), True)
 
 #JSON View Tests
 
@@ -144,6 +145,66 @@ class JSONAddComment(TestCase):
             exists = False
         self.assertEqual(exists, True)
 
+class ResultView(TestCase):
+
+    def setUp(self):
+        self.the_user = User.objects.get_or_create(username="testUser", password="testPass")[0]
+        self.the_user.save()
+        self.the_user_profile = UserProfile.objects.get_or_create(user=self.the_user)[0]
+        self.the_user_profile.save()
+        self.the_poll = Poll.objects.get_or_create(submitter=self.the_user, question="Test Poll", answer1="Yes", answer2="No")[0]
+        self.the_poll.poll_slug = slugify(self.the_poll.question)
+        self.the_poll.save()
+        self.main_comment = Comment.objects.get_or_create(submitter=self.the_user, poll=self.the_poll, comment="Main Comment", votes=0)[0]
+        self.main_comment.save()
+        self.reply_comment = Comment.objects.get_or_create(submitter=self.the_user, poll=self.the_poll, comment="Reply Comment", votes=0, parent=self.main_comment)[0]
+        self.reply_comment.save()
+        self.other_main_comment = Comment.objects.get_or_create(submitter=self.the_user, poll=self.the_poll, comment="Other Main Comment", votes=0, parent=None)[0]
+        self.other_main_comment.save()
+
+    def test_404_if_poll_doesnt_exist(self):
+        response = self.client.get(reverse("poll_app:results", kwargs={"poll_slug": "does-not-exist"}))
+        self.assertEqual(response.status_code, 404)
+
+    def test_poll_details_in_result_view(self):
+        response = self.client.get(reverse("poll_app:results", kwargs={"poll_slug": self.the_poll.poll_slug}))
+        self.assertEqual(response.status_code, 200)
+        the_context = response.context
+        self.assertEqual(the_context["poll"], self.the_poll)
     
+    def test_poll_main_poll_comments_are_in_context(self):
+        response = self.client.get(reverse("poll_app:results", kwargs={"poll_slug": self.the_poll.poll_slug}))
+        self.assertEqual(response.status_code, 200)
+        the_context = response.context
+        print(response.context["comments"])
+        self.assertEqual(len(the_context["comments"]), 2)
+        for comment in the_context["comments"]:
+            self.assertEqual(comment["comment"].parent, None)
 
+class VoteView(TestCase):
 
+    def setUp(self):
+        self.user = User.objects.get_or_create(username="testUser", password="testPass")[0]
+        self.user.save()
+        self.client.force_login(self.user)
+        self.profile = UserProfile.objects.get_or_create(user=self.user)[0]
+        self.profile.save()
+        self.poll = Poll.objects.get_or_create(submitter=self.user, question="Test Poll", answer1="Yes", answer2="No")[0]
+        self.poll.poll_slug = slugify(self.poll.question)
+        self.poll.save()
+
+    def test_404_if_poll_does_not_exist(self):
+        response = self.client.get(reverse("poll_app:vote", kwargs={"poll_slug": "does-not-exist"}))
+        self.assertEqual(response.status_code, 404)
+
+    def test_poll_details_in_context(self):
+        response = self.client.get(reverse("poll_app:vote", kwargs={"poll_slug": self.poll.poll_slug}))
+        self.assertEqual(response.status_code, 200)
+        the_context = response.context
+        self.assertEqual(the_context["poll"], self.poll)
+
+    def test_poll_redirects_if_no_user_logs_in(self):
+        self.client.logout()
+        response = self.client.get(reverse("poll_app:vote", kwargs={"poll_slug": self.poll.poll_slug}))
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response["Location"], reverse("poll_app:results", kwargs={"poll_slug": self.poll.poll_slug}))

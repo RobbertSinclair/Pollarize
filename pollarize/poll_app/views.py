@@ -215,8 +215,11 @@ def account(request):
 
 
 def vote(request, poll_slug):
-    poll = Poll.objects.get(poll_slug=poll_slug)
-    context_dict = {"poll": poll}
+    try:
+        poll = Poll.objects.get(poll_slug=poll_slug)
+        context_dict = {"poll": poll}
+    except Poll.DoesNotExist:
+        raise Http404("Poll Does not exist")
 
     # Redirect to results or vote page depending on if logged in
     if request.user.is_authenticated:
