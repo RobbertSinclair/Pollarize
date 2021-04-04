@@ -108,14 +108,12 @@ def random_poll(request):
 
     return redirect("poll_app:vote", poll_slug=the_slug)
 
-
+@login_required
 def create(request):
     context_dict = {}
     form = CreatePollForm()
     user = request.user
 
-    if not user.is_authenticated:
-        return redirect(reverse('poll_app:login'))
     if request.method == 'POST':
         form = CreatePollForm(request.POST)
         if form.is_valid():
