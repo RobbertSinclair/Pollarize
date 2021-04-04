@@ -20,6 +20,6 @@ $(document).ready(function() {
         if ($(this).attr("type") == "submit") {
             $(this).addClass("orange_button");
         }
-    })
+    });
     
 })

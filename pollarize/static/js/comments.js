@@ -257,18 +257,30 @@ function addVote(vote_amount, comment_id, votes) {
         url: the_url,
         data: post_data,
         success: function(data) {
-            $("#votes-" + comment_id).html(data.votes);
             console.log(data);
-            if(vote_amount == 1 && !data.voted_before) {
-                console.log("Upvote");
-                $("#upvote-" + comment_id).addClass("upvote-selected");
-            } else if (vote_amount == -1 && !data.voted_before) {
-                console.log("Downvote");
-                $("#downvote-" + comment_id).addClass("downvote-selected");
+            if (data.message == "SUCCESS") {
+                $("#votes-" + comment_id).html(data.votes);
+                if(vote_amount == 1 && !data.voted_before) {
+                    console.log("Upvote");
+                    $("#upvote-" + comment_id).addClass("upvote-selected");
+                } else if (vote_amount == -1 && !data.voted_before) {
+                    console.log("Downvote");
+                    $("#downvote-" + comment_id).addClass("downvote-selected");
+                } else {
+                    $("#upvote-" + comment_id).removeClass("upvote-selected");
+                    $("#downvote-" + comment_id).removeClass("downvote-selected");
+                }
             } else {
-                $("#upvote-" + comment_id).removeClass("upvote-selected");
-                $("#downvote-" + comment_id).removeClass("downvote-selected");
+                console.log(data.redirect_url);
+                var redirect = confirm("You need to login to do that. Press OK to go to the login screen");
+                if(redirect) {
+                    var origin = window.location.origin;
+                    var redirect_url = origin + data.redirect_url;
+                    window.location.replace(redirect_url);
+
+                }
             }
+            
 
         },
         failure: function(data) {

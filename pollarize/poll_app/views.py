@@ -478,7 +478,10 @@ def add_comment_votes(request):
             the_comment.votes += vote_amount
             voted_before = False
         the_comment.save()
-        context_dict = {"votes": the_comment.votes, "voted_before": voted_before }
+        context_dict = {"votes": the_comment.votes, "voted_before": voted_before, "message": "SUCCESS" }
+        return JsonResponse(context_dict)
+    elif request.method == "POST" and not user.is_authenticated:
+        context_dict = {"redirect_url": reverse("poll_app:login"), "message": "FAILURE"}
         return JsonResponse(context_dict)
 
 def get_comment_votes(request, comment_id):
