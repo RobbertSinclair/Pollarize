@@ -5,9 +5,9 @@ from django.contrib.auth.models import User
 
 class CreatePollForm(forms.ModelForm):
     # user input
-    question = forms.CharField(max_length=128, help_text="Please enter the poll question.") 
-    answer1 = forms.CharField(max_length=5000, help_text="Please enter the first option.") 
-    answer2 = forms.CharField(max_length=5000, help_text="Please enter the second option.") 
+    question = forms.CharField(max_length=128, help_text="Please enter the poll question:")
+    answer1 = forms.CharField(max_length=5000, help_text="Please enter the first option:")
+    answer2 = forms.CharField(max_length=5000, help_text="Please enter the second option:")
 
     # hidden fields
     votes1 = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
@@ -16,7 +16,7 @@ class CreatePollForm(forms.ModelForm):
 
     class Meta:
         model = Poll
-        fields = ['question', 'answer1', 'answer2']
+        fields = ('question', 'answer1', 'answer2')
 
 class UserProfileForm(forms.ModelForm):
 

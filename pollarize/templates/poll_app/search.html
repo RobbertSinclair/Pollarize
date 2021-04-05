@@ -2,9 +2,51 @@
 {% load staticfiles %}
 
 {% block head_block %}
+       <script src="{% static 'js/populate_boxes.js' %}"></script>
+       <link rel="stylesheet" href="{% static 'css/search_page.css' %}"/>
+
        <title>Pollarize - Search</title>
 {% endblock %}
 
 {% block body_block %}
-<h1>This is the <em>Search</em> page!</h1>
+{% if not polls and not users %}
+       <h1>No results for <em>"{{ query }}"</em></h1>
+       <h2>Try searching something else: </h2>
+{% endif %}
+
+<!--Search bar-->
+<div id="search_page_container">
+       <form class="search_form page_search_form" method="post" action="{% url 'poll_app:search' %}">
+            {% csrf_token %}
+            <input type="text" id="page_searchbar" list="search-results" placeholder="Search for polls..." name="query">
+            <button type="submit"><img src="{% static 'img/search_icon.png' %}" id="search_icon" alt="Search" width="20px" height="20px"></i></button>
+       </form>
+          <datalist id="page-search-results"></dataset>
+</div>
+
+
+{% if polls or users %}
+<h1 id="title">Results for <em>"{{ query }}":</em></h1>
+<div class="divider"></div>
+{% endif %}
+
+       {% if polls %}
+              <h2 class="section_title">Polls:</h2>
+              {% for poll in polls %}
+                     {% include "poll_app/centre_box.html" with poll=poll %}
+              {% endfor %}
+
+       {% endif %}
+
+       {% if users %}
+              <h2 class="section_title">Users:</h2>
+       {% for user in users %}
+<div class = "centre_poll_box" id="user_{{ user }}">
+    <img src="{{ user.profile_image.url }}" id="profile_img" height="150px"></img>
+    <h1><a href="{% url 'poll_app:user' user.id %}">{{ user }}</a></h1>
+</div>
+       {% endfor %}
+       {% endif %}
+
+
 {% endblock %}

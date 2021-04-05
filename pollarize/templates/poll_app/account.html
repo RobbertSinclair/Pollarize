@@ -3,27 +3,27 @@
 
 {% block head_block %}
        <title>Pollarize - Account</title>
-       <script type="text/javascript" src="{% static 'js/account.js' %}"></script> 
+       <script type="text/javascript" src="{% static 'js/account.js' %}"></script>
+       <script type="text/javascript" src="{% static 'js/account_delete.js' %}"></script>
        <link rel="stylesheet" href="{% static 'css/account.css' %}">
+
 {% endblock %}
 
 {% block body_block %}
 {% if user.is_authenticated %}
+       {% if error %}
+              <div class="error_box">{{ error }}</div>
+       {% endif %}
+
 <div class="container">
        <div class="grid-item" id="item1">
               <img src="{{ profile.profile_image.url }}" id="profile_img" class="profile"></img>
               <div class="overlay">
                      <div id="center-image">
-                            <a href="" id="change-image-link">
+                            <a href="{% url 'poll_app:register' %}" id="change-image-link">
                                    Change Profile Image
                             </a>
                      </div>
-              </div>
-              <div class="upload_form">
-                     <form id="image_upload">
-                            <input type="file" id="file_upload">
-                            <input type="submit">
-                     </form>
               </div>
        </div>
        <div class="grid-item" id="item2">
@@ -38,6 +38,21 @@
                      <li>Comments: {{ comments }}</li>
               </ul>
        </div>
+
 </div>
+       <div class="action_buttons">
+              <button class="red_button" id="delete_button">Delete account</button>
+       </div>
+
+       <div id="account_delete_block">
+              <h1>Please enter your password to delete your account: </h1>
+              <form id="account_delete_form" method="post" action="{% url 'poll_app:account' %}">
+                     {% csrf_token %}
+                     <input type="password" name="password" value="" size="50" /> <br />
+                     <div class="action_buttons">
+                            <button type="submit" class = "red_button" id="confirm_button">Confirm deletion</button>
+                     </div>
+              </form>
+       </div>
 {% endif %}
 {% endblock %}

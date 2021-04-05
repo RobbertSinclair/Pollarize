@@ -1,4 +1,5 @@
 
+/* Profile pictures on comments */
 .profile-img {
     padding-left: 5px;
     width: 40px;
@@ -11,10 +12,11 @@
 
 .comment {
     margin-bottom: 30px;
-    background: #f0f0f0;
+    background: #f0f0f0; /* Make comment background white*/
     padding: 5px;
 }
 
+/*Add bar to left of replies*/
 .replies {
     border-left: 3px solid #505050;
 }
@@ -37,6 +39,7 @@
     margin-left: 3%;
 }
 
+/*Add comment box styling*/
 #add-comment {
     padding: 10px;
     font-family: 'Open Sans', sans-serif;
@@ -45,11 +48,13 @@
     font-size: 18px;
 }
 
+/* Increase border size of add comment box on focus */
 #add-comment:focus {
     border-radius: 10px;
     border: solid 4px #505050;
 }
 
+/*Adjust comment positioning*/
 #comments {
     margin: auto;
     margin-top: 15px;
@@ -58,8 +63,7 @@
     padding: 10px;
 }
 
-
-
+/*Replies loading image*/
 .loading-image {
     width: 20px;
     height: 20px;
@@ -74,17 +78,21 @@
     font-size: 14px;
 }
 
+/* Upvote and downvote buttons when selected */
 .upvote-selected {
+    /* Grey arrow on orange background */
     background-color: #FF9C00;
     color: #505050;
     
 }
 
 .downvote-selected {
+    /* Orange arrow on grey background */
     background-color: #505050;
     color: #FF9C00;
 }
 
+/*Resize results chart*/
 #poll-chart {
     width: 300px;
     height: 100px;
@@ -97,6 +105,7 @@
     min-width: 280px;
 }
 
+/*Darken links on hover*/
 a:hover {
     color: #ff9c00;
 }
@@ -119,6 +128,7 @@ h3 a:hover {
     text-align: center;
     }
 
+/*Move upvote and downvote buttons to bottom right*/
 .col-sm {
     float: right;
     margin-right: 10px;
@@ -126,6 +136,7 @@ h3 a:hover {
     margin-top: -30px;
 }
 
+/*Button styling*/
 .btn {
     margin-left: 10px;
     margin-bottom: 10px;
@@ -141,7 +152,7 @@ h3 a:hover {
 }
 
 .btn:hover{
-    transform: scale(1.1); /* Reduce search bar size */
+    transform: scale(1.1); /* Increase button size */
     box-shadow: 0 0 10px rgba(0,0,0, 0.5); /* Increase blackness of shadow */
 }
 
@@ -158,6 +169,7 @@ p {
     
 }
 
+/*Resize content on smaller resolutions*/
 @media only screen and (max-width: 700px) {
     #add-comment {
         font-size: 14px;

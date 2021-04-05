@@ -3,54 +3,19 @@
 
 {% block head_block %}
        <title>Pollarize - Create poll</title>
-       <link rel="stylesheet" href="{% static 'css/vote.css' %}" />
+       <link rel="stylesheet" href="{% static 'css/create_poll.css' %}" />
 {% endblock %}
 
 {% block body_block %}
-<style type="text/css">
-    
-       .input{
-              width: 100%;
-       }
-
-       .container{
-              padding:20px;
-       }
-
-       .orange{
-              color: #ff9c00;
-              font-size:20px
-       }
-
-       .container{
-              padding:20px;
-       }
-
-       .poll-form button{
-              border: none;
-              font-size: 20px;
-              text-align: center;
-              padding:10px 20px;
-              text-decoration: none;
-              display: inline-block;
-              
-       }
-
-       .poll-form {
-              margin-top: 5%;
-              margin-left: 30%;
-              margin-right: 30%;
-              width: 40%;
-              
-       }
-       
-</style>
+       <h1 id="title">Create a <em>New Poll!</em></h1>
+       <div class="divider"></div>
 
 <div class="poll-form">
        <div class="container">
               <div class="row">
                      <div class="col-lg-7 offset-lg-1">
-                            <form id="poll_form" method="post" action="/create-poll/">{% csrf_token %}
+                            <form id="poll_form" method="post" action="{% url 'poll_app:create' %}">
+                                   {% csrf_token %}
        
                                    {% if error == True %}
                                    <div class="alert alert-warning">
@@ -77,8 +42,10 @@
                                    {% endfor %}
                                    
 
-                                   <br><br>
-                                   <button class="orange_button" formaction='/create-poll/'>Create Poll</button>
+                                   <br>
+                                   <div class="action_buttons">
+                                          <button class="orange_button" type="submit">Create Poll</button>
+                                   </div>
                             </form>
                      </div>
               </div>

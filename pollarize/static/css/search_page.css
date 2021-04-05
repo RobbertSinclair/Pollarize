@@ -1,0 +1,78 @@
+/*Sizing of search bar container*/
+#search_page_container{
+    margin: auto;
+    width: 60%;
+    min-width: 300px;
+}
+
+/*Sizing of search form on main page*/
+.page_search_form {
+    /*Centre search bar and button*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    width: 100%;
+}
+
+/*Search bar styling*/
+#search_page_container input {
+    display: inline-block;
+    width: 80%;
+    height: 32px;
+    font-weight: 700; /*Bold text*/
+    font-size: 1em;
+    color: #919191; /*Light grey text*/
+    border: 2px solid #ff9c00;
+    border-radius: 30px; /*Rounded edges*/
+    text-align: center;
+    margin-right: -40px;
+}
+
+/*Increase search border size on focus*/
+#search_page_container input:focus {
+    border: 4px solid #ff9c00;
+    outline: none;
+}
+
+/*Search button styling*/
+#search_page_container button {
+    display: inline-block;
+    background-color: #ff9c00; /*Orange*/
+    padding: 5px 11px 5px 11px;
+
+    border: none;
+    border-radius: 50%;
+}
+
+/*Image inside search button*/
+#search_page_container button img {
+    margin-top: 4px;
+}
+
+/*Profile pictures of accounts in search results*/
+#profile_img{
+    margin: 0 auto; /* Centre */
+    border-radius: 50%; /* Make circular */
+    object-fit: cover;
+    margin-top: 25px;
+}
+
+/* Header resizing and recolouring */
+
+h2 {
+     display: block;
+     margin: auto;
+     text-align: center;
+     margin-top: 100px;
+     margin-bottom: 20px;
+     font-size: 1.5em;
+     color: #505050; /*Grey text*/
+}
+/*Emphasis on section headers (poll and account section headers)*/
+.section_title{
+    font-size: 2.5em;
+    font-weight: 800; /*Extrabold*/
+    color: #ff9c00; /*Orange text*/
+}

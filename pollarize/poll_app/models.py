@@ -2,13 +2,18 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
 from django.utils import timezone
-
+from PIL import Image
 
 # Create your models here.
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="user_profile")
     profile_image = models.ImageField(null=True, upload_to='profile_images', blank=True, default="default.png")
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        profile_image = Image.open(self.profile_image.path)
+        profile_image.save(self.profile_image.path, quality=40, optimize=True)
 
     def __str__(self):
         return self.user.username
@@ -23,15 +28,15 @@ class Poll(models.Model):
     answer2 = models.CharField(max_length=200, null=False)
     votes1 = models.IntegerField(default=0)
     votes2 = models.IntegerField(default=0)
-    pub_date = models.DateTimeField('date published', default=timezone.now())
+    pub_date = models.DateTimeField('date published', default=timezone.now)
 
-    #def save(self, *args, **kwargs):
-    #    self.slug = slugify(self.question)
-    #    if self.votes1 < 0:
-    #        self.votes1 = 0
-    #    if self.votes2 < 0:
-    #        self.votes2 = 0
-    #    super(Poll, self).save(*args, **kwargs)
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.question)
+        if self.votes1 < 0:
+            self.votes1 = 0
+        if self.votes2 < 0:
+            self.votes2 = 0
+        super(Poll, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.question

@@ -33,6 +33,11 @@ h1 {
     font-size: 1.8em;
 }
 
+#title {
+    font-weight: 800;
+    font-size: 4em;
+}
+
 em{
     font-weight: 800; /*Extrabold text*/
     font-style: normal; /*Remove italics*/
@@ -53,19 +58,12 @@ ul {
 }
   
 ul li::before {
-    content: ">";  /* Add content: \2022 is the CSS Code/unicode for a bullet */
-    color: #ff9c00; /* Change the color */
-    font-weight: 800; /* If you want it to be bold */
-    display: inline-block; /* Needed to add space between the bullet and the text */
-    width: 1em; /* Also needed for space (tweak if needed) */
-    margin-left: -1em; /* Also needed for space (tweak if needed) */
+    content: ">";
+    display: inline-block;
+    width: 1em;
+    margin-left: -1em;
+    font-weight: 800;
   }
-
-li{
-    font-size: 1.5em;
-    font-weight: 700;
-    color:#505050;
-}
 
 .main {
     margin-top: 150px; /* Avoid overlap with navigation bar */
@@ -144,13 +142,14 @@ li{
 
    
     /* Make login text/account picture float to the right */
-    #navbar_account, #navbar_login {
+    #navbar_account, #navbar_login, #navbar_register {
         float: right;
         padding-bottom: 5px;
-        margin-right: 60px;
         font-weight: 700; /*Bold text*/
     }
-
+    #navbar_account, #navbar_login {
+        margin-right: 60px;
+    }
         #navbar_login {
         font-weight: 700; /*Bold text*/
     }
@@ -199,11 +198,14 @@ li{
             margin-top: -6px;
             margin-bottom: 0;
             border-radius: 50%; /*Make circular*/
+            height: 35px;
+            width: 35px;
+            object-fit: cover;
         }
 
         /* Adjust search box and logo size at smaller resolutions to keep navbar one line long */
 
-        @media only screen and (max-width: 1492px) {
+        @media only screen and (max-width: 1596px) {
             /* Reduce search bar size */
             .navbar input[type=text] {
                 width:250px;
@@ -219,10 +221,22 @@ li{
 
           }
 
-          @media only screen and (max-width: 1229px) {
+          @media only screen and (max-width: 1287px) {
             /* Reduce search bar size */
             .navbar input[type=text] {
                 width:150px;
+            }
+
+          }
+
+          @media only screen and (max-width: 1182px) {
+            /* Reduce search bar size */
+            #navbar_register {
+                display: none;
+            }
+
+            #navbar_login {
+                float: left;
             }
 
           }
@@ -295,6 +309,11 @@ li{
     background: linear-gradient(180deg, #505050,#414141);
 }
 
+/* Styling for grey action buttons (red background, white text) */
+.red_button {
+    background: linear-gradient(180deg, #cf0303,#aa0c0c);
+    color:#f0f0f0;
+}
 
 /* Create a box with orange gradient that spans the screen */
 .orange_box{
@@ -473,7 +492,7 @@ li{
 /* Orange divider styling */
 .divider{
     margin: auto;
-    margin-top: -50px;
+    margin-top: -40px;
     margin-bottom: 10px;
     width:30%;
     min-width: 450px;
@@ -500,6 +519,7 @@ li{
 }
 
 /* Custom scrollbar styling */
+
 ::-webkit-scrollbar {
   width: 10px; /*Set length to 8px*/
 }
@@ -574,8 +594,32 @@ li{
     transition: ease-in-out;
 }
 
+/* Profile picture styling */
 #profile-icon {
     height: 35px;
     width: 35px;
     object-fit:cover;
+}
+
+/* Box for showing validation errors to user */
+  .error_box {
+    background-color: #ff9393; /* Light red background */
+    color: #cf0303; /* Dark red text */
+
+    margin: auto;
+    text-align: center;
+    padding: 20px 0px;
+    border: 5px solid #cf0303; /* Dark red border */
+    border-radius: 30px; /* Rounded border */
+
+    width: 50%;
+    min-width: 300px;
+    font-weight: 700;
+  }
+
+@media only screen and (max-width: 400px) {
+     /* Reduce Poll box size */
+     .poll_box, .centre_poll_box {
+          min-width: 300px;
+     }
 }

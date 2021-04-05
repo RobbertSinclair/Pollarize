@@ -6,6 +6,7 @@ $(document).ready(function(){
     var theCanvas = document.getElementById("poll-chart");
     var poll_slug = the_url.split("/")[1];
     var request_url = "/json/" + poll_slug + "/results/"
+    //Get chart
     $.get(request_url, function(data) {
         chartData = displayChart(data.answer1, data.votes1, data.answer2, data.votes2);
         theChart = new Chart(theCanvas, chartData)
@@ -13,7 +14,7 @@ $(document).ready(function(){
     UpdateChart();
 });
 
-
+//Display chart data
 function displayChart(answer1, votes1, answer2, votes2) {
     var theData = {
             labels: [answer1, answer2],
@@ -48,10 +49,12 @@ function UpdateChart() {
         theChart.data.datasets[0].data[0] = votes1;
         theChart.data.datasets[0].data[1] = votes2;
         theChart.update();
+        //Display latest vote if it exists
         if(data.latest_user != null){
             $("#latest").html("LATEST: " + data.latest_user + " voted for " + data.latest_option);
         }
 
     })
+    //Recursively call function after 2 seconds
     setTimeout(UpdateChart, 2000);
 }

@@ -1,14 +1,15 @@
 {% extends 'poll_app/base.html' %}
 {% load staticfiles %}
 
-{% block title_block %}
-    Register - Step 2
+{% block head_block %}
+    <link rel="stylesheet" href="{% static 'css/register.css' %}"/>
+    <title>Pollarize - Profile Image</title>
 {% endblock %}
 
 {% block body_block %}
 <div>
     <div>
-        <h1>Register Here - Step 2</h1>
+        <h1>Create Profile Image</h1>
     </div>
 </div>
 
@@ -20,7 +21,7 @@
             {% csrf_token %}
             {{ form.as_p }}
             <input type="submit" value="Create Profile" />
-    </form>
+        </form>
     </div>
 </div>  
 {% endblock %}

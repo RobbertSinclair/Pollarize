@@ -5,10 +5,15 @@
     max-height: 300px;
 }
 
+/* List elements */
+li{
+    font-size: 1.5em;
+    font-weight: 700;
+    color:#505050;
+}
+
 /* Page text styling */
-#title{
-    font-size: 4em;
-    font-weight: 800;
+.about_title{
     margin-top: 100px;
 }
 
@@ -16,8 +21,8 @@
     /* Centre text */
     text-align: center;
     margin: auto;
-
     margin-top: 30px;
+
     /* Resize text */
     width: 60%;
     min-width: 480px;
@@ -73,7 +78,7 @@ h2 em{
 }
 
 .orange_box ul li::before {
-    color: #f0f0f0; /* Change the color */
+    color: #f0f0f0; /* Change color of bullet points */
   }
 
   #orange_box_header{
