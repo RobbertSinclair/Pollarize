@@ -24,3 +24,32 @@ ul {
 .search-item.hover {
     background-color: grey;
 }
+
+
+/* Styling for centred account boxes */
+.centre_account_box{
+    margin: auto; /* Centre box within its column */
+    background-color: #f0f0f0;
+    width:35%;
+    text-align: center;
+    border: 3px solid #505050;
+    box-shadow: 0 0 15px rgba(0,0,0, 0.4); /* Drop shadow */;
+    margin-bottom: 100px;
+    min-width: 400px;
+}
+
+/* Styling for account title header */
+.centre_account_box h1{
+    text-align: center;
+    width: 95%
+    display: inline-block;
+    margin-left: 15px;
+    font-weight: 800;
+    font-size: 2em;
+    color:#505050;
+
+    /*Generate ellipses when text flows outside of account box*/
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}

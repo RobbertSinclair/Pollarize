@@ -130,28 +130,8 @@ def random_poll(request):
 def create(request):
     #Initialise dictionary, form and user
     context_dict = {}
-
     form = CreatePollForm()
     user = request.user
-    if not user.is_authenticated:
-        return redirect(reverse('poll_app:login'))
-    form = CreatePollForm(request.POST or None)
-    if form.is_valid():
-        poll_list = Poll.objects.order_by("id")
-        if request.method == 'POST':
-            obj = form.save(commit=False)
-            obj.submitter = user
-            obj.pub_date = timezone.now()
-            obj.poll_slug = slugify(obj.question)
-            obj.save(force_insert=True)
-            obj.save(update_fields=['question','answer1','answer2'])
-            
-            form = CreatePollForm()
-            poll = Poll.objects.get(id=(obj.id))
-            context_dict = {"poll": poll}
-            return redirect("poll_app:vote", poll_slug=obj.poll_slug)
-            
-    context_dict['form'] = form
 
     if request.method == 'POST':
         #Get form information and create poll object
@@ -164,7 +144,6 @@ def create(request):
             obj.save()
             #Redirect to vote page
             return redirect(reverse("poll_app:vote", kwargs={'poll_slug': obj.poll_slug}))
-
         else:
             print(form.errors)
 

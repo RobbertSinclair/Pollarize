@@ -2,7 +2,7 @@ $(document).ready(function(){
     console.log("populate_boxes.js loaded successfully");
     //populate all poll boxes
     $(".poll_box, .centre_poll_box").each(function() {
-    populateBox(this)
+            populateBox(this)
     });
 
 })
@@ -21,6 +21,7 @@ function populateBox(box) {
                var percent1 = "--";
                var percent2 = "--";
                totalString = "No votes"
+               var orange_bar_start = 50;
            }
            else{
                var percent1 = Math.round((data.votes1 / total) * 100);
@@ -40,6 +41,8 @@ function populateBox(box) {
                  //display in terms of millions with one decimal
                  totalString = (Math.round((total / 100000)) / 10) + "M votes";
                }
+                //set orange percentage to between 1 and 99 percent to guarantee 2 colours
+                var orange_bar_start = Math.min(Math.max(percent1, 1), 99);
            }
 
            //update percentages
@@ -49,8 +52,6 @@ function populateBox(box) {
            //set vote string
            $(box).find('.box_votes').html(totalString);
 
-           //set orange percentage to between 1 and 99 percent to guarantee 2 colours
-           var orange_bar_start = Math.min(Math.max(percent1, 1), 99)
            //change vote bar to match percentages
            $(box).find('.vote_bar').css("background",
            "linear-gradient(90deg, #ff9c00 " + orange_bar_start + "%, #505050 " + (orange_bar_start + 0.1) + "%)");
