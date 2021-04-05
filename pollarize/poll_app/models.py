@@ -2,13 +2,18 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
 from django.utils import timezone
-
+from PIL import Image
 
 # Create your models here.
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="user_profile")
     profile_image = models.ImageField(null=True, upload_to='profile_images', blank=True, default="default.png")
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        profile_image = Image.open(self.profile_image.path)
+        profile_image.save(self.profile_image.path, quality=40, optimize=True)
 
     def __str__(self):
         return self.user.username
