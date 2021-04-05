@@ -12,7 +12,8 @@ from django.template.defaultfilters import slugify
 import random
 
 def populate():
-    
+
+    #List of accounts
     users = [
         {"username": "AdminUser", "password": "adminPass", "superuser": True},
         {"username": "Adamanatite", "password": "testPass1", "superuser": False},
@@ -21,7 +22,8 @@ def populate():
         {"username": "Ciaran-Carr", "password": "testPass4", "superuser": False},
         {"username": "PollMaster71", "password": "testPass5", "superuser": False}
     ]
-    
+
+    #List of polls
     polls = [
         {"question": "Does Pineapple belong on a pizza?", "answer1": "Yes", "answer2": "No", "votes1": random.randint(0, 100), "votes2": random.randint(0, 100), "submitter": "Adamanatite", "pub_date": (timezone.now())},
         {"question": "Star Wars or Star Trek?", "answer1": "Star Wars", "answer2": "Star Trek", "votes1": random.randint(501, 9999), "votes2": random.randint(501, 9999), "submitter": "ogra", "pub_date": (timezone.now() - timedelta(days=4))},
@@ -36,6 +38,7 @@ def populate():
         {"question": "Should education be mandatory?", "answer1": "Yes", "answer2": "No", "votes1": random.randint(500001, 999999), "votes2": random.randint(500001, 999999), "submitter": "ogra", "pub_date": (timezone.now() - timedelta(days=random.randint(1, 28)))}
     ]
 
+    #List of poll comments
     comments = [
         {"id": 1, "submitter": "Adamanatite", "poll_question": "Does Pineapple belong on a pizza?", "comment": "I love pineapple on pizza. It is the tastiest thing on a pizza", "votes": 16, "parent": None},
         {"id": 2, "submitter": "ogra", "poll_question": "Does Pineapple belong on a pizza?", "comment": "You are wrong in so many ways.", "votes": 2, "parent": 1},
@@ -55,6 +58,7 @@ def populate():
         {"id": 16, "submitter": "Ciaran-Carr", "poll_question": "Should education be mandatory?", "comment": "Completely agree", "votes": 1225, "parent": 14}
     ]
 
+    #List of user votes
     votes_in = [
         {"user": "Adamanatite", "poll": "Does Pineapple belong on a pizza?", "option": "Yes"},
         {"user": "ogra", "poll": "Does Pineapple belong on a pizza?", "option": "No"},
@@ -74,6 +78,7 @@ def populate():
         {"user": "PollMaster71", "poll": "Is water wet?", "option": "Yes"}
     ]
 
+    #Add all information to database
     for user in users:
         u = add_user(user)
         print(f"{user['username']} created")

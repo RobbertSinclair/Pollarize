@@ -1,5 +1,5 @@
 
-
+/*Positioning, text and background of login form background*/
 #login_box {
     display: block;
     margin: 0 auto;
@@ -12,6 +12,7 @@
     border-radius: 50px;
 }
 
+/*Form text box styling*/
 #login_form input {
     color: #505050;
     margin: auto;
@@ -21,9 +22,12 @@
     border: none;
   }
 
+  /*Give fields a grey outline when focused*/
   #login_form input:focus {
     outline: 3px solid #505050;
   }
+
+  /* Header resizing */
 
   h2 {
       text-align: center;
@@ -39,6 +43,7 @@
       font-size: 1.5em;
   }
 
+  /*Give login button white text*/
   #login_button{
       color: #f0f0f0;
   }

@@ -1,22 +1,25 @@
+/*Question title styling*/
 #question {
-    color: #FF9C00;
+    color: #FF9C00; /*Grey*/
     font-size: 4em;
     font-weight: 800;
     text-align: center;
 }
 
-
+/*Vote buttons sizing*/
 .voting-form button{
     padding: 10px;
     font-size: 2em;
 }
 
+/*Form margins*/
 .voting-form {
     margin-top: 5%;
     margin-left: 5%;
     margin-right: 5%;
 }
 
+/*Option title text styling*/
 .vote-div h2 {
     text-align: center;
     font-size: 1.5em;
@@ -28,14 +31,17 @@ h3 {
     font-size: 2.5em;
 }
 
+/*Answer 1 is grey*/
 h3.answer1 {
     color: #505050;
 }
 
+/*Answer 2 is orange*/
 h3.answer2 {
     color: #ff9c00;
 }
 
+/*Positioning of right and left columns*/
 #left_option, #right_option{
     display: inline-block;
     text-align: center;
@@ -46,29 +52,36 @@ h3.answer2 {
     margin-bottom: 20px;
 }
 
+/*Background and alignment of left option box*/
 #left_option{
     float: left;
-    background: linear-gradient(180deg, #ff9c00,#f08400);
+    background: linear-gradient(180deg, #ff9c00,#f08400); /*Orange gradient*/
 }
 
+/*Background and alignment of left option box*/
 #right_option {
     float: right;
-    background: linear-gradient(180deg, #505050,#414141);
+    background: linear-gradient(180deg, #505050,#414141); /*Grey gradient*/
 }
 
+/*Divider between options*/
 .vertical_divider{
+    /*Centre*/
     display: inline-block;
     margin: auto;
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
     text-align: center;
+    /*Sizing*/
     width:5px;
     height: 300px;
+    /*Make orange and rounded edges*/
     background-color: #ff9c00;
     border-radius: 40px;
 }
 
+/*Resize elements at smaller resolutions*/
 @media only screen and (max-width: 735px) {
     #left_option, #right_option{
       float: none;

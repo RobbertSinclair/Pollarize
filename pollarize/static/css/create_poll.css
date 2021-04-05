@@ -14,16 +14,18 @@
               margin: auto;
        }
 
+       /*Positioning, text and background of poll form*/
        #poll_form {
           margin: auto;
           width: 50%;
           font-weight: 700;
           min-width: 300px;
-          background: linear-gradient(180deg, #505050, #414141);
+          background: linear-gradient(180deg, #505050, #414141); /*Black/grey gradient background*/
           padding: 40px 10px;
           border-radius: 50px;
        }
 
+       /*Text boxes styling*/
        #poll_form input {
             margin: auto;
             width: 80%;
@@ -32,6 +34,7 @@
             font-size: 1.2em;
        }
 
+      /*Give text boxes orange outline when selected*/
        #poll_form input:focus {
             outline: 2px solid #ff9c00;
        }

@@ -1,3 +1,4 @@
+//Set size of account overlay dynamically on account page
 $(document).ready(function() {
     setOverlaySize();
 

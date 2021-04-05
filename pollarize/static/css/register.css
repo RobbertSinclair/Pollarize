@@ -1,3 +1,4 @@
+/*Form help text*/
 .form-messages {
     list-style-type: none !important;
     text-align:left;
@@ -10,6 +11,7 @@
     font-size: 1em;
 }
 
+/*Grid positionings*/
 #password1-div {
     display: grid;
     grid-gap: 50px 50px;
@@ -30,6 +32,7 @@
     grid-column-end: 3;
 }
 
+/*Change grid sizing at smaller resolutions*/
 @media only screen and (max-width: 600px) {
     #password1-div {
         grid-gap: 20px 20px;
@@ -54,12 +57,14 @@
     }
 }
 
+/*Centred elements*/
 .centre {
     margin: auto;
     text-align: center;
 
 }
 
+/*Positioning, text and background of registration form*/
 .container {
     display: flex;
     justify-content: center;
@@ -74,21 +79,25 @@
     border-radius: 50px;
 }
 
+/*Centre form content*/
 #registration_form{
     margin: auto;
     text-align: center;
 }
 
+/*Form text boxes*/
 #registration_form input{
     margin: auto;
     text-align: center;
     width: 250px;
 }
 
+/*Give fields orange outline when selected*/
 #registration_form input:focus {
     outline: 2px solid #ff9c00;
 }
 
+/*Help text sizing and text formatting*/
 .help_text{
     margin: auto;
     text-align: center;
@@ -98,20 +107,24 @@
     margin-top: 5px;
 }
 
+
+/* Header resizing and recolouring */
+
 h3 {
     font-size: 1.8em;
-    color: #ff9c00;
-    font-weight: 800;
+    color: #ff9c00; /*Orange text*/
+    font-weight: 800; /*Extrabold*/
 }
 
 h2 {
     font-size: 2em;
     text-align: center;
     margin-top: 50px;
-    color: #505050;
+    color: #505050; /*Grey text*/
     margin-bottom: -5px;
 }
 
+/*Centre form in container*/
 form {
     margin: auto;
     text-align: center;

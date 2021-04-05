@@ -2,7 +2,8 @@ $(document).ready(function() {
     console.log("top_scroll.js loaded successfully");
     windowResize();
     $(".back-to-top").hide();
-    
+
+    //Show back to top if not already at top of page
     $(window).scroll(function() {
         var max_scroll = 100;
         if($(this).scrollTop() > max_scroll) {

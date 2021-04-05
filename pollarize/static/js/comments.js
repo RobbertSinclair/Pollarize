@@ -1,5 +1,6 @@
 $(document).ready(function(){
     console.log("comments.js loaded successfully");
+    //Hide reply elements
     $(".loading").hide();
     $(".replies").hide();
     $(".hide-replies").hide();
@@ -8,21 +9,25 @@ $(document).ready(function(){
     repliesResize();
     var auth;
     var username;
+    //Get user information
     $.get("/json/user/", function(data) {
         auth = data.authenticated;
         username = data.username;
         console.log(data);
     });
 
+    //Load all comments replies
     $(".load-replies").each(function() {
         var id = $(this).attr("id");
         var the_string = $(this).html();
         var reply_length = parseInt(the_string.replaceAll(/\D/g, ""), 10);
         if (reply_length == 0) {
+        //Hide reply box if no replies
             $("#" + id).hide();
         }
     });
-    
+
+    //Change size of add comment box and replies when resizing window
     if(window.innerWidth <= 500) {
         $("#add-comment").attr('rows', 2);
     }
@@ -36,6 +41,7 @@ $(document).ready(function(){
         repliesResize();
     });
 
+    //Post reply
     $(".submit-reply").click(function() {
         console.log($(this).attr("id") + " add reply clicked");
         var poll_slug = window.location.pathname.split("/")[1];
@@ -44,6 +50,7 @@ $(document).ready(function(){
         postComment(poll_slug, username, children, parent); 
     });
 
+    //Delete comment
     $(".delete-btn").click(function() {
         var the_id = $(this).attr("id");
         the_id = parseInt(getCommentId(the_id));
@@ -58,10 +65,12 @@ function getCommentId(the_id) {
 }
 
 function deleteComment(the_id) {
+    //Get comment info
     var deleteData = {
         comment_id: the_id,
         csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val()
     };
+    //Post delete request
     var the_url = "/json/delete-comment/"
     $.ajax({
         type: "POST",
@@ -74,6 +83,7 @@ function deleteComment(the_id) {
 }
 
 function repliesResize() {
+    //Resize replies
     if(window.innerWidth <= 1000) {
         $(".replies").css("marginLeft", "10vw");
     } else {
@@ -89,6 +99,7 @@ function loadReplies(comment_id) {
     if (reply_children_count == 1) {
         $.get("/json/" + comment_id + "/child-comments", function( data ) {
             console.log(data);
+            //Get info of all children comments
             for (var i = 0; i < data.comments.length; i++) {
                 var the_comment = data.comments[i];
                 if (the_comment.vote_option != null) {
@@ -96,6 +107,7 @@ function loadReplies(comment_id) {
                 } else {
                     var votes_for = "Has not voted yet";
                 }
+                //Add children comments below parent
                 $("#replies-" + comment_id).append("<div class='comment row replies' id='comment-" + the_comment.id +
                 "'><div class='col'><img class='mr-3 rounded-circle profile-img' alt='Profile image' src='" + the_comment.profile_image + "'/><h3>" + the_comment.submitter + " - " + votes_for + "</h3><p>" + the_comment.comment + "</p></div>" + 
                 "<div class='col'><button id='upvote-" + the_comment.id + "'class='upvote vote-button'" +
@@ -103,6 +115,7 @@ function loadReplies(comment_id) {
                 "<label id='votes-" + the_comment.id + "'>" + the_comment.votes + "</label>" + 
                 "<button id='downvote-" + the_comment.id + "' class='downvote vote-button' onClick='addVote(-1, " + the_comment.id + ", " + the_comment.votes + ")'><ion-icon name='chevron-down-outline'></ion-icon></button></div></div>");
 
+                //Check if reply has been prevously voted on by user and update css
                 if (the_comment.user_vote > 0){
                     $("#upvote-" + the_comment.id).addClass("upvote-selected");
                 }
@@ -144,11 +157,13 @@ function hideReplyForm(comment_id) {
 
 function postComment(poll_slug, submitter, children, parent) {
     console.log(parent);
+    //Check if comment is a reply
     if (parent == null) {
         var the_comment = $("#add-comment").val();
     } else {
         var the_comment = $("#add-reply-text-" + parent).val();
     }
+    //Send new comment data to views
     var post_data = {
         comment: the_comment,
         poll: poll_slug,
@@ -172,6 +187,7 @@ function postComment(poll_slug, submitter, children, parent) {
                     var vote_string = "Has not Voted";
                 }
                 var profile_pic = data.profile_image;
+                //Create new comment on page
                 var html_string = "<div class='comment' id='comment-" + data.comment_id + "'>"
                 + "<div class='row'>"
                 + "<div class='col-md'>"
@@ -180,7 +196,8 @@ function postComment(poll_slug, submitter, children, parent) {
                 + "<h3>" + submitter + " - " + vote_string + "</h3>"
                 + "</div>"
                 + "<p>" + the_comment + "</p>"; 
-                
+
+                //Non-reply comment HTML
                 if(parent == null) {
                     var post_comment_string = "postComment('" + poll_slug + "', \'" + submitter + "\', " + data.comment_id + ")";
                     console.log(post_comment_string);
@@ -207,7 +224,8 @@ function postComment(poll_slug, submitter, children, parent) {
                     + "<div id='replies-" + data.comment_id + "' class='row-ml-5 replies'>"
                     + "</div>"
                     + "</div>";
-                    
+
+                    //Add reply to page and hide reply forms
                     $("#submit-reply-" + parent).attr("val", children + 1);
                     $("#comments").prepend(html_string);
                     $("#replies-" + data.comment_id).hide();
@@ -243,6 +261,7 @@ function postComment(poll_slug, submitter, children, parent) {
 function addVote(vote_amount, comment_id, votes) {
     var page_url = window.location.pathname;
     var poll_slug = page_url.split("/")[1];
+    //Send new vote info to views
     var post_data = {
         id: comment_id,
         votes: votes,
@@ -260,6 +279,7 @@ function addVote(vote_amount, comment_id, votes) {
             console.log(data);
             if (data.message == "SUCCESS") {
                 $("#votes-" + comment_id).html(data.votes);
+                //Change upvote/downvote button css
                 if(vote_amount == 1 && !data.voted_before) {
                     console.log("Upvote");
                     $("#upvote-" + comment_id).addClass("upvote-selected");
@@ -271,6 +291,7 @@ function addVote(vote_amount, comment_id, votes) {
                     $("#downvote-" + comment_id).removeClass("downvote-selected");
                 }
             } else {
+                //Redirect user to login page if not logged in
                 console.log(data.redirect_url);
                 var redirect = confirm("You need to login to do that. Press OK to go to the login screen");
                 if(redirect) {
