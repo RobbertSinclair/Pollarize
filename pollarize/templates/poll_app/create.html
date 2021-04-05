@@ -50,7 +50,7 @@
        <div class="container">
               <div class="row">
                      <div class="col-lg-7 offset-lg-1">
-                            <form id="poll_form" method="post" action="/create_poll/">{% csrf_token %}
+                            <form id="poll_form" method="post" action="/create-poll/">{% csrf_token %}
        
                                    {% if error == True %}
                                    <div class="alert alert-warning">
@@ -78,7 +78,7 @@
                                    
 
                                    <br><br>
-                                   <button class="orange_button" formaction='/create_poll/'>Create Poll</button>
+                                   <button class="orange_button" formaction='/create-poll/'>Create Poll</button>
                             </form>
                      </div>
               </div>

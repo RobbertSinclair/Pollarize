@@ -23,15 +23,15 @@ class Poll(models.Model):
     answer2 = models.CharField(max_length=200, null=False)
     votes1 = models.IntegerField(default=0)
     votes2 = models.IntegerField(default=0)
-    pub_date = models.DateTimeField('date published', default=timezone.now)
+    pub_date = models.DateTimeField('date published', default=timezone.now())
 
-    def save(self, *args, **kwargs):
-        self.slug = slugify(self.question)
-        if self.votes1 < 0:
-            self.votes1 = 0
-        if self.votes2 < 0:
-            self.votes2 
-        super(Poll, self).save(*args, **kwargs)
+    #def save(self, *args, **kwargs):
+    #    self.slug = slugify(self.question)
+    #    if self.votes1 < 0:
+    #        self.votes1 = 0
+    #    if self.votes2 < 0:
+    #        self.votes2 = 0
+    #    super(Poll, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.question
