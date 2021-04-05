@@ -13,6 +13,8 @@ from django.db.utils import IntegrityError
 import json
 import random
 from django.contrib.auth import authenticate, login, logout
+import re
+
 
 # Create your views here.
 
@@ -109,7 +111,7 @@ def rankings(request):
 
 def random_poll(request):
     # Get a random poll
-    polls = Poll.objects.all()
+    polls = Poll.objects.filter(pub_date__lt=timezone.now())
     the_poll = random.choice(polls)
     the_slug = the_poll.poll_slug
 
@@ -138,6 +140,55 @@ def create(request):
     return render(request, "poll_app/create.html", context=context_dict)
 
 def search(request):
+
+    stopwords = ["a", "and", "by", "be", "to", "the", "of", "that", "i", "not", "for", "on", "as", "do", "at", "but"]
+    poll_results_limit = 10
+    account_results_limit = 10
+
+    if request.method == 'POST':
+        query = request.POST.get('query')
+        if len(query) == 0:
+            return redirect(reverse("poll_app:rankings"))
+
+        try:
+            poll = Poll.objects.get(question=query)
+            if (poll.pub_date > timezone.now()):
+                raise Http404("Can't access poll")
+            return redirect(reverse("poll_app:vote", kwargs={'poll_slug': poll.poll_slug}))
+
+        except Poll.DoesNotExist:
+            polls = Poll.objects.filter(pub_date__lt=timezone.now())
+            polls = popular(polls)
+
+            users = UserProfile.objects.all()
+
+            found_polls = []
+            found_users = []
+
+            query_args = query.lower().split(" ")
+            for arg in query_args:
+                if not arg in stopwords:
+                    if len(found_polls) <= poll_results_limit:
+                        for poll in polls:
+                            if not (poll in found_polls) and re.search(arg, poll.question, re.IGNORECASE):
+                                found_polls.append(poll)
+                                if len(found_polls) >= poll_results_limit:
+                                    break
+                    if len(found_users) <= account_results_limit:
+                        for acc in users:
+                            if not (acc in found_users) and re.search(arg, acc.user.username, re.IGNORECASE):
+                                found_users.append(acc)
+                                if len(found_users) >= account_results_limit:
+                                    break
+
+            context_dict = {
+                "query": query,
+                "polls": found_polls,
+                "users": found_users
+            }
+
+            return render(request, "poll_app/search.html", context=context_dict)
+
     return render(request, "poll_app/search.html")
 
 def register(request):
@@ -165,7 +216,6 @@ def register(request):
         user = request.user
         if user.is_authenticated:
             profile = UserProfile.objects.get_or_create(user=request.user)[0]
-            print(profile)
             if not profile.profile_image:
                 profile.profile_image = 'default.png'
                 profile.save()

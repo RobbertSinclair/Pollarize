@@ -52,7 +52,7 @@
         <div id="search_container">
         <form class="search_form" method="post" action="{% url 'poll_app:search' %}">
             {% csrf_token %}
-            <input type="text" id="searchbar" list="search-results" placeholder="Search for polls..." name="search">
+            <input type="text" id="searchbar" list="search-results" placeholder="Search for polls..." name="query">
             <button type="submit"><img src="{% static 'img/search_icon.png' %}" id="search_icon" alt="Search" width="20px" height="20px"></i></button>
           </form>
           <datalist id="search-results"></dataset>

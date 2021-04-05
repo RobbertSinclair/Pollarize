@@ -1,9 +1,20 @@
-$(document).ready(function() {
-    var getUrl = "/json/search/";
-    $("#searchbar").on('input', function() {
+var getUrl = "/json/search/";
 
-        var data = {
-            search_term: $("#searchbar").val(),
+$(document).ready(function() {
+    $("#searchbar").on('input', function() {
+        console.log("main")
+        populate_box("#searchbar");
+    })
+
+    $("#page_searchbar").on('input', function() {
+        console.log("Page");
+        populate_box("#page_searchbar");
+    })
+})
+
+function populate_box(search_bar){
+            var data = {
+            search_term: $(search_bar).val(),
             csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val()
         }
 
@@ -26,6 +37,4 @@ $(document).ready(function() {
             }
 
         })
-        
-    })
-})
+}
