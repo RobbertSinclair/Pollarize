@@ -29,11 +29,17 @@ def pollarizing(polls):
     pollarizing = sorted(pollarizing, key=lambda x: x[1])
     return [poll[0] for poll in pollarizing]
 
+# Calculate score of each poll for pollarizing
 def pollarizing_score(poll):
     total = poll.votes1 + poll.votes2
     if total == 0:
         return 100
     return abs(((poll.votes1 / (total)) * 100) - 50)
+
+# Sort polls by recency and exclude future polls (with publish time after current time)
+def recent_polls(polls):
+    polls = polls.order_by('-pub_date')
+    return list(polls)
 
 # Format votes string on about page depending on number of votes
 def votes_string(no_votes):
@@ -50,10 +56,11 @@ def index(request):
     return redirect("poll_app:home")
 
 def homepage(request):
-    # Get recent polls
-    recent = Poll.objects.order_by('-pub_date')[:3]
+    # Get all polls not from the future
+    polls = Poll.objects.filter(pub_date__lt=timezone.now())
 
-    polls = Poll.objects.all()
+    # Get recent polls
+    recent = recent_polls(polls)[:3]
 
     # Get pollarizing and popular polls
     popular_polls = popular(polls)[:3]
@@ -72,10 +79,10 @@ def about(request):
     return render(request, "poll_app/about.html")
 
 def rankings(request):
-    # Get recent polls
-    recent = Poll.objects.order_by('-pub_date')[:10]
 
-    polls = Poll.objects.all()
+    polls = Poll.objects.filter(pub_date__lt=timezone.now())
+    # Get recent polls
+    recent = recent_polls(polls)[:10]
 
     # Get pollarizing and popular polls
     popular_polls = popular(polls)[:10]
@@ -225,6 +232,8 @@ def account(request):
 def vote(request, poll_slug):
     try:
         poll = Poll.objects.get(poll_slug=poll_slug)
+        if(poll.pub_date > timezone.now()):
+            raise Http404("Can't access poll")
         context_dict = {"poll": poll}
     except Poll.DoesNotExist:
         raise Http404("Poll Does not exist")
@@ -239,7 +248,7 @@ def user(request, user_id):
 
     # Get user and all their polls
     profile = UserProfile.objects.get(id=user_id)
-    polls = Poll.objects.filter(submitter=profile.id)
+    polls = Poll.objects.filter(submitter=profile.id, pub_date__lt=timezone.now())
 
     # Sort by pollarizing
     polls = pollarizing(polls)
